@@ -1,8 +1,10 @@
 package com.projects.AgiTask.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,11 +14,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,6 +48,23 @@ public class User implements UserDetails, Serializable{
 			)
 	private Set<Role> roles = new HashSet<>();
 	
+	@OneToMany(mappedBy = "user")
+	private List<Notification> notifications = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "author")
+	private List<Comment> comments = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "employee")
+	private List<Work> works = new ArrayList<>();
+	
+	@ManyToMany(mappedBy = "users")
+	private Set<Group> groups = new HashSet<>();
+	
+	@OneToMany(mappedBy = "creator")
+	private List<Task> tasks = new ArrayList<>();
+	
+	@ManyToMany(mappedBy = "followers")
+	private Set<Task> tasksFollowing = new HashSet<>();
 	
 	public User() {
 	}
@@ -96,6 +116,30 @@ public class User implements UserDetails, Serializable{
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+	public List<Work> getWorks() {
+		return works;
+	}
+
+	public Set<Task> getTasksFollowing() {
+		return tasksFollowing;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
 	}
 
 	@Override
