@@ -25,6 +25,18 @@ public class UserDTO implements Serializable {
 	private String imgUrl;
 	
 	private List<RoleDTO> roles = new ArrayList<>();
+	
+	private List<NotificationDTO> notifications = new ArrayList<>();
+	
+	private List<Long> commentsId = new ArrayList<>();
+	
+	private List<Long> groupsId = new ArrayList<>();
+	
+	private List<WorkDTO> works = new ArrayList<>();
+	
+	private List<TaskDTO> tasks = new ArrayList<>();
+	
+	private List<TaskDTO> tasksFollowing = new ArrayList<>();
 	  
 	public UserDTO() {}
 
@@ -43,7 +55,14 @@ public class UserDTO implements Serializable {
 		this.imgUrl = entity.getImgUrl();
 
 		entity.getRoles().forEach(rol -> this.roles.add(new RoleDTO(rol)));
-
+		entity.getNotifications().forEach(not -> this.notifications.add(new NotificationDTO(not)));
+		entity.getComments().forEach(com -> this.commentsId.add(com.getId()));
+		entity.getGroups().forEach(group -> this.groupsId.add(group.getId()));
+		entity.getWorks().forEach(work -> this.works.add(new WorkDTO(work)));
+		entity.getTasks().forEach(task -> this.tasks.add(new TaskDTO(task)));
+		entity.getTasksFollowing().forEach(task -> this.tasksFollowing.add(new TaskDTO(task)));
+		
+		entity.getTasksFollowing().forEach(task -> this.tasks.add(new TaskDTO(task)));
 	}
 
 	public Long getId() {
@@ -80,6 +99,30 @@ public class UserDTO implements Serializable {
 
 	public List<RoleDTO> getRoles() { 
 		return roles;
+	}
+
+	public List<NotificationDTO> getNotifications() {
+		return notifications;
+	}
+
+	public List<Long> getCommentsId() {
+		return commentsId;
+	}
+
+	public List<Long> getGroupsId() {
+		return groupsId;
+	}
+
+	public List<WorkDTO> getWorks() {
+		return works;
+	}
+
+	public List<TaskDTO> getTasks() {
+		return tasks;
+	}
+
+	public List<TaskDTO> getTasksFollowing() {
+		return tasksFollowing;
 	}
 
 	@Override

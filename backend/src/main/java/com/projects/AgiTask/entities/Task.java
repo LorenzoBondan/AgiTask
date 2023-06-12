@@ -127,6 +127,14 @@ public class Task implements Serializable {
 	public Set<User> getFollowers() {
 		return followers;
 	}
+	
+	public Integer getTotalWorkTime() {
+		int totalWorkTime = 0;
+		for(Work work : works) {
+			totalWorkTime += work.getTime();
+		}
+		return totalWorkTime;
+	}
 
 	@Override
 	public int hashCode() {
