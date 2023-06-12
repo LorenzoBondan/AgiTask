@@ -1,8 +1,10 @@
 package com.projects.AgiTask.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,9 @@ private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime moment;
+	private Boolean read;
 	
 	@ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,10 +33,12 @@ private static final long serialVersionUID = 1L;
 	
 	public Notification() {}
 
-	public Notification(Long id, String description, User user) {
+	public Notification(Long id, String description, LocalDateTime moment, Boolean read, User user) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.moment = moment;
+		this.read = read;
 		this.user = user;
 	}
 
@@ -49,6 +56,22 @@ private static final long serialVersionUID = 1L;
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public LocalDateTime getMoment() {
+		return moment;
+	}
+
+	public void setMoment(LocalDateTime moment) {
+		this.moment = moment;
+	}
+
+	public Boolean getRead() {
+		return read;
+	}
+
+	public void setRead(Boolean read) {
+		this.read = read;
 	}
 
 	public User getUser() {

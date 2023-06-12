@@ -1,6 +1,7 @@
 package com.projects.AgiTask.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.projects.AgiTask.entities.Notification;
@@ -11,14 +12,18 @@ public class NotificationDTO implements Serializable {
 
 	private Long id;
 	private String description;
+	private LocalDateTime moment;
+	private Boolean read;
 	private Long userId;
 	
 	public NotificationDTO() {}
 
-	public NotificationDTO(Long id, String description, Long userId) {
+	public NotificationDTO(Long id, String description, LocalDateTime moment, Boolean read, Long userId) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.moment = moment;
+		this.read = read;
 		this.userId = userId;
 	}
 	
@@ -42,6 +47,22 @@ public class NotificationDTO implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public LocalDateTime getMoment() {
+		return moment;
+	}
+
+	public void setMoment(LocalDateTime moment) {
+		this.moment = moment;
+	}
+
+	public Boolean getRead() {
+		return read;
+	}
+
+	public void setRead(Boolean read) {
+		this.read = read;
 	}
 
 	public Long getUserId() {
