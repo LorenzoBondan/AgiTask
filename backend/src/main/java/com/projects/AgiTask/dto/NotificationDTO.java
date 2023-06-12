@@ -30,6 +30,8 @@ public class NotificationDTO implements Serializable {
 	public NotificationDTO(Notification entity) {
 		this.id = entity.getId();
 		this.description = entity.getDescription();
+		this.moment = entity.getMoment();
+		this.read = entity.getRead();
 		this.userId = entity.getUser().getId();
 	}
 
