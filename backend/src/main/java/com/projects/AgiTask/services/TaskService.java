@@ -109,6 +109,24 @@ public class TaskService {
 			Task entity = repository.getOne(id);
 			entity.setStatus(status);
 			entity = repository.save(entity);
+			
+			// send a notification to every follower when task is changed to COMPLETED
+			if(entity.getStatus() == Status.COMPLETED) {
+				for(User follower : entity.getFollowers()) {
+					LocalDateTime date = LocalDateTime.now();
+					Notification notification = new Notification();
+					notification.setDescription("The task: " + entity.getTitle() + " has changed the status to completed.");
+					notification.setMoment(date);
+					notification.setRead(false);
+					notification.setUser(follower);
+					
+					notification = notificationRepository.save(notification);
+					
+					follower.getNotifications().add(notification);
+					follower = userRepository.save(follower);
+				}
+			}
+			
 			return new TaskDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
