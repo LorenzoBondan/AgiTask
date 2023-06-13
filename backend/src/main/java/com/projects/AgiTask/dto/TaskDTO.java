@@ -18,6 +18,7 @@ public class TaskDTO implements Serializable {
 	private String description;
 	private LocalDateTime startDate;
 	private Status status;
+	private Integer totalWorkTime;
 	
 	private Long creatorId;
 	
@@ -29,13 +30,14 @@ public class TaskDTO implements Serializable {
 	
 	public TaskDTO() {}
 
-	public TaskDTO(Long id, String title, String description, LocalDateTime startDate, Status status, Long creatorId) {
+	public TaskDTO(Long id, String title, String description, LocalDateTime startDate, Status status, Integer totalWorkTime, Long creatorId) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.startDate = startDate;
 		this.status = status;
+		this.totalWorkTime = totalWorkTime;
 		this.creatorId = creatorId;
 	}
 	
@@ -47,18 +49,12 @@ public class TaskDTO implements Serializable {
 		this.status = entity.getStatus();
 		this.creatorId = entity.getCreator().getId();
 		
+		this.totalWorkTime = entity.getTotalWorkTime();
+		
 		entity.getComments().forEach(com -> this.comments.add(new CommentDTO(com)));
 		entity.getWorks().forEach(work -> this.works.add(new WorkDTO(work)));
 		entity.getFollowers().forEach(fol -> this.followersId.add(fol.getId()));
 	}
-	
-    public int getTotalWorkTime() {
-        int totalWorkTime = 0;
-        for (WorkDTO work : works) {
-            totalWorkTime += work.getTime();
-        }
-        return totalWorkTime;
-    }
 
 	public Long getId() {
 		return id;
@@ -98,6 +94,14 @@ public class TaskDTO implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public Integer getTotalWorkTime() {
+		return totalWorkTime;
+	}
+
+	public void setTotalWorkTime(Integer totalWorkTime) {
+		this.totalWorkTime = totalWorkTime;
 	}
 
 	public Long getCreatorId() {
