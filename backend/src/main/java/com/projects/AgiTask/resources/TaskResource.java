@@ -61,6 +61,12 @@ public class TaskResource {
 		return ResponseEntity.ok().body(newDto);
 	}
 	
+	@PutMapping(value = "/{id}/updateStatus/{status}")
+	public ResponseEntity<TaskDTO> updateStatus(@PathVariable Long id, @PathVariable Status status)	{
+		TaskDTO newDto = service.updateStatus(id, status);
+		return ResponseEntity.ok().body(newDto);
+	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<TaskDTO> delete(@PathVariable Long id){
 		service.delete(id);

@@ -1,5 +1,6 @@
 package com.projects.AgiTask.services;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,11 +17,13 @@ import com.projects.AgiTask.dto.CommentDTO;
 import com.projects.AgiTask.dto.TaskDTO;
 import com.projects.AgiTask.dto.WorkDTO;
 import com.projects.AgiTask.entities.Comment;
+import com.projects.AgiTask.entities.Notification;
 import com.projects.AgiTask.entities.Task;
 import com.projects.AgiTask.entities.User;
 import com.projects.AgiTask.entities.Work;
 import com.projects.AgiTask.entities.enums.Status;
 import com.projects.AgiTask.repositories.CommentRepository;
+import com.projects.AgiTask.repositories.NotificationRepository;
 import com.projects.AgiTask.repositories.TaskRepository;
 import com.projects.AgiTask.repositories.UserRepository;
 import com.projects.AgiTask.repositories.WorkRepository;
@@ -38,6 +41,9 @@ public class TaskService {
 	
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
 	
 	@Autowired
 	private WorkRepository workRepository;
@@ -66,6 +72,22 @@ public class TaskService {
 		Task entity = new Task();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
+		
+		// send a notification to every follower when the task is created
+		for(User follower : entity.getFollowers()) {
+			LocalDateTime date = LocalDateTime.now();
+			Notification notification = new Notification();
+			notification.setDescription("You were added as follower to the task: " + entity.getTitle() + ".");
+			notification.setMoment(date);
+			notification.setRead(false);
+			notification.setUser(follower);
+			
+			notification = notificationRepository.save(notification);
+			
+			follower.getNotifications().add(notification);
+			follower = userRepository.save(follower);
+		}
+		
 		return new TaskDTO(entity);
 	}
 
@@ -74,6 +96,18 @@ public class TaskService {
 		try {
 			Task entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);
+			entity = repository.save(entity);
+			return new TaskDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
+	
+	@Transactional
+	public TaskDTO updateStatus(Long id, Status status) {
+		try {
+			Task entity = repository.getOne(id);
+			entity.setStatus(status);
 			entity = repository.save(entity);
 			return new TaskDTO(entity);
 		} catch (EntityNotFoundException e) {
