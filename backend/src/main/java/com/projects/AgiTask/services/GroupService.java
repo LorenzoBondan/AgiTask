@@ -2,6 +2,7 @@ package com.projects.AgiTask.services;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -81,8 +82,37 @@ public class GroupService {
 	public GroupDTO update(Long id, GroupDTO dto) {
 		try {
 			Group entity = repository.getOne(id);
+			
+			// get the users who are already in the group
+			Set<User> usersAlreadyIn = entity.getUsers();
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
+			
+			// getting all the users after the update
+			Set<User> usersAfterUpdate = entity.getUsers();
+			
+			// filtering only the users added
+			for(User user : usersAlreadyIn) {
+				if(usersAfterUpdate.contains(user)) {
+					usersAfterUpdate.remove(user);
+				}
+			}
+			
+			// send a notification to new users
+			for(User userAdded : usersAfterUpdate) {
+				LocalDateTime date = LocalDateTime.now();
+				Notification notification = new Notification();
+				notification.setDescription("You were added to a new group: " + entity.getName() + ".");
+				notification.setMoment(date);
+				notification.setRead(false);
+				notification.setUser(userAdded);
+					
+				notification = notificationRepository.save(notification);
+					
+				userAdded.getNotifications().add(notification);
+				userAdded = userRepository.save(userAdded);
+			}
+			
 			return new GroupDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
