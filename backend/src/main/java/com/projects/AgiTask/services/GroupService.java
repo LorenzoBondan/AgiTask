@@ -1,5 +1,6 @@
 package com.projects.AgiTask.services;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -15,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.projects.AgiTask.dto.GroupDTO;
 import com.projects.AgiTask.dto.UserDTO;
 import com.projects.AgiTask.entities.Group;
+import com.projects.AgiTask.entities.Notification;
 import com.projects.AgiTask.entities.User;
 import com.projects.AgiTask.repositories.GroupRepository;
+import com.projects.AgiTask.repositories.NotificationRepository;
 import com.projects.AgiTask.repositories.UserRepository;
 import com.projects.AgiTask.services.exceptions.DataBaseException;
 import com.projects.AgiTask.services.exceptions.ResourceNotFoundException;
@@ -29,6 +32,9 @@ public class GroupService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
 	
 	@Autowired
 	private AuthService authService;
@@ -52,6 +58,22 @@ public class GroupService {
 		Group entity = new Group();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
+		
+		// send a notification to every member of the group
+		for(User member : entity.getUsers()) {
+			LocalDateTime date = LocalDateTime.now();
+			Notification notification = new Notification();
+			notification.setDescription("You were added to the group '" + entity.getName() + "'.");
+			notification.setMoment(date);
+			notification.setRead(false);
+			notification.setUser(member);
+				
+			notification = notificationRepository.save(notification);
+				
+			member.getNotifications().add(notification);
+			member = userRepository.save(member);
+		}
+		
 		return new GroupDTO(entity);
 	}
 
