@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.projects.AgiTask.dto.TaskDTO;
+import com.projects.AgiTask.entities.enums.Status;
 import com.projects.AgiTask.services.TaskService;
 
 @RestController
@@ -31,6 +32,12 @@ public class TaskResource {
 	@GetMapping
 	public ResponseEntity<Page<TaskDTO>> findAll(Pageable pageable) {
 		Page<TaskDTO> list = service.findAllPaged(pageable);	
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/status/{status}")
+	public ResponseEntity<Page<TaskDTO>> findByStaus(@PathVariable Status status, Pageable pageable) {
+		Page<TaskDTO> list = service.findByStatus(status, pageable);	
 		return ResponseEntity.ok().body(list);
 	}
 	

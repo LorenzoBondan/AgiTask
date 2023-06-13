@@ -19,6 +19,7 @@ import com.projects.AgiTask.entities.Comment;
 import com.projects.AgiTask.entities.Task;
 import com.projects.AgiTask.entities.User;
 import com.projects.AgiTask.entities.Work;
+import com.projects.AgiTask.entities.enums.Status;
 import com.projects.AgiTask.repositories.CommentRepository;
 import com.projects.AgiTask.repositories.TaskRepository;
 import com.projects.AgiTask.repositories.UserRepository;
@@ -44,6 +45,12 @@ public class TaskService {
 	@Transactional(readOnly = true)
 	public Page<TaskDTO> findAllPaged(Pageable pageable) {
 		Page<Task> list = repository.findAll(pageable);
+		return list.map(x -> new TaskDTO(x));
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<TaskDTO> findByStatus(Status status, Pageable pageable) {
+		Page<Task> list = repository.findByStatus(status, pageable);
 		return list.map(x -> new TaskDTO(x));
 	}
 
