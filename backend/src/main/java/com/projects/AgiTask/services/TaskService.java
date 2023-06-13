@@ -127,6 +127,20 @@ public class TaskService {
 				}
 			}
 			
+			// also send a notification to the creator of the task
+			User creator = entity.getCreator();
+			LocalDateTime date = LocalDateTime.now();
+			Notification notification = new Notification();
+			notification.setDescription("The task: " + entity.getTitle() + " has changed the status to completed.");
+			notification.setMoment(date);
+			notification.setRead(false);
+			notification.setUser(creator);
+				
+			notification = notificationRepository.save(notification);
+				
+			creator.getNotifications().add(notification);
+			creator = userRepository.save(creator);
+			
 			return new TaskDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
