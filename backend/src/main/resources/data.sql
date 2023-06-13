@@ -55,3 +55,5 @@ INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is th
 
 INSERT INTO tb_work (time, employee_id, task_id) VALUES (30, 1, 1);
 INSERT INTO tb_work (time, employee_id, task_id) VALUES (15, 2, 1);
+
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
