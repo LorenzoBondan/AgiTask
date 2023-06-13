@@ -12,6 +12,7 @@ import com.projects.AgiTask.dto.NotificationDTO;
 import com.projects.AgiTask.entities.Notification;
 import com.projects.AgiTask.entities.User;
 import com.projects.AgiTask.repositories.NotificationRepository;
+import com.projects.AgiTask.repositories.UserRepository;
 import com.projects.AgiTask.services.exceptions.DataBaseException;
 import com.projects.AgiTask.services.exceptions.ResourceNotFoundException;
 
@@ -24,11 +25,29 @@ public class NotificationService {
 	@Autowired
 	private AuthService authService;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	@Transactional(readOnly = true)
 	public Page<NotificationDTO> notificationsForCurrentUser(boolean unreadOnly, Pageable pageable){
 		User user = authService.authenticated();
 		Page<Notification> page = repository.find(user, unreadOnly, pageable);
 		return page.map(x -> new NotificationDTO(x));
+	}
+	
+	@Transactional
+	public NotificationDTO insert(NotificationDTO dto) {
+		Notification entity = new Notification();
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new NotificationDTO(entity);
+	}
+	
+	private void copyDtoToEntity(NotificationDTO dto, Notification entity) {
+		entity.setDescription(dto.getDescription());
+		entity.setMoment(dto.getMoment());
+		entity.setRead(dto.getRead());
+		entity.setUser(userRepository.getOne(dto.getUserId()));
 	}
 	
 	public void delete(Long id) {
