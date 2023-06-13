@@ -40,3 +40,9 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (16, 2);
 
 
 INSERT INTO tb_notification (description, moment, read, user_id) VALUES ('Welcome', TIMESTAMP WITHOUT TIME ZONE '2022-12-20T14:00:00', false, 2);
+
+INSERT INTO tb_group (name) VALUES ('Group 1');
+INSERT INTO tb_group (name) VALUES ('Group 2');
+
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,2);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (2,1);
