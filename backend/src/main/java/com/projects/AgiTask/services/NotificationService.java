@@ -1,5 +1,7 @@
 package com.projects.AgiTask.services;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,6 +43,18 @@ public class NotificationService {
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new NotificationDTO(entity);
+	}
+	
+	@Transactional
+	public NotificationDTO updateToRead(Long id, NotificationDTO dto) {
+		try {
+			Notification entity = repository.getOne(id);
+			entity.setRead(true);
+			entity = repository.save(entity);
+			return new NotificationDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
 	}
 	
 	private void copyDtoToEntity(NotificationDTO dto, Notification entity) {
