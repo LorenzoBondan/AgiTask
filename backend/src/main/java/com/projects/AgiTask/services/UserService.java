@@ -17,14 +17,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.projects.AgiTask.dto.NotificationDTO;
 import com.projects.AgiTask.dto.RoleDTO;
+import com.projects.AgiTask.dto.TaskDTO;
 import com.projects.AgiTask.dto.UserDTO;
 import com.projects.AgiTask.dto.UserInsertDTO;
 import com.projects.AgiTask.dto.UserUpdateDTO;
+import com.projects.AgiTask.dto.WorkDTO;
+import com.projects.AgiTask.entities.Comment;
+import com.projects.AgiTask.entities.Group;
+import com.projects.AgiTask.entities.Notification;
 import com.projects.AgiTask.entities.Role;
+import com.projects.AgiTask.entities.Task;
 import com.projects.AgiTask.entities.User;
+import com.projects.AgiTask.entities.Work;
+import com.projects.AgiTask.repositories.CommentRepository;
+import com.projects.AgiTask.repositories.GroupRepository;
+import com.projects.AgiTask.repositories.NotificationRepository;
 import com.projects.AgiTask.repositories.RoleRepository;
+import com.projects.AgiTask.repositories.TaskRepository;
 import com.projects.AgiTask.repositories.UserRepository;
+import com.projects.AgiTask.repositories.WorkRepository;
 import com.projects.AgiTask.services.exceptions.DataBaseException;
 import com.projects.AgiTask.services.exceptions.ResourceNotFoundException;
 
@@ -41,6 +54,21 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private NotificationRepository notificationRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
+	
+	@Autowired
+	private GroupRepository groupRepository;
+	
+	@Autowired
+	private WorkRepository workRepository;
+	
+	@Autowired
+	private TaskRepository taskRepository;
 	
 
 	@Transactional(readOnly = true)
@@ -109,6 +137,30 @@ public class UserService implements UserDetailsService {
 			entity.getRoles().add(role);
 		}
 		
+		for (NotificationDTO notDto : dto.getNotifications()) {
+			Notification not = notificationRepository.getOne(notDto.getId());
+			entity.getNotifications().add(not);
+		}
+		
+		for (Long comId : dto.getCommentsId()) {
+			Comment com = commentRepository.getOne(comId);
+			entity.getComments().add(com);
+		}
+		
+		for (Long groupId : dto.getGroupsId()) {
+			Group group = groupRepository.getOne(groupId);
+			entity.getGroups().add(group);
+		}
+		
+		for (WorkDTO workDto : dto.getWorks()) {
+			Work work = workRepository.getOne(workDto.getId());
+			entity.getWorks().add(work);
+		}
+		
+		for (TaskDTO taskDto : dto.getTasks()) {
+			Task task = taskRepository.getOne(taskDto.getId());
+			entity.getTasks().add(task);
+		}
 	}
 
 	@Override
