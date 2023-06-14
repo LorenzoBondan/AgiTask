@@ -45,10 +45,14 @@ INSERT INTO tb_group (name) VALUES ('Group 1');
 INSERT INTO tb_group (name) VALUES ('Group 2');
 
 INSERT INTO tb_group_user (group_id, user_id) VALUES (1,2);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,3);
 INSERT INTO tb_group_user (group_id, user_id) VALUES (2,1);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (2,4);
 
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('First Task', 'This is the first task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 0, 2);
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Second Task', 'This is the second task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 0, 2);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Third Task', 'This is the third task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 1, 1);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Fourth Task', 'This is the fourth task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 2, 3);
 
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 1, 1);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the second task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 2);
@@ -57,3 +61,7 @@ INSERT INTO tb_work (time, employee_id, task_id) VALUES (30, 1, 1);
 INSERT INTO tb_work (time, employee_id, task_id) VALUES (15, 2, 1);
 
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,4);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,5);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (3,3);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (3,6);

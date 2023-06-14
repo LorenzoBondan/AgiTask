@@ -37,15 +37,18 @@ public class UserDTO implements Serializable {
 	private List<TaskDTO> tasks = new ArrayList<>();
 	
 	private List<TaskDTO> tasksFollowing = new ArrayList<>();
+	
+	private Integer totalWorkTime;
 	  
 	public UserDTO() {}
 
-	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl) {
+	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl, Integer totalWorkTime) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.imgUrl = imgUrl;
+		this.totalWorkTime = totalWorkTime;
 	}
 	
 	public UserDTO(User entity) {
@@ -63,6 +66,8 @@ public class UserDTO implements Serializable {
 		entity.getTasksFollowing().forEach(task -> this.tasksFollowing.add(new TaskDTO(task)));
 		
 		entity.getTasksFollowing().forEach(task -> this.tasks.add(new TaskDTO(task)));
+		
+		this.totalWorkTime = entity.getTotalWorkTime();
 	}
 
 	public Long getId() {
@@ -123,6 +128,14 @@ public class UserDTO implements Serializable {
 
 	public List<TaskDTO> getTasksFollowing() {
 		return tasksFollowing;
+	}
+
+	public Integer getTotalWorkTime() {
+		return totalWorkTime;
+	}
+
+	public void setTotalWorkTime(Integer totalWorkTime) {
+		this.totalWorkTime = totalWorkTime;
 	}
 
 	@Override

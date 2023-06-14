@@ -77,6 +77,14 @@ public class User implements UserDetails, Serializable{
 		this.password = password;
 		this.imgUrl = imgUrl;
 	}
+	
+	public Integer getTotalWorkTime() {
+		int totalWorkTime = 0;
+		for(Work work : works) {
+			totalWorkTime += work.getTime();
+		}
+		return totalWorkTime;
+	}
 
 	public Long getId() {
 		return id;
