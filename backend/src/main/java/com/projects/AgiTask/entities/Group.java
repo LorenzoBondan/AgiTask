@@ -40,6 +40,14 @@ public class Group implements Serializable{
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Integer getTotalWorkTime() {
+		int totalWorkTime = 0;
+		for(User user : users) {
+			totalWorkTime += user.getTotalWorkTime();
+		}
+		return totalWorkTime;
+	}
 
 	public Long getId() {
 		return id;

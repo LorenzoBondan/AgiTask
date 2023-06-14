@@ -14,19 +14,23 @@ public class GroupDTO implements Serializable {
 	private Long id;
 	private String name;
 	
+	private Integer totalWorkTime;
+	
 	private List<UserDTO> users = new ArrayList<>();
 	
 	public GroupDTO() {}
 	
-	public GroupDTO(Long id, String name) {
+	public GroupDTO(Long id, String name, Integer totalWorkTime) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.totalWorkTime = totalWorkTime;
 	}
 	
 	public GroupDTO(Group entity) {
 		this.id = entity.getId();
 		this.name = entity.getName();
+		this.totalWorkTime = entity.getTotalWorkTime();
 		
 		entity.getUsers().forEach(user -> this.users.add(new UserDTO(user)));
 	}
@@ -45,6 +49,14 @@ public class GroupDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getTotalWorkTime() {
+		return totalWorkTime;
+	}
+
+	public void setTotalWorkTime(Integer totalWorkTime) {
+		this.totalWorkTime = totalWorkTime;
 	}
 
 	public List<UserDTO> getUsers() {
