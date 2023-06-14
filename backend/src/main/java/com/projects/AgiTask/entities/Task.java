@@ -3,8 +3,10 @@ package com.projects.AgiTask.entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,6 +68,17 @@ public class Task implements Serializable {
 		this.startDate = startDate;
 		this.status = status;
 		this.creator = creator;
+	}
+	
+	public Map<String, Integer> getUsersWorkTime() {
+	    Map<String, Integer> userWorkTimeMap = new HashMap<>();
+	    for (Work work : works) {
+	        User user = work.getEmployee();
+	        int workTime = work.getTime();
+	        String userName = user.getName();
+	        userWorkTimeMap.put(userName, userWorkTimeMap.getOrDefault(userName, 0) + workTime);
+	    }
+	    return userWorkTimeMap;
 	}
 
 	public Long getId() {

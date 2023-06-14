@@ -3,7 +3,9 @@ package com.projects.AgiTask.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import com.projects.AgiTask.entities.Task;
@@ -28,6 +30,8 @@ public class TaskDTO implements Serializable {
 	
 	private List<CommentDTO> comments = new ArrayList<>();
 	
+	private Map<String, Integer> usersWorkTime = new HashMap<>();
+	
 	public TaskDTO() {}
 
 	public TaskDTO(Long id, String title, String description, LocalDateTime startDate, Status status, Integer totalWorkTime, Long creatorId) {
@@ -50,6 +54,7 @@ public class TaskDTO implements Serializable {
 		this.creatorId = entity.getCreator().getId();
 		
 		this.totalWorkTime = entity.getTotalWorkTime();
+		this.usersWorkTime = entity.getUsersWorkTime();
 		
 		entity.getComments().forEach(com -> this.comments.add(new CommentDTO(com)));
 		entity.getWorks().forEach(work -> this.works.add(new WorkDTO(work)));
@@ -122,6 +127,10 @@ public class TaskDTO implements Serializable {
 
 	public List<CommentDTO> getComments() {
 		return comments;
+	}
+
+	public Map<String, Integer> getUsersWorkTime() {
+		return usersWorkTime;
 	}
 
 	@Override
