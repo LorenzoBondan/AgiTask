@@ -78,7 +78,7 @@ public class WorkService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Integer findTotalHoursByEmployeeAndMonth(Long employeeId, Integer month) {
+	public Integer findTotalTimeByEmployeeAndMonth(Long employeeId, Integer month) {
 		Integer totalHoursByEmployeeAndMonth = repository.getTotalTimeByEmployeeAndMonth(employeeId, month);
 		return totalHoursByEmployeeAndMonth;
 	}

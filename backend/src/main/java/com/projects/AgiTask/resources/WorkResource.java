@@ -51,9 +51,9 @@ public class WorkResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value = "/{employeeId}/totalHours/{month}")
-	public ResponseEntity<Integer> findTotalHoursByEmployeeAndMonth(@PathVariable Long employeeId, @PathVariable Integer month) {
-		Integer totalHours = service.findTotalHoursByEmployeeAndMonth(employeeId, month);	
+	@GetMapping(value = "/{employeeId}/totalTime/{month}")
+	public ResponseEntity<Integer> findTotalTimeByEmployeeAndMonth(@PathVariable Long employeeId, @PathVariable Integer month) {
+		Integer totalHours = service.findTotalTimeByEmployeeAndMonth(employeeId, month);	
 		return ResponseEntity.ok().body(totalHours);
 	}
 	
