@@ -1,6 +1,7 @@
 package com.projects.AgiTask.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,18 @@ public class WorkResource {
 	public ResponseEntity<WorkDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/{employeeId}/totalHours/{month}")
+	public ResponseEntity<Integer> findTotalHoursByEmployeeAndMonth(@PathVariable Long employeeId, @PathVariable Integer month) {
+		Integer totalHours = service.findTotalHoursByEmployeeAndMonth(employeeId, month);	
+		return ResponseEntity.ok().body(totalHours);
+	}
+	
+	@GetMapping(value = "/{employeeId}/totalWorks/{month}")
+	public ResponseEntity<List<WorkDTO>> findWorksByEmployeeAndMonth(@PathVariable Long employeeId, @PathVariable Integer month) {
+		List<WorkDTO> totalWorks = service.findWorksByEmployeeAndMonth(employeeId, month);	
+		return ResponseEntity.ok().body(totalWorks);
 	}
 	
 }

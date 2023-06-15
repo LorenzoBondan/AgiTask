@@ -1,5 +1,6 @@
 package com.projects.AgiTask.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -75,4 +76,14 @@ public class WorkService {
 			throw new DataBaseException("Integrity Violation");
 		}
 	}
+	
+	@Transactional(readOnly = true)
+	public Integer findTotalHoursByEmployeeAndMonth(Long employeeId, Integer month) {
+		Integer totalHoursByEmployeeAndMonth = repository.getTotalTimeByEmployeeAndMonth(employeeId, month);
+		return totalHoursByEmployeeAndMonth;
+	}
+	
+    public List<WorkDTO> findWorksByEmployeeAndMonth(Long employeeId, Integer month) {
+        return repository.getWorksByEmployeeAndMonth(employeeId, month);
+    }
 }
