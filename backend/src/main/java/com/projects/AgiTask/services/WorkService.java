@@ -1,5 +1,6 @@
 package com.projects.AgiTask.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,4 +87,16 @@ public class WorkService {
     public List<WorkDTO> findWorksByEmployeeAndMonth(Long employeeId, Integer month) {
         return repository.getWorksByEmployeeAndMonth(employeeId, month);
     }
+    
+	@Transactional
+	public WorkDTO finishWork(Long id, WorkDTO dto) {
+		try {
+			Work entity = repository.getOne(id);
+			entity.setDateTimeEnd(LocalDateTime.now());
+			entity = repository.save(entity);
+			return new WorkDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
 }

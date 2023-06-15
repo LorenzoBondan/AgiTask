@@ -1,18 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import { getTokenData, hasAnyRoles, isAuthenticated } from 'util/auth';
-import logo from 'assets/images/sn-logo.png'
-import { AiOutlineHome } from 'react-icons/ai';
-import { CgProfile } from 'react-icons/cg';
-import { HiOutlineUsers } from 'react-icons/hi';
-import { MdOutlineAdminPanelSettings } from 'react-icons/md';
-import { RxInstagramLogo } from 'react-icons/rx';
-import { CgFeed } from 'react-icons/cg';
-import './styles.css';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from 'AuthContext';
 import { removeAuthData } from 'util/storage';
 import history from 'util/history';
 
+import logo from 'assets/images/AT-logo-with-title.png'
+import taskIcon from 'assets/images/task.png';
+import plusIcon from 'assets/images/plus.png';
+import profileIcon from 'assets/images/profile.png';
+import adminIcon from 'assets/images/admin.png';
+import logoutIcon from 'assets/images/logout.png';
+import loginIcon from 'assets/images/login.png';
+import homeIcon from 'assets/images/home.png';
+
+import './styles.css';
 
 const Navbar = () => {
 
@@ -44,56 +46,58 @@ const Navbar = () => {
         history.replace('/'); 
     }
 
+    const [isExpanded, setExpendState] = useState(false);
+
     return(
-        <nav className='admin-nav-container'>
-            <div className='navbar-title'>
+        <nav className= {isExpanded ? 'admin-nav-container' : 'admin-nav-container-expanded'}>
+            <div className={isExpanded ? 'navbar-title' : 'navbar-title-expanded'} >
                 <img src={logo} alt="logo" />
-                <h1 className='title'><div style={{color:"#E74A7D"}}>Social</div><div style={{color:"#7D5889"}}>Network</div></h1>
+            </div>
+
+            <div className='hambuger-container'>
+                <button	className="hamburger" onClick={() => setExpendState(!isExpanded)}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
 
             <ul className='ul-container'>
                 {isAuthenticated() ? (
                 <>
                 <li>
-                    <NavLink to="/feed" className='admin-nav-item'>
-                        <CgFeed style={{color:"#7D5889", marginRight:"8px"}}/>
-                        <p>Feed</p>
+                    <NavLink to="/tasks" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"} >
+                        <img src={taskIcon} alt="" />
+                        { isExpanded && <p>Tasks</p>}
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/create" className='admin-nav-item'>
-                        <RxInstagramLogo style={{color:"#7D5889", marginRight:"8px"}}/>
-                        <p>New Post</p>
+                    <NavLink to="/create" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
+                        <img src={plusIcon} alt="" />
+                        {isExpanded && <p>New Task</p>}
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/profile" className='admin-nav-item'>
-                        <CgProfile style={{color:"#7D5889", marginRight:"8px"}}/>
-                        <p>Profile</p>
-                    </NavLink>
-                </li>
-
-                <li>
-                    <NavLink to="/users" className='admin-nav-item'>
-                        <HiOutlineUsers style={{color:"#7D5889", marginRight:"8px"}}/>
-                        <p>Users</p>
+                    <NavLink to="/profile" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
+                        <img src={profileIcon} alt="" />
+                        {isExpanded && <p>Profile</p>}
                     </NavLink>
                 </li>
 
                 { hasAnyRoles(['ROLE_ADMIN']) && ( 
                     <li>
-                        <NavLink to="/admin" className='admin-nav-item'>
-                            <MdOutlineAdminPanelSettings style={{color:"#7D5889", marginRight:"8px"}}/>
-                            <p>Admin</p>
+                        <NavLink to="/admin" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
+                            <img src={adminIcon} alt="" />
+                            {isExpanded && <p>Admin</p>}
                         </NavLink>
                     </li>   
                 )}
                 </>
                 ) : (
                     <li>
-                        <NavLink to="/home" exact className='admin-nav-item'>
-                            <AiOutlineHome style={{color:"#7D5889", marginRight:"8px"}}/>
-                            <p>Home</p>
+                        <NavLink to="/home" exact className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
+                            <img src={homeIcon} alt="" />
+                            {isExpanded && <p>Home</p>}
                         </NavLink>
                     </li>   
                 
@@ -101,25 +105,22 @@ const Navbar = () => {
 
                 { authContextData.authenticated ? (
                     <li>
-                        <NavLink to="/" className='login-nav-item' onClick={handleLogoutClick}>
-                            <CgProfile style={{color:"#7D5889", marginRight:"8px"}}/>
-                                <p>Logout</p>
+                        <NavLink to="/" className={isExpanded ? "login-nav-item" : "login-nav-item-expanded"} onClick={handleLogoutClick}>
+                            <img src={logoutIcon} alt="" />
+                                {isExpanded && <p>Logout</p>}
                         </NavLink>
                     </li>
                     ) : (
                         <li>
-                            <NavLink to="/auth/login" className='login-nav-item'>
-                                <CgProfile style={{color:"#7D5889", marginRight:"8px"}}/>
-                                <p>Login</p>
+                            <NavLink to="/auth/login" className={isExpanded ? "login-nav-item" : "login-nav-item-expanded"}>
+                                <img src={loginIcon} alt="" />
+                                {isExpanded && <p>Login</p>}
                             </NavLink>
                         </li>
                     )
                 }
-
             </ul>
         </nav>
-        
-
     );
 }
 

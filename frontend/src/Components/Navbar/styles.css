@@ -1,10 +1,12 @@
 .admin-nav-container{
     padding: 10px;
-    background-color: #fff;
+    background-color: #F15A23;
     width: 100%;
     border-bottom: 1px solid darkgray;
-    position: fixed;
+    position: relative;
     z-index: 9999;
+
+    transition: 0.4s;
 }
 
 .navbar-title{
@@ -16,17 +18,40 @@
 }
 
 .navbar-title img{
-    height: 100px;
+    height: 150px;
     margin-bottom: 5px;
 }
 
-.title{
-    display: flex;
+.navbar-title-expanded img{
+    height: 75px;
+    margin-bottom: 5px;
 }
 
-.navbar-title h1{
-    font-size: 2rem;
-    font-weight: 700;
+.hambuger-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.hamburger {
+	background: none;
+	border: none;
+	cursor: pointer;
+	margin: auto;
+    display: none;
+}
+
+.hamburger span {
+	display: block;
+	margin-top: 5px;
+	background-color: silver;
+	border-radius: 20px;
+	height: 4px;
+	width: 32px;
+
+	transition: 0.4s;
 }
 
 .ul-container{
@@ -42,36 +67,52 @@
     font-weight: 400;
 }
 
-.ul-container svg {
-    display: none;
+.ul-container img {
+    display: flex;
 }
 
-.admin-nav-item, .login-nav-item{
+.admin-nav-item, .login-nav-item, .admin-nav-item-expanded, .login-nav-item-expanded{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 50px;
-    background-color: #fff;
+    background-color: #F15A23;
     padding: 0 10px;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: -0.015em;
-    color: #7D5889 !important;
+    color: #fff !important;
     text-decoration: none;
     border-radius: 100px;
 }
 
-.admin-nav-item:hover, .login-nav-item:hover {
-    background-color: rgb(225, 225, 225);
-    color: #7D5889 !important;
+.admin-nav-item img, .login-nav-item img{
+    width: 20px;
+}
+
+.admin-nav-item-expanded img, .login-nav-item-expanded img{
+    width: 35px;
+}
+
+.admin-nav-item:hover, .login-nav-item:hover, .admin-nav-item-expanded:hover, .login-nav-item-expanded:hover {
+    background-color: rgb(225, 225, 225) !important;
 }
 
 .admin-nav-item.active {
-    background: #7D5889;
+    background: #B9331A;
     color: #fff !important;
 }
 
-.active svg{
+.admin-nav-item-expanded.active{
+    background: #B9331A;
+}
+
+.admin-nav-item svg, .admin-nav-item-expanded svg, .login-nav-item svg, .login-nav-item-expanded svg{
+    color: #fff !important;
+}
+
+.admin-nav-item.active svg, .admin-nav-item-expanded.active svg{
     color: #fff !important;
 }
 
@@ -79,6 +120,9 @@
     margin-bottom: 0;
 }
 
+.login-nav-item.active svg{
+    color: #fff !important;
+}
 
 /* --- VIRA UMA NAVBAR LATERAL ESQ */
 
@@ -90,13 +134,19 @@
 
 @media(min-width:1200px){
 
+    .navbar-title img{
+        height: 200px;
+        margin-bottom: 5px;
+    }
+
     ul{
         justify-content: unset;
         flex-direction: column;
     }
 
-    .ul-container svg {
+    .ul-container img {
         display: unset;
+        margin-right: 8px;
     }
 
     .admin-nav-container{
@@ -108,12 +158,59 @@
 
     .admin-nav-item, .login-nav-item {
         height: 60px;
-        background-color: white;
+        background-color: #F15A23;
         justify-content: flex-start;
         padding-left: 30px;
         width: 300px;
         border-right: 1px solid darkgray;
         border-radius: 0;
+    }
+
+    .admin-nav-item-expanded, .login-nav-item-expanded{
+        border-radius: 0;
+    }
+
+    .hamburger{
+        display: unset;
+    }
+
+    .admin-nav-item img, .login-nav-item img{
+        width: 20px;
+    }
+
+    .admin-nav-item-expanded img, .login-nav-item-expanded img{
+        width: 35px;
+    }
+
+
+
+    
+    .admin-nav-container-expanded{
+        width: 85px;
+        transition: 0.4s;
+        background-color: #F15A23;
+        border-bottom: 1px solid darkgray;
+        position: fixed;
+        z-index: 9999;
+        height: 100vh;
+    }
+    
+    .navbar-title, .navbar-title-expanded{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .navbar-title img{
+        height: 150px;
+        margin-bottom: 5px;
+    }
+    
+    .navbar-title-expanded img{
+        height: 75px;
+        margin-bottom: 5px;
     }
 
 }

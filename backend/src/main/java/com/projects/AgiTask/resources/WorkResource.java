@@ -63,4 +63,10 @@ public class WorkResource {
 		return ResponseEntity.ok().body(totalWorks);
 	}
 	
+	@PutMapping(value = "/{id}/finishWork")
+	public ResponseEntity<WorkDTO> finishWork(@PathVariable Long id, @RequestBody WorkDTO dto) {
+		dto = service.finishWork(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 }
