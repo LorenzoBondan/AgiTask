@@ -1,8 +1,10 @@
 package com.projects.AgiTask.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Work implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Integer time;
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime dateTime;
 	
 	@ManyToOne
     @JoinColumn(name = "employee_id")
@@ -32,12 +36,13 @@ public class Work implements Serializable {
 	
 	public Work() {}
 
-	public Work(Long id, Integer time, User employee, Task task) {
+	public Work(Long id, Integer time, User employee, Task task, LocalDateTime dateTime) {
 		super();
 		this.id = id;
 		this.time = time;
 		this.employee = employee;
 		this.task = task;
+		this.dateTime = dateTime;
 	}
 
 	public Long getId() {
@@ -70,6 +75,14 @@ public class Work implements Serializable {
 
 	public void setTask(Task task) {
 		this.task = task;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	@Override

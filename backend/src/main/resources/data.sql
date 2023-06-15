@@ -57,8 +57,8 @@ INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES 
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 1, 1);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the second task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 2);
 
-INSERT INTO tb_work (time, employee_id, task_id) VALUES (30, 1, 1);
-INSERT INTO tb_work (time, employee_id, task_id) VALUES (15, 2, 1);
+INSERT INTO tb_work (time, employee_id, task_id, date_Time) VALUES (30, 1, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00');
+INSERT INTO tb_work (time, employee_id, task_id, date_Time) VALUES (15, 2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:09:00');
 
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,4);

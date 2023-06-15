@@ -61,6 +61,7 @@ public class WorkService {
 		entity.setTime(dto.getTime());
 		entity.setEmployee(userRepository.getOne(dto.getEmployeeId()));
 		entity.setTask(taskRepository.getOne(dto.getTaskId()));
+		entity.setDateTime(dto.getDateTime());
 	}
 
 	public void delete(Long id) {

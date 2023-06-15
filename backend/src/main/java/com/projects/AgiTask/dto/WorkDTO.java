@@ -1,6 +1,7 @@
 package com.projects.AgiTask.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.projects.AgiTask.entities.Work;
@@ -13,15 +14,17 @@ public class WorkDTO implements Serializable {
 	private Integer time;
 	private Long employeeId;
 	private Long taskId;
+	private LocalDateTime dateTime;
 	
 	public WorkDTO() {}
 
-	public WorkDTO(Long id, Integer time, Long employeeId, Long taskId) {
+	public WorkDTO(Long id, Integer time, Long employeeId, Long taskId, LocalDateTime dateTime) {
 		super();
 		this.id = id;
 		this.time = time;
 		this.employeeId = employeeId;
 		this.taskId = taskId;
+		this.dateTime = dateTime;
 	}
 	
 	public WorkDTO(Work entity) {
@@ -29,6 +32,7 @@ public class WorkDTO implements Serializable {
 		this.time = entity.getTime();
 		this.employeeId = entity.getEmployee().getId();
 		this.taskId = entity.getTask().getId();
+		this.dateTime = entity.getDateTime();
 	}
 
 	public Long getId() {
@@ -61,6 +65,14 @@ public class WorkDTO implements Serializable {
 
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	@Override
