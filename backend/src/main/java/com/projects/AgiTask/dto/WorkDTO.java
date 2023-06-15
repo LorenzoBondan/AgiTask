@@ -11,28 +11,31 @@ public class WorkDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private Integer time;
+	private Integer totalTime;
 	private Long employeeId;
 	private Long taskId;
-	private LocalDateTime dateTime;
+	private LocalDateTime dateTimeStart;
+	private LocalDateTime dateTimeEnd;
 	
 	public WorkDTO() {}
 
-	public WorkDTO(Long id, Integer time, Long employeeId, Long taskId, LocalDateTime dateTime) {
+	public WorkDTO(Long id, Integer totalTime, Long employeeId, Long taskId, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
 		super();
 		this.id = id;
-		this.time = time;
+		this.totalTime = totalTime;
 		this.employeeId = employeeId;
 		this.taskId = taskId;
-		this.dateTime = dateTime;
+		this.dateTimeStart = dateTimeStart;
+		this.dateTimeEnd = dateTimeEnd;
 	}
 	
 	public WorkDTO(Work entity) {
 		this.id = entity.getId();
-		this.time = entity.getTime();
+		this.totalTime = entity.getTotalTime();
 		this.employeeId = entity.getEmployee().getId();
 		this.taskId = entity.getTask().getId();
-		this.dateTime = entity.getDateTime();
+		this.dateTimeStart = entity.getDateTimeStart();
+		this.dateTimeEnd = entity.getDateTimeEnd();
 	}
 
 	public Long getId() {
@@ -43,12 +46,28 @@ public class WorkDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTime() {
-		return time;
+	public Integer getTotalTime() {
+		return totalTime;
 	}
 
-	public void setTime(Integer time) {
-		this.time = time;
+	public void setTotalTime(Integer totalTime) {
+		this.totalTime = totalTime;
+	}
+
+	public LocalDateTime getDateTimeStart() {
+		return dateTimeStart;
+	}
+
+	public void setDateTimeStart(LocalDateTime dateTimeStart) {
+		this.dateTimeStart = dateTimeStart;
+	}
+
+	public LocalDateTime getDateTimeEnd() {
+		return dateTimeEnd;
+	}
+
+	public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
+		this.dateTimeEnd = dateTimeEnd;
 	}
 
 	public Long getEmployeeId() {
@@ -65,14 +84,6 @@ public class WorkDTO implements Serializable {
 
 	public void setTaskId(Long taskId) {
 		this.taskId = taskId;
-	}
-
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
 	}
 
 	@Override

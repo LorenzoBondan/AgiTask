@@ -59,10 +59,10 @@ public class WorkService {
 	}
 	
 	private void copyDtoToEntity(WorkDTO dto, Work entity) {
-		entity.setTime(dto.getTime());
+		entity.setDateTimeStart(dto.getDateTimeStart());
+		entity.setDateTimeEnd(dto.getDateTimeEnd());
 		entity.setEmployee(userRepository.getOne(dto.getEmployeeId()));
 		entity.setTask(taskRepository.getOne(dto.getTaskId()));
-		entity.setDateTime(dto.getDateTime());
 	}
 
 	public void delete(Long id) {

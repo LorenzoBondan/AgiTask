@@ -1,6 +1,7 @@
 package com.projects.AgiTask.entities;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -22,9 +23,12 @@ public class Work implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer time;
+
 	@Column(columnDefinition = "TIMESTAMP")
-	private LocalDateTime dateTime;
+	private LocalDateTime dateTimeStart;
+	
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime dateTimeEnd;
 	
 	@ManyToOne
     @JoinColumn(name = "employee_id")
@@ -36,14 +40,19 @@ public class Work implements Serializable {
 	
 	public Work() {}
 
-	public Work(Long id, Integer time, User employee, Task task, LocalDateTime dateTime) {
+	public Work(Long id, User employee, Task task, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd) {
 		super();
 		this.id = id;
-		this.time = time;
 		this.employee = employee;
 		this.task = task;
-		this.dateTime = dateTime;
+		this.dateTimeEnd = dateTimeEnd;
+		this.dateTimeStart = dateTimeStart;
 	}
+	
+    public Integer getTotalTime() {
+        Duration duration = Duration.between(dateTimeStart, dateTimeEnd);
+        return (int) duration.toMinutes();
+    }
 
 	public Long getId() {
 		return id;
@@ -51,14 +60,6 @@ public class Work implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Integer getTime() {
-		return time;
-	}
-
-	public void setTime(Integer time) {
-		this.time = time;
 	}
 
 	public User getEmployee() {
@@ -77,12 +78,20 @@ public class Work implements Serializable {
 		this.task = task;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public LocalDateTime getDateTimeStart() {
+		return dateTimeStart;
+	}
+	
+	public void setDateTimeStart(LocalDateTime dateTimeStart) {
+		this.dateTimeStart = dateTimeStart;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public LocalDateTime getDateTimeEnd() {
+		return dateTimeEnd;
+	}
+
+	public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
+		this.dateTimeEnd = dateTimeEnd;
 	}
 
 	@Override

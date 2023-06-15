@@ -74,7 +74,7 @@ public class Task implements Serializable {
 	    Map<String, Integer> userWorkTimeMap = new HashMap<>();
 	    for (Work work : works) {
 	        User user = work.getEmployee();
-	        int workTime = work.getTime();
+	        int workTime = work.getTotalTime();
 	        String userName = user.getName();
 	        userWorkTimeMap.put(userName, userWorkTimeMap.getOrDefault(userName, 0) + workTime);
 	    }
@@ -144,7 +144,7 @@ public class Task implements Serializable {
 	public Integer getTotalWorkTime() {
 		int totalWorkTime = 0;
 		for(Work work : works) {
-			totalWorkTime += work.getTime();
+			totalWorkTime += work.getTotalTime();
 		}
 		return totalWorkTime;
 	}

@@ -81,7 +81,7 @@ public class User implements UserDetails, Serializable{
 	public Integer getTotalWorkTime() {
 		int totalWorkTime = 0;
 		for(Work work : works) {
-			totalWorkTime += work.getTime();
+			totalWorkTime += work.getTotalTime();
 		}
 		return totalWorkTime;
 	}
