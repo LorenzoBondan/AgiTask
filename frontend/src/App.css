@@ -1,0 +1,71 @@
+@font-face {
+  font-family: Instagram Sans;
+  src: url('./assets/fonts/InstagramSans-Regular.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: Instagram Sans;
+  src: url('./assets/fonts/InstagramSans-Bold.ttf');
+  font-weight: 700;
+}
+
+*, *::before, *::after{
+  font-family: 'Instagram Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* títulos principais do projeto estão em negrito */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 0;
+  text-decoration: none !important;
+}
+
+/* textos -> sem o sublinhado */
+a, a:hover{
+  text-decoration: none !important;
+  color: unset !important;
+}
+
+ul {
+  list-style-type: none; /* sem as bolinhas pretas no meio */
+  margin: 0;
+  padding: 0;
+}
+
+.base-card{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+/* TEXTBOX */
+.base-input {
+  border-radius: 30px;
+  padding-left: 12px;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: #263238;
+  height: 40px;
+  border: #9E9E9E 1px solid;
+}
+
+
+.base-input::placeholder {
+  color: #9E9E9E;
+}
+
+.flex-direction-row{
+  display: flex;
+  flex-direction: column;
+}
+
+@media(min-width:1200px){
+  .flex-direction-row{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+}

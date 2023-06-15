@@ -1,0 +1,18 @@
+.user-register-form-card{
+    padding: 20px;
+}
+
+.user-register-form-card h1{
+    color: #E74A7D;
+    font-weight: 700;
+}
+
+.user-buttons-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-crud-buttons{
+    width: 45%;
+}

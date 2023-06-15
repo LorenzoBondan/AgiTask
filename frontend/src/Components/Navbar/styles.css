@@ -1,0 +1,119 @@
+.admin-nav-container{
+    padding: 10px;
+    background-color: #fff;
+    width: 100%;
+    border-bottom: 1px solid darkgray;
+    position: fixed;
+    z-index: 9999;
+}
+
+.navbar-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.navbar-title img{
+    height: 100px;
+    margin-bottom: 5px;
+}
+
+.title{
+    display: flex;
+}
+
+.navbar-title h1{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.ul-container{
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    padding-left: 0px;
+    margin: 0;
+}
+
+.ul-container p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.ul-container svg {
+    display: none;
+}
+
+.admin-nav-item, .login-nav-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: #fff;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.015em;
+    color: #7D5889 !important;
+    text-decoration: none;
+    border-radius: 100px;
+}
+
+.admin-nav-item:hover, .login-nav-item:hover {
+    background-color: rgb(225, 225, 225);
+    color: #7D5889 !important;
+}
+
+.admin-nav-item.active {
+    background: #7D5889;
+    color: #fff !important;
+}
+
+.active svg{
+    color: #fff !important;
+}
+
+.admin-nav-item p, .login-nav-item p {
+    margin-bottom: 0;
+}
+
+
+/* --- VIRA UMA NAVBAR LATERAL ESQ */
+
+@media(min-width:768px){
+    .ul-container p {
+        font-size: 20px;
+    }
+}
+
+@media(min-width:1200px){
+
+    ul{
+        justify-content: unset;
+        flex-direction: column;
+    }
+
+    .ul-container svg {
+        display: unset;
+    }
+
+    .admin-nav-container{
+        padding: 0px;
+        width: 300px;
+        height: 100vh; /* toda a altura da tela menos o cabeçalho */
+        border-right: 1px solid darkgray;
+    }
+
+    .admin-nav-item, .login-nav-item {
+        height: 60px;
+        background-color: white;
+        justify-content: flex-start;
+        padding-left: 30px;
+        width: 300px;
+        border-right: 1px solid darkgray;
+        border-radius: 0;
+    }
+
+}
