@@ -4,7 +4,7 @@ import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
-
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { FiClock } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 import { SlUserFollow } from 'react-icons/sl';
@@ -91,9 +91,25 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
                     </div>
                 </div>
                 <div className="task-card-buttons">
-                    <p className='update-task-status' style={{backgroundColor:"#F66565"}} onClick={() => updateTaskStatus("PENDING")}></p>
-                    <p className='update-task-status' style={{backgroundColor:"#FECB33"}} onClick={() => updateTaskStatus("WORKING")}></p>
-                    <p className='update-task-status' style={{backgroundColor:"#0DAA2A"}} onClick={() => updateTaskStatus("COMPLETED")}></p>
+                    <p className='update-task-status' 
+                        style={{backgroundColor:"#F66565"}} 
+                        onClick={() => updateTaskStatus("PENDING")} 
+                        data-tooltip-content="Change status to Pending" 
+                        data-tooltip-id='myTooltip'
+                    ></p>
+                    <p className='update-task-status' 
+                        style={{backgroundColor:"#FECB33"}} 
+                        onClick={() => updateTaskStatus("WORKING")} 
+                        data-tooltip-content="Change status to Working" 
+                        data-tooltip-id='myTooltip'
+                    ></p>
+                    <p className='update-task-status' 
+                        style={{backgroundColor:"#0DAA2A"}} 
+                        onClick={() => updateTaskStatus("COMPLETED")} 
+                        data-tooltip-content="Change status to Completed" 
+                        data-tooltip-id='myTooltip'
+                    ></p>
+                    <ReactTooltip id='myTooltip' place="top" />
                 </div>
             </div>
 
