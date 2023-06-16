@@ -1,7 +1,9 @@
 package com.projects.AgiTask.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.projects.AgiTask.dto.CommentDTO;
 import com.projects.AgiTask.dto.TaskDTO;
+import com.projects.AgiTask.dto.TasksByStatusDTO;
 import com.projects.AgiTask.dto.WorkDTO;
 import com.projects.AgiTask.entities.Comment;
 import com.projects.AgiTask.entities.Notification;
@@ -22,6 +25,7 @@ import com.projects.AgiTask.entities.Task;
 import com.projects.AgiTask.entities.User;
 import com.projects.AgiTask.entities.Work;
 import com.projects.AgiTask.entities.enums.Status;
+import com.projects.AgiTask.entities.interfaces.TasksByStatusProjection;
 import com.projects.AgiTask.repositories.CommentRepository;
 import com.projects.AgiTask.repositories.NotificationRepository;
 import com.projects.AgiTask.repositories.TaskRepository;
@@ -187,5 +191,13 @@ public class TaskService {
 			entity.getFollowers().add(user);
 		}
 		
+	}
+	 
+	@Transactional(readOnly = true)
+	public List<TasksByStatusDTO> findTasksByStatus() {
+	    List<TasksByStatusProjection> projections = repository.tasksByStatus();
+	    return projections.stream()
+	            .map(projection -> new TasksByStatusDTO(projection.getStatus(), projection.getSum()))
+	            .collect(Collectors.toList());
 	}
 }

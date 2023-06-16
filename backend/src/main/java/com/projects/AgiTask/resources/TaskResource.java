@@ -1,6 +1,7 @@
 package com.projects.AgiTask.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.projects.AgiTask.dto.TaskDTO;
+import com.projects.AgiTask.dto.TasksByStatusDTO;
 import com.projects.AgiTask.entities.enums.Status;
 import com.projects.AgiTask.services.TaskService;
 
@@ -72,5 +74,12 @@ public class TaskResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/byStatus")
+	public ResponseEntity<List<TasksByStatusDTO>> findByStatus() {
+	    List<TasksByStatusDTO> list = service.findTasksByStatus();
+	    return ResponseEntity.ok(list);
+	}
+
 	
 }
