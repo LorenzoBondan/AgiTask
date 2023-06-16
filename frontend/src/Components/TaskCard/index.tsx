@@ -13,9 +13,10 @@ type Props = {
     task: Task;
     creatorId: number;
     userLoggedId: number;
+    onUpdateStatus : Function;
 }
 
-const TaskCard = ({task, creatorId, userLoggedId} : Props) => {
+const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
 
     const [creator, setCreator] = useState<User>(); 
 
@@ -57,6 +58,18 @@ const TaskCard = ({task, creatorId, userLoggedId} : Props) => {
         return `${month}/${day}/${year} ${hours}:${minutes}`;
     }
 
+    const updateTaskStatus = useCallback((status : string) => {
+        const params : AxiosRequestConfig = {
+          method:"PUT",
+          url: `/tasks/${task.id}/updateStatus/${status}`,
+          withCredentials:true
+        }
+        requestBackend(params) 
+          .then(response => {
+            onUpdateStatus();
+          })
+    }, [task.id, onUpdateStatus])
+
     return(
         <div className="task-card-container">
             <p className='task-card-border' style={{backgroundColor:changeBorderColor(task.status)}}></p>
@@ -78,9 +91,9 @@ const TaskCard = ({task, creatorId, userLoggedId} : Props) => {
                     </div>
                 </div>
                 <div className="task-card-buttons">
-                    <p className='update-task-status' style={{backgroundColor:"#F66565"}}></p>
-                    <p className='update-task-status' style={{backgroundColor:"#FECB33"}}></p>
-                    <p className='update-task-status' style={{backgroundColor:"#0DAA2A"}}></p>
+                    <p className='update-task-status' style={{backgroundColor:"#F66565"}} onClick={() => updateTaskStatus("PENDING")}></p>
+                    <p className='update-task-status' style={{backgroundColor:"#FECB33"}} onClick={() => updateTaskStatus("WORKING")}></p>
+                    <p className='update-task-status' style={{backgroundColor:"#0DAA2A"}} onClick={() => updateTaskStatus("COMPLETED")}></p>
                 </div>
             </div>
 

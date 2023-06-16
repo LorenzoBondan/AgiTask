@@ -118,6 +118,12 @@ const Tasks = () => {
         getTasksCompleted();
     }, [getTasksPending, getTasksWorking, getTasksCompleted]);
 
+    const getAllTasks = () => {
+        getTasksPending();
+        getTasksWorking();
+        getTasksCompleted();
+    }
+    
     return(
         <div className="tasks-container">
             <div className='tasks-container-navbar'>
@@ -140,7 +146,7 @@ const Tasks = () => {
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksPending?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
                         ))}
                     </div>
                     }
@@ -154,7 +160,7 @@ const Tasks = () => {
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksWorking?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
                         ))}
                     </div>
                     }
@@ -168,7 +174,7 @@ const Tasks = () => {
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksCompleted?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
                         ))}
                     </div>
                     }
