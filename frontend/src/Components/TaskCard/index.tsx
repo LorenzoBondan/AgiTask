@@ -7,13 +7,15 @@ import { requestBackend } from 'util/requests';
 
 import { FiClock } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
+import { SlUserFollow } from 'react-icons/sl';
 
 type Props = {
     task: Task;
     creatorId: number;
+    userLoggedId: number;
 }
 
-const TaskCard = ({task, creatorId} : Props) => {
+const TaskCard = ({task, creatorId, userLoggedId} : Props) => {
 
     const [creator, setCreator] = useState<User>(); 
 
@@ -70,6 +72,7 @@ const TaskCard = ({task, creatorId} : Props) => {
                         <div className='task-card-title-info'>
                             <p><FiClock style={{marginRight:"3px"}}/>{formatDateTime(task.startDate)}</p>
                             <p><BiCommentDetail style={{marginRight:"3px"}}/>{task.comments.length}</p>
+                            {task.followersId.includes(userLoggedId) && <p><SlUserFollow style={{marginRight:"3px"}}/>Follower</p>}
                         </div>
                         
                     </div>

@@ -13,6 +13,7 @@ import adminIcon from 'assets/images/admin.png';
 import logoutIcon from 'assets/images/logout.png';
 import loginIcon from 'assets/images/login.png';
 import homeIcon from 'assets/images/home.png';
+import notificationIcon from 'assets/images/notification.png';
 
 import './styles.css';
 
@@ -81,6 +82,12 @@ const Navbar = () => {
                     <NavLink to="/profile" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
                         <img src={profileIcon} alt="" />
                         {isExpanded && <p>Profile</p>}
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/notifications" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
+                        <img src={notificationIcon} alt="" />
+                        {isExpanded && <p>Notifications</p>}
                     </NavLink>
                 </li>
 

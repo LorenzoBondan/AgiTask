@@ -120,7 +120,15 @@ const Tasks = () => {
 
     return(
         <div className="tasks-container">
-            <h1>{user?.name}'s Tasks</h1>
+            <div className='tasks-container-navbar'>
+                <div className='tasks-container-first'>
+                    <img src={user?.imgUrl} alt="" />
+                    <h1>{user?.name}'s Tasks</h1>
+                </div>
+                <div className='tasks-container-second'>
+                    <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasks.length}</p>
+                </div>
+            </div>
             
             <div className='user-tasks-container'>
                 <div className='tasks-status'>
@@ -131,8 +139,8 @@ const Tasks = () => {
                     </div>
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
-                        {tasksPending?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        {user && tasksPending?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
                         ))}
                     </div>
                     }
@@ -145,8 +153,8 @@ const Tasks = () => {
                     </div>
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
-                        {tasksWorking?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        {user && tasksWorking?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
                         ))}
                     </div>
                     }
@@ -159,8 +167,8 @@ const Tasks = () => {
                     </div>
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
-                        {tasksCompleted?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        {user && tasksCompleted?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id}/>
                         ))}
                     </div>
                     }
