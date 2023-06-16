@@ -76,3 +76,13 @@ export type Notification = {
     read: boolean;
     userId: number;
 }
+
+export type PieChartConfig = {
+    labels: string[];
+    series: number[];
+}
+
+export type TasksByStatus = {
+    status: string;
+    sum: number;
+}

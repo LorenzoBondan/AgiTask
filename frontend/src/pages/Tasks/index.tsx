@@ -3,12 +3,14 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import './styles.css';
 import { AuthContext } from 'AuthContext';
 import { getTokenData, isAuthenticated } from 'util/auth';
-import { SpringPage, Task, User } from 'types';
+import { PieChartConfig, SpringPage, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import TaskCard from 'Components/TaskCard';
 
 import { BsListTask } from 'react-icons/bs';
+import { buildTasksByStatusChart } from 'helpers';
+import PieChartCard from 'Components/pie-chart-card';
 
 const Tasks = () => {
 
@@ -122,7 +124,32 @@ const Tasks = () => {
         getTasksPending();
         getTasksWorking();
         getTasksCompleted();
+        getTasksByStatus();
     }
+
+    /**/
+
+    const [tasksByStatus, setTasksByStatus] = useState<PieChartConfig | undefined>();
+
+    const getTasksByStatus = useCallback(async () => {
+        try {
+          const params: AxiosRequestConfig = {
+            method: "GET",
+            url: `/tasks/byStatus`,
+            withCredentials: true
+          };
+    
+          const response = await requestBackend(params);
+          const tasksByStatusChart = buildTasksByStatusChart(response.data);
+          setTasksByStatus(tasksByStatusChart);
+        } catch (error) {
+          console.log("erro: " + error);
+        }
+      }, []);
+
+    useEffect(() => {
+        getTasksByStatus();
+    }, [getTasksByStatus]);
     
     return(
         <div className="tasks-container">
@@ -146,7 +173,7 @@ const Tasks = () => {
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksPending?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -160,7 +187,7 @@ const Tasks = () => {
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksWorking?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -174,11 +201,19 @@ const Tasks = () => {
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksCompleted?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks}/>
+                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
                 </div>
+
+                {tasksByStatus && (
+                    <PieChartCard
+                        name="Tasks Status"
+                        labels={tasksByStatus.labels}
+                        series={tasksByStatus.series}
+                    />
+                )}
             </div>
         </div>
     );
