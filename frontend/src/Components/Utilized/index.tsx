@@ -64,7 +64,6 @@ const Utilized = () => {
                         <i className="item-logo"><FaMoneyBill/></i>
                     </div> 
                 </div>
-                
             </div>
         </div>
     );
