@@ -16,7 +16,6 @@ const RegisterForm = () => {
     const onSubmit = (formData : User) => {
         
         formData.roles = [ {id:1, authority:"ROLE_OPERATOR"} ]; 
-        formData.verified = false;
         formData.imgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg";
 
         const params : AxiosRequestConfig = {

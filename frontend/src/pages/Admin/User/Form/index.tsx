@@ -27,19 +27,17 @@ const Form = () => {
 
                     setValue('name', user.name);
                     setValue('imgUrl', user.imgUrl);
-                    setValue('bio', user.bio);
-    
-                    // not editable values
                     setValue('password', user.password);
                     setValue('email', user.email);
                     setValue('commentsId', user.commentsId);
-                    setValue('followersId', user.followersId);
-                    setValue('followingId', user.followingId);
-                    setValue('postsId', user.postsId);
-                    setValue('postsLikedId', user.postsLikedId);
+                    setValue('notifications', user.notifications);
+                    setValue('commentsId', user.commentsId);
+                    setValue('groupsId', user.groupsId);
+                    setValue('works', user.works);
+                    setValue('tasks',user.tasks);
+                    setValue('tasksFollowing', user.tasksFollowing);
                     setValue('roles', user.roles);
-                    setValue('verified', user.verified);
-
+                    setValue('totalWorkTime',user.totalWorkTime);
                 })
         }
         
@@ -104,19 +102,6 @@ const Form = () => {
                                 <div className='invalid-feedback d-block'>{errors.name?.message}</div>
                             </div>
 
-                            <div className='margin-bottom-30'>
-                                <label htmlFor="">Bio</label>
-                                <textarea 
-                                    rows={10}
-                                    {...register("bio", {
-                                    required: 'Campo obrigatório',
-                                    })}
-                                    className={`form-control base-input description-input ${errors.bio ? 'is-invalid' : ''}`}
-                                    placeholder="Bio"
-                                    name="bio"
-                                />
-                                <div className='invalid-feedback d-block'>{errors.bio?.message}</div>
-                            </div>
                         </div>
 
                         <div className='margin-bottom-30'>
@@ -135,17 +120,6 @@ const Form = () => {
                                     name="imgUrl"
                                 />
                                 <div className='invalid-feedback d-block'>{errors.imgUrl?.message}</div>
-                        </div>
-
-                        <div className='margin-bottom-30 checkbox-graduated text-dark'> 
-                            <input 
-                                type="checkbox"
-                                placeholder='Verified'
-                                {...register("verified", {})}
-                                className='mx-3 checkbox-verified text-dark'
-                                name="verified"
-                                value='true'
-                            /> Verified
                         </div>
 
                         <div className='margin-bottom-30'>
