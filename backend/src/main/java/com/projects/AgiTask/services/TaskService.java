@@ -48,6 +48,9 @@ public class TaskService {
 	@Autowired
 	private WorkRepository workRepository;
 	
+	@Autowired
+	private AuthService authService;
+	
 	@Transactional(readOnly = true)
 	public Page<TaskDTO> findAllPaged(Pageable pageable) {
 		Page<Task> list = repository.findAll(pageable);
@@ -56,7 +59,8 @@ public class TaskService {
 	
 	@Transactional(readOnly = true)
 	public Page<TaskDTO> findByStatus(Status status, Pageable pageable) {
-		Page<Task> list = repository.findByStatus(status, pageable);
+		User user = authService.authenticated();
+		Page<Task> list = repository.findByStatus(user, status, pageable);
 		return list.map(x -> new TaskDTO(x));
 	}
 
