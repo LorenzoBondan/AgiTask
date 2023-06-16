@@ -6,6 +6,7 @@ import { getTokenData, isAuthenticated } from 'util/auth';
 import { SpringPage, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
+import TaskCard from 'Components/TaskCard';
 
 const Tasks = () => {
 
@@ -117,24 +118,28 @@ const Tasks = () => {
 
     return(
         <div className="tasks-container">
-            <h1>{user?.name}</h1>
+            <h1>{user?.name}'s Tasks</h1>
             <div className='user-tasks-container'>
+                
                 <div className='tasks-status'>
-                    <h3>Tasks pending</h3>
+                    <div className='task-status-top' style={{backgroundColor:"#F66565"}}></div>
+                    <h3>Tasks Pending</h3>
                     {tasksPending?.content.map(task => (
-                        <p>{task.title}</p>
+                        <TaskCard task={task} creatorId={task.creatorId}/>
                     ))}
                 </div>
                 <div className='tasks-status'>
+                    <div className='task-status-top' style={{backgroundColor:"#FECB33"}}></div>
                     <h3>Tasks Working</h3>
                     {tasksWorking?.content.map(task => (
-                        <p>{task.title}</p>
+                        <TaskCard task={task} creatorId={task.creatorId}/>
                     ))}
                 </div>
                 <div className='tasks-status'>
+                    <div className='task-status-top' style={{backgroundColor:"#0DAA2A"}}></div>
                     <h3>Tasks Completed</h3>
                     {tasksCompleted?.content.map(task => (
-                        <p>{task.title}</p>
+                        <TaskCard task={task} creatorId={task.creatorId}/>
                     ))}
                 </div>
             </div>

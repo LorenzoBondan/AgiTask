@@ -19,7 +19,7 @@ const Routes = () => {
 
                 <Switch>
                     {isAuthenticated() ? (
-                        <Redirect from='/' to='/feed' exact />
+                        <Redirect from='/' to='/tasks' exact />
                     ) : (
                         <Redirect from='/' to='/home' exact />
                     )}
