@@ -3,7 +3,7 @@
     background-color: #F15A23;
     width: 100%;
     border-bottom: 1px solid darkgray;
-    position: relative;
+    position: fixed;
     z-index: 9999;
 
     transition: 0.4s;

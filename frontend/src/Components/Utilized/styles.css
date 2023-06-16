@@ -1,0 +1,33 @@
+.utilized-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #FBDACE;
+    padding: 20px;
+}
+
+.utilized-container h3{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.utilized-item{
+    display:flex;
+    flex-direction:column-reverse;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:25px;
+}
+
+.utilized-item i svg{
+    color: #F15A23;
+    font-size: 70px;
+    margin-bottom: 10px;
+}
+
+.utilized-item p {
+    font-weight: 700;
+}

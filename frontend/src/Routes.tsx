@@ -2,6 +2,7 @@
 import Navbar from "Components/Navbar";
 import Admin from "pages/Admin";
 import Auth from "pages/Auth";
+import Home from "pages/Home";
 
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { isAuthenticated } from "util/auth";
@@ -22,7 +23,7 @@ const Routes = () => {
                     )}
                     
                     <Route path="/home" exact>
-
+                        <Home/>
                     </Route>
 
                     <Redirect from='/auth' to='/auth/login' exact />
