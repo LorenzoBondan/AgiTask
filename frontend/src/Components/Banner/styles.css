@@ -55,6 +55,11 @@
     width: 500px;
 }
 
+.home-logo-container:hover{
+    transform:  translate(10px, -10px);
+    transition: 1s;
+}
+
 .fixer {
     position: absolute;
     top: -25px;

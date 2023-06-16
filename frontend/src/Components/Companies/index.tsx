@@ -1,4 +1,4 @@
-
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 import './styles.css';
 
 const Companies = () => {
@@ -70,10 +70,11 @@ const Companies = () => {
         <div className='companies-container'>
             <h3>Companies that are already using AgiTask</h3>
             <div className='row companies-row'>
-                {companies.map(company => (
+                {companies.sort( (a,b) => a.name > b.name ? 1 : -1).map(company => (
                     <div className="col-sm-12 col-lg-4 col-xl-2 utilized-column">
                     <div className='company base-card'>
-                        <img src={company.imgUrl} alt="" />
+                        <img src={company.imgUrl} alt="" data-tooltip-content={company.name} data-tooltip-id={`myTooltip-${company.name}`} />
+                        <ReactTooltip id={`myTooltip-${company.name}`} place="top" />
                     </div> 
                 </div>
                 ))}

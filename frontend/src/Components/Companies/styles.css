@@ -28,6 +28,11 @@
     justify-content: center;
 }
 
+.company:hover{
+    transform:  translate(10px, -10px) scale(1.5) rotate(360deg);
+    transition: 1s;
+}
+
 .company img{
     height: auto;
     width: 100%;
