@@ -8,6 +8,8 @@ import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import TaskCard from 'Components/TaskCard';
 
+import { BsListTask } from 'react-icons/bs';
+
 const Tasks = () => {
 
     // getting the email
@@ -119,31 +121,51 @@ const Tasks = () => {
     return(
         <div className="tasks-container">
             <h1>{user?.name}'s Tasks</h1>
+            
             <div className='user-tasks-container'>
-                
                 <div className='tasks-status'>
                     <div className='task-status-top' style={{backgroundColor:"#F66565"}}></div>
-                    <h3>Tasks Pending</h3>
-                    {tasksPending?.content.map(task => (
-                        <TaskCard task={task} creatorId={task.creatorId}/>
-                    ))}
+                    <div className='tasks-status-title'>
+                        <h3>Tasks Pending</h3>
+                        <h3><BsListTask style={{marginRight:"3px"}}/>{tasksPending?.numberOfElements}</h3>
+                    </div>
+                    {tasksPending?.numberOfElements !== 0 && 
+                    <div className='tasks-zone'>
+                        {tasksPending?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        ))}
+                    </div>
+                    }
                 </div>
                 <div className='tasks-status'>
                     <div className='task-status-top' style={{backgroundColor:"#FECB33"}}></div>
-                    <h3>Tasks Working</h3>
-                    {tasksWorking?.content.map(task => (
-                        <TaskCard task={task} creatorId={task.creatorId}/>
-                    ))}
+                    <div className='tasks-status-title'>
+                        <h3>Tasks Working</h3>
+                        <h3><BsListTask style={{marginRight:"3px"}}/>{tasksWorking?.numberOfElements}</h3>
+                    </div>
+                    {tasksWorking?.numberOfElements !== 0 && 
+                    <div className='tasks-zone'>
+                        {tasksWorking?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        ))}
+                    </div>
+                    }
                 </div>
                 <div className='tasks-status'>
                     <div className='task-status-top' style={{backgroundColor:"#0DAA2A"}}></div>
-                    <h3>Tasks Completed</h3>
-                    {tasksCompleted?.content.map(task => (
-                        <TaskCard task={task} creatorId={task.creatorId}/>
-                    ))}
+                    <div className='tasks-status-title'>
+                        <h3>Tasks Completed</h3>
+                        <h3><BsListTask style={{marginRight:"3px"}}/>{tasksCompleted?.numberOfElements}</h3>
+                    </div>
+                    {tasksCompleted?.numberOfElements !== 0 && 
+                    <div className='tasks-zone'>
+                        {tasksCompleted?.content.map(task => (
+                            <TaskCard task={task} creatorId={task.creatorId}/>
+                        ))}
+                    </div>
+                    }
                 </div>
             </div>
-
         </div>
     );
 }

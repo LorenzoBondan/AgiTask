@@ -1,32 +1,45 @@
 .tasks-container{
     margin-left: 85px;
     display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-direction: column;
+    width: 100%;
 }
 
 .user-tasks-container{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .tasks-status{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: #E7EAEB;;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
     margin-left: 20px;
-
-    max-height: 400px;
-    overflow-y: scroll;
-    white-space: nowrap;
+    width: 415px;
 }
 
-.tasks-status > * {
-    display: inline-block;
+.tasks-status-title{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 5px 5px 5px;
+}
+
+.tasks-zone{
+    display: flex;
+    flex-direction: column;
+    height: 500px; /* Defina uma altura fixa */
+
+    overflow-y: scroll;
+    margin-bottom: 10px;
 }
 
 .task-status-top{
