@@ -46,11 +46,14 @@
 }
 
 .home-team-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
 .home-team-text h3{
-    margin-bottom: 20px;
     font-weight: 700;
 }
 

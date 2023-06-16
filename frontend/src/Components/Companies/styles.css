@@ -1,0 +1,41 @@
+.companies-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:20px;
+    background-color: #fff;
+}
+
+.companies-row{
+    width: 75%;
+}
+
+.companies-container h3{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.company{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    padding: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.company img{
+    height: auto;
+    width: 100%;
+}
+
+.utilized-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
