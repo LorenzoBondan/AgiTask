@@ -59,6 +59,9 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
     }
 
     const updateTaskStatus = useCallback((status : string) => {
+        if(!window.confirm(`Are you sure that you want to change the task status to ${status.toLowerCase()}?`)){
+            return;
+        }
         const params : AxiosRequestConfig = {
           method:"PUT",
           url: `/tasks/${task.id}/updateStatus/${status}`,
@@ -112,7 +115,6 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
                     <ReactTooltip id='myTooltip' place="top" />
                 </div>
             </div>
-
         </div>
     );
 }
