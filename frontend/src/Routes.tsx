@@ -4,6 +4,7 @@ import Navbar from "Components/Navbar";
 import Admin from "pages/Admin";
 import Auth from "pages/Auth";
 import Home from "pages/Home";
+import Tasks from "pages/Tasks";
 
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { isAuthenticated } from "util/auth";
@@ -37,6 +38,11 @@ const Routes = () => {
                         <Admin/>
                     </Route>
 
+                    {isAuthenticated() && (
+                        <Route path="/tasks" exact>
+                            <Tasks/>
+                        </Route>
+                    )}
 
                 </Switch>
                 

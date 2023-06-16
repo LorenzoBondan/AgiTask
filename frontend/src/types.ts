@@ -8,8 +8,7 @@ export type SpringPage<T> = {
     first: boolean;
     numberOfElements?: number;
     empty: boolean;
-  };
-
+};
 
 export type User = {
     id:number;
@@ -17,14 +16,14 @@ export type User = {
     email: string;
     password: string;
     imgUrl: string;
-    bio: string;
-    verified: boolean;
     roles : Role[];
-    postsId: number[];
+    notifications: Notification[];
     commentsId: number[];
-    followingId: number[];
-    followersId: number[];
-    postsLikedId: number[];
+    groupsId: number[];
+    works: Work[];
+    tasks: Task[];
+    tasksFollowing: Task[];
+    totalWorkTime: number;
 }
 
 export type Role = {
@@ -32,19 +31,48 @@ export type Role = {
     authority : string;
 }
 
-export type Post = {
+export type Task = {
     id: number;
     title: string;
     description: string;
-    date: string;
-    user: User;
+    startDate: string;
+    status: string;
+    totalWorkTime: number;
+    creatorId: number;
+    followersId: number[];
+    works: Work[];
     comments: Comment[];
-    likes: User[];
+    usersWorkTime: Record<string, number>;
+}
+
+export type Group = {
+    id: number;
+    name: string;
+    totalWorkTime: number;
+    users: User[];
 }
 
 export type Comment = {
     id: number;
+    text: string;
+    dateTime: string;
+    author: User;
+    taskId : number;
+}
+
+export type Work = {
+    id: number;
+    totalTime: number;
+    employeeId: number;
+    taskId: number;
+    dateTimeStart: string;
+    dateTimeEnd: string;
+}
+
+export type Notification = {
+    id: number;
     description: string;
+    moment: string;
+    read: boolean;
     userId: number;
-    postId : number;
 }

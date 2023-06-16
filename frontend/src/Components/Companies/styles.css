@@ -20,7 +20,7 @@
 .company{
     height: 150px;
     width: 150px;
-    border-radius: 50%;
+    border-radius: 50% !important;
     padding: 30px;
     margin-bottom: 10px;
     display: flex;

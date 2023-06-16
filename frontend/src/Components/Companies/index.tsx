@@ -65,7 +65,8 @@ const Companies = () => {
             imgUrl: "https://i.pinimg.com/originals/da/f3/0f/daf30fac5e16393d66a3684dd27e29af.png"
         },
 
-    ]
+    ];
+
     return(
         <div className='companies-container'>
             <h3>Companies that are already using AgiTask</h3>
