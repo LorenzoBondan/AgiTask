@@ -1,7 +1,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import './styles.css';
-import { User } from 'types';
+import { User, Work } from 'types';
 import { getTokenData } from 'util/auth';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
@@ -51,7 +51,7 @@ const Profile = () => {
 
   // filter by month
 
-  const [selectedMonth, setSelectedMonth] = useState<string>('');
+  const [selectedMonth, setSelectedMonth] = useState<string>('1');
 
   const months: MonthOption[] = [
     { value: '1', label: 'January' },
@@ -75,6 +75,7 @@ const Profile = () => {
   const [totalWorkedTimeByMonth, setTotalWorkedTimeByMonth] = useState<number>();
 
   const getTotalWorkedTimeByMonth = useCallback(() => {
+    if(user){
       const params : AxiosRequestConfig = {
         method:"GET",
         url: `/works/${user?.id}/totalTime/${selectedMonth}`,
@@ -84,13 +85,35 @@ const Profile = () => {
         .then(response => {
             setTotalWorkedTimeByMonth(response.data);
         })
-  }, [user?.id, selectedMonth])
+    }
+  }, [user, selectedMonth])
 
   useEffect(() => {
     getTotalWorkedTimeByMonth();
   }, [getTotalWorkedTimeByMonth]);
 
+  // find works by employee and month
 
+  const [worksByEmployeeAndMonth, setWorksByEmployeeAndMonth] = useState<Work[]>([]);
+
+  const getWorksByEmployeeAndMonth = useCallback(() => {
+      const params : AxiosRequestConfig = {
+        method:"GET",
+        url: `/works/${user?.id}/totalWorks/${selectedMonth}`,
+        withCredentials:true
+      }
+      requestBackend(params) 
+        .then(response => {
+            setWorksByEmployeeAndMonth(response.data);
+        })
+  }, [user?.id, selectedMonth])
+
+  useEffect(() => {
+    if (user?.id && selectedMonth) {
+      getWorksByEmployeeAndMonth();
+    }
+  }, [user?.id, selectedMonth, getWorksByEmployeeAndMonth]);
+  
 
     return(
         <div className="profile-container">
@@ -133,17 +156,21 @@ const Profile = () => {
 
                 <div className='profile-card-third-container'>
                     <div className='profile-card-filter-container'>
-                        <h1>{totalWorkedTimeByMonth}</h1>
+                        <h6>Your Personal Data</h6>
                         <select className='base-input' value={selectedMonth} onChange={handleSelectChange}>
-                            <option value="">Selecione um mês</option>
+                            <option value="">Select one month</option>
                             {months.map((month) => (
                                 <option key={month.value} value={month.value}>
                                 {month.label}
                                 </option>
                             ))}
-                            </select>
+                        </select>
                     </div>
                     <div className='profile-card-results-container'>
+                        <h1>{totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</h1>
+                        {worksByEmployeeAndMonth.map(work => (
+                            <p>{work.totalTime}</p>
+                        ))}
 
                     </div>
                 </div>

@@ -34,13 +34,14 @@ ul {
 
 /* TEXTBOX */
 .base-input {
-  border-radius: 30px;
+  border-radius: 20px;
   padding-left: 12px;
   font-size: 1em;
   letter-spacing: -0.015em;
   color: #263238;
   height: 40px;
   border: #9E9E9E 1px solid;
+  padding-right: 10px;
 }
 
 
