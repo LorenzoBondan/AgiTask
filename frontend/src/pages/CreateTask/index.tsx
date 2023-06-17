@@ -67,9 +67,6 @@ const CreateTask = () => {
 
   const [selectFollowers, setSelectFollowers] = useState<User[]>();
 
-  const followersIds = selectFollowers?.map(follower => follower.id);
-  const followersNames = selectFollowers?.map(follower => follower.name);
-
   useEffect(() => {
       requestBackend({url: '/users', withCredentials: true})
           .then(response => {
@@ -120,43 +117,31 @@ const CreateTask = () => {
                             <div className='invalid-feedback d-block'>{errors.description?.message}</div>
                         </div>
 
-                        </div>
-                        
-                        {followersNames && followersIds && 
                         <div className='margin-bottom-30'>
-                            <label htmlFor="" style={{color:"white"}}>Followers</label> 
-                            <Controller
-  name="followersId"
-  rules={{ required: 'Campo obrigatório' }}
-  control={control}
-  render={({ field }) => (
-<Select
-  {...field}
-  options={(followersIds || []).map((id, index) => ({
-    value: id,
-    label: followersNames[index],
-    key: id // Adicione uma chave única com base no ID ou outro identificador exclusivo
-  }))}
-  classNamePrefix="users-crud-select"
-  placeholder="Followers"
-  isMulti
-  getOptionLabel={(follower: { value: number; label: string }) => follower.label}
-  getOptionValue={(follower: { value: number; label: string }) => follower.value.toString()}
-  value={field.value ? field.value.map((id: number) => ({ value: id, label: '', key: id })) : []}
-/>
-
-  )}
-/>
-
-
-
-
-                                {errors.followersId && (
+                                <label htmlFor="" style={{color:"white"}}>Followers</label>  
+                                <Controller 
+                                    name = 'followers'
+                                    rules = {{required: false}}
+                                    control = {control}
+                                    render = {( {field} ) => (
+                                        <Select 
+                                            {...field}
+                                            options={selectFollowers?.sort((a,b) => a.name > b.name ? 1 : -1)}
+                                            classNamePrefix="followers-crud-select"
+                                            placeholder="Followers"
+                                            isMulti
+                                            getOptionLabel={(c: User) => c.name}
+                                            getOptionValue={(c: User) => c.id.toString()}
+                                        />    
+                                    )}
+                                />
+                                {errors.followers && (
                                     <div className='invalid-feedback d-block'>Campo obrigatório</div>
                                 )}
-                        </div>
-                        }
+                            </div>
 
+                        </div>
+                        
                         <div className='post-crud-buttons-container'>
                             <button 
                                 className='btn btn-outline-danger post-crud-buttons'

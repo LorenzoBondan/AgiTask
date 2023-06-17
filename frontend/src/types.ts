@@ -21,8 +21,8 @@ export type User = {
     commentsId: number[];
     groupsId: number[];
     works: Work[];
-    tasks: Task[];
-    tasksFollowing: Task[];
+    tasksId: number[];
+    tasksFollowingId: number[];
     totalWorkTime: number;
 }
 
@@ -39,7 +39,7 @@ export type Task = {
     status: string;
     totalWorkTime: number;
     creatorId: number;
-    followersId: number[];
+    followers: User[];
     works: Work[];
     comments: Comment[];
     usersWorkTime: Record<string, number>;

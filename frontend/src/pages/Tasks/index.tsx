@@ -189,7 +189,7 @@ const Tasks = () => {
                             <button className='btn'><img src={plusIcon} alt="" />New Task</button>
                         </NavLink>
                     </div>
-                    <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasks.length}</p>
+                    <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasksId.length}</p>
                 </div>
             </div>
 
@@ -207,7 +207,7 @@ const Tasks = () => {
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksPending?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -221,7 +221,7 @@ const Tasks = () => {
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksWorking?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -235,7 +235,7 @@ const Tasks = () => {
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksCompleted?.content.map(task => (
-                            <TaskCard task={task} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }

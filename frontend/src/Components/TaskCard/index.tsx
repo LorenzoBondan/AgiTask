@@ -9,13 +9,32 @@ import { BiCommentDetail } from 'react-icons/bi';
 import { SlUserFollow } from 'react-icons/sl';
 
 type Props = {
-    task: Task;
+    taskId: number;
     creatorId: number;
     userLoggedId: number;
     onUpdateStatus : Function;
 }
 
-const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
+const TaskCard = ({taskId, creatorId, userLoggedId, onUpdateStatus} : Props) => {
+
+    // get current task
+    const [task, setTask] = useState<Task>();
+
+    const getThisTask = useCallback(() => {
+        const params : AxiosRequestConfig = {
+          method:"GET",
+          url: `/tasks/${taskId}`,
+          withCredentials:true
+        }
+        requestBackend(params) 
+          .then(response => {
+            setTask(response.data);
+          })
+    }, [taskId])
+
+    useEffect(() => {
+        getThisTask();
+    }, [getThisTask]);
 
     const [creator, setCreator] = useState<User>(); 
 
@@ -57,24 +76,35 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
         return `${month}/${day}/${year} ${hours}:${minutes}`;
     }
 
-    const updateTaskStatus = useCallback((status : string) => {
-        if(!window.confirm(`Are you sure that you want to change the task status to ${status.toLowerCase()}?`)){
+    const updateTaskStatus = useCallback((status : string | undefined) => {
+        if(!window.confirm(`Are you sure that you want to change the task status to ${status?.toLowerCase()}?`)){
             return;
         }
         const params : AxiosRequestConfig = {
           method:"PUT",
-          url: `/tasks/${task.id}/updateStatus/${status}`,
+          url: `/tasks/${taskId}/updateStatus/${status}`,
           withCredentials:true
         }
         requestBackend(params) 
           .then(response => {
             onUpdateStatus();
           })
-    }, [task.id, onUpdateStatus])
+    }, [taskId, onUpdateStatus])
+
+    const isFollower = (): boolean => {
+        const userId = userLoggedId;
+        if (task) {
+          return task.followers.some((follower) => follower.id === userId);
+        }
+        return false;
+    };
+      
 
     return(
+        
         <div className="task-card-container">
-            <p className='task-card-border' style={{backgroundColor:changeBorderColor(task.status)}}></p>
+            {task && <>
+            <p className='task-card-border' style={{backgroundColor:changeBorderColor(task?.status)}}></p>
 
             <div className='task-card-components'>
                 <div className="task-card-content">
@@ -82,12 +112,12 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
                         <img src={creator?.imgUrl} alt="" />
                     </div>
                     <div className='task-card-title'>
-                        <h3>{task.title}</h3>
-                        <p>{task.description}</p>
+                        <h3>{task?.title}</h3>
+                        <p>{task?.description}</p>
                         <div className='task-card-title-info'>
-                            <p><FiClock style={{marginRight:"3px"}}/>{formatDateTime(task.startDate)}</p>
-                            <p><BiCommentDetail style={{marginRight:"3px"}}/>{task.comments.length}</p>
-                            {task.followersId.includes(userLoggedId) && <p><SlUserFollow style={{marginRight:"3px"}}/>Follower</p>}
+                            <p><FiClock style={{marginRight:"3px"}}/>{formatDateTime(task?.startDate)}</p>
+                            <p><BiCommentDetail style={{marginRight:"3px"}}/>{task?.comments.length}</p>
+                            {isFollower() && <p><SlUserFollow style={{marginRight:"3px"}}/>Follower</p>}
                         </div>
                         
                     </div>
@@ -114,6 +144,7 @@ const TaskCard = ({task, creatorId, userLoggedId, onUpdateStatus} : Props) => {
                     <ReactTooltip id='myTooltip' place="top" />
                 </div>
             </div>
+            </>}
         </div>
     );
 }
