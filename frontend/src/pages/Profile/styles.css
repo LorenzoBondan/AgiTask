@@ -9,7 +9,8 @@
 
 .profile-card{
     display: flex;
-    width: 1000px;
+    width: 1200px;
+    height: 520px;
 }
 
 .profile-card-first-container{
@@ -111,6 +112,7 @@
 
 .profile-card-second-container{
     padding: 10px;
+    border-right: silver 1px solid;
 }
 
 .profile-card-groups-container{
@@ -119,9 +121,11 @@
     justify-content: space-between;
     width: 300px;
     margin-bottom: 10px;
+    border-bottom: 1px solid silver;
+    padding-bottom: 12px;
 }
 
-.profile-card-groups-container h3{
+.profile-card-groups-container h3, .profile-card-filter-container h6{
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 0;
@@ -149,5 +153,35 @@
     border: none;
 }
 
+.profile-card-groups{
+    height: 454px;
+    overflow-y: scroll;
+}
 
+.profile-card-third-container{
+    padding: 10px;
+    width: 100%;
+}
+
+.profile-card-filter-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid silver;
+    padding-bottom: 5px;
+}
+
+.month-input{
+    width: 200px;
+}
+
+.profile-card-results-container{
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card-results-container h4{
+    font-size: 16px;
+}
 

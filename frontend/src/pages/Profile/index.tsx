@@ -11,6 +11,7 @@ import { AiOutlineTool } from 'react-icons/ai';
 import { BiCommentDetail } from 'react-icons/bi';
 import { FaCrown } from 'react-icons/fa';
 import { BsFillGearFill } from 'react-icons/bs';
+import { BsFillBarChartFill } from 'react-icons/bs';
 import { MdGroups } from 'react-icons/md';
 import GroupCard from './GroupCard';
 import { NavLink } from 'react-router-dom';
@@ -156,9 +157,8 @@ const Profile = () => {
 
                 <div className='profile-card-third-container'>
                     <div className='profile-card-filter-container'>
-                        <h6>Your Personal Data</h6>
-                        <select className='base-input' value={selectedMonth} onChange={handleSelectChange}>
-                            <option value="">Select one month</option>
+                        <h6><BsFillBarChartFill style={{marginRight:"3px"}}/>Your Personal Data</h6>
+                        <select className='base-input month-input' value={selectedMonth} onChange={handleSelectChange}>
                             {months.map((month) => (
                                 <option key={month.value} value={month.value}>
                                 {month.label}
@@ -167,11 +167,10 @@ const Profile = () => {
                         </select>
                     </div>
                     <div className='profile-card-results-container'>
-                        <h1>{totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</h1>
+                        <h4><BsClock style={{marginRight:"3px"}}/>Total time worked: {totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</h4>
                         {worksByEmployeeAndMonth.map(work => (
                             <p>{work.totalTime}</p>
                         ))}
-
                     </div>
                 </div>
             </div>
