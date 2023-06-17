@@ -34,9 +34,9 @@ public class UserDTO implements Serializable {
 	
 	private List<WorkDTO> works = new ArrayList<>();
 	
-	private List<TaskDTO> tasks = new ArrayList<>();
+	private List<Long> tasksId = new ArrayList<>();
 	
-	private List<TaskDTO> tasksFollowing = new ArrayList<>();
+	private List<Long> tasksFollowingId = new ArrayList<>();
 	
 	private Integer totalWorkTime;
 	  
@@ -62,10 +62,10 @@ public class UserDTO implements Serializable {
 		entity.getComments().forEach(com -> this.commentsId.add(com.getId()));
 		entity.getGroups().forEach(group -> this.groupsId.add(group.getId()));
 		entity.getWorks().forEach(work -> this.works.add(new WorkDTO(work)));
-		entity.getTasks().forEach(task -> this.tasks.add(new TaskDTO(task)));
-		entity.getTasksFollowing().forEach(task -> this.tasksFollowing.add(new TaskDTO(task)));
+		entity.getTasks().forEach(task -> this.tasksId.add(task.getId()));
+		entity.getTasksFollowing().forEach(task -> this.tasksFollowingId.add(task.getId()));
 		
-		entity.getTasksFollowing().forEach(task -> this.tasks.add(new TaskDTO(task)));
+		entity.getTasksFollowing().forEach(task -> this.tasksId.add(task.getId()));
 		
 		this.totalWorkTime = entity.getTotalWorkTime();
 	}
@@ -122,12 +122,12 @@ public class UserDTO implements Serializable {
 		return works;
 	}
 
-	public List<TaskDTO> getTasks() {
-		return tasks;
+	public List<Long> getTasksId() {
+		return tasksId;
 	}
 
-	public List<TaskDTO> getTasksFollowing() {
-		return tasksFollowing;
+	public List<Long> getTasksFollowingId() {
+		return tasksFollowingId;
 	}
 
 	public Integer getTotalWorkTime() {

@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.projects.AgiTask.dto.NotificationDTO;
 import com.projects.AgiTask.dto.RoleDTO;
-import com.projects.AgiTask.dto.TaskDTO;
 import com.projects.AgiTask.dto.UserDTO;
 import com.projects.AgiTask.dto.UserInsertDTO;
 import com.projects.AgiTask.dto.UserUpdateDTO;
@@ -157,8 +156,8 @@ public class UserService implements UserDetailsService {
 			entity.getWorks().add(work);
 		}
 		
-		for (TaskDTO taskDto : dto.getTasks()) {
-			Task task = taskRepository.getOne(taskDto.getId());
+		for (Long taskId : dto.getTasksId()) {
+			Task task = taskRepository.getOne(taskId);
 			entity.getTasks().add(task);
 		}
 	}

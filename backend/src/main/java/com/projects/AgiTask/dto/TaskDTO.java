@@ -24,7 +24,7 @@ public class TaskDTO implements Serializable {
 	
 	private Long creatorId;
 	
-	private List<Long> followersId = new ArrayList<>();
+	private List<UserDTO> followers = new ArrayList<>();
 	
 	private List<WorkDTO> works = new ArrayList<>();
 	
@@ -58,7 +58,7 @@ public class TaskDTO implements Serializable {
 		
 		entity.getComments().forEach(com -> this.comments.add(new CommentDTO(com)));
 		entity.getWorks().forEach(work -> this.works.add(new WorkDTO(work)));
-		entity.getFollowers().forEach(fol -> this.followersId.add(fol.getId()));
+		entity.getFollowers().forEach(fol -> this.followers.add(new UserDTO(fol)));
 	}
 
 	public Long getId() {
@@ -117,8 +117,8 @@ public class TaskDTO implements Serializable {
 		this.creatorId = creatorId;
 	}
 
-	public List<Long> getFollowersId() {
-		return followersId;
+	public List<UserDTO> getFollowers() {
+		return followers;
 	}
 
 	public List<WorkDTO> getWorks() {

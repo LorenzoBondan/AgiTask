@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.projects.AgiTask.dto.CommentDTO;
 import com.projects.AgiTask.dto.TaskDTO;
 import com.projects.AgiTask.dto.TasksByStatusDTO;
+import com.projects.AgiTask.dto.UserDTO;
 import com.projects.AgiTask.dto.WorkDTO;
 import com.projects.AgiTask.entities.Comment;
 import com.projects.AgiTask.entities.Notification;
@@ -187,8 +188,8 @@ public class TaskService {
 			entity.getWorks().add(work);
 		}
 		
-		for (Long followerId : dto.getFollowersId()) {
-			User user = userRepository.getOne(followerId);
+		for (UserDTO followerDto : dto.getFollowers()) {
+			User user = userRepository.getOne(followerDto.getId());
 			entity.getFollowers().add(user);
 		}
 		
