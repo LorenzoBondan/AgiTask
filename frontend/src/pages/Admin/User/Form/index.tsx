@@ -34,8 +34,8 @@ const Form = () => {
                     setValue('commentsId', user.commentsId);
                     setValue('groupsId', user.groupsId);
                     setValue('works', user.works);
-                    setValue('tasks',user.tasks);
-                    setValue('tasksFollowing', user.tasksFollowing);
+                    setValue('tasksId',user.tasksId);
+                    setValue('tasksFollowingId', user.tasksFollowingId);
                     setValue('roles', user.roles);
                     setValue('totalWorkTime',user.totalWorkTime);
                 })

@@ -40,8 +40,17 @@ const CreateTask = () => {
   const onSubmit = async (formData: Task) => {
     if (user) {
       formData.status = "PENDING";
-      formData.startDate = new Date().toISOString();
+
+      const startDate = new Date();
+      startDate.setHours(startDate.getHours() - 3);
+      formData.startDate = startDate.toISOString();   
+         
       formData.creatorId = user.id;
+      formData.totalWorkTime = 0;
+      formData.followers = [];
+      formData.works = [];
+      formData.comments = [];
+      formData.usersWorkTime = {} as Record<string, number>;
 
       console.log(formData);
 
@@ -150,7 +159,7 @@ const CreateTask = () => {
                                 CANCEL
                             </button>
 
-                            <button className='btn btn-primary text-white post-crud-buttons' onClick={() => onSubmit}>SAVE</button>
+                            <button className='btn btn-primary text-white post-crud-buttons' onClick={handleSubmit(onSubmit)}>SAVE</button>
                         </div>
                     </div>
                 </form>
