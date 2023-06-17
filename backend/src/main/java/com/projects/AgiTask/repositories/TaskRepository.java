@@ -19,9 +19,10 @@ public interface TaskRepository extends JpaRepository<Task,Long>{
 	@Query("SELECT obj FROM Task obj WHERE "
 			+ "((obj.creator = :user) OR "
 			+ "(:user MEMBER OF obj.followers)) AND "
-			+ "(obj.status = :status) "
+			+ "(obj.status = :status) AND "
+			+ "(UPPER(obj.title) LIKE UPPER(CONCAT('%', :title, '%')) ) "
 			+ "ORDER BY obj.startDate DESC")
-	Page<Task> findByStatus(User user, Status status, Pageable pageable);
+	Page<Task> findByStatus(User user, Status status, String title, Pageable pageable);
 	
 	@Query("SELECT t.status AS status, COUNT(t.id) AS sum FROM Task t GROUP BY t.status")
 	List<TasksByStatusProjection> tasksByStatus();

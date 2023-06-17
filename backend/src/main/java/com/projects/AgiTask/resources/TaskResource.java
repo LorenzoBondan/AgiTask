@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,11 +39,11 @@ public class TaskResource {
 	}
 	
 	@GetMapping(value = "/status/{status}")
-	public ResponseEntity<Page<TaskDTO>> findByStaus(@PathVariable Status status, Pageable pageable) {
-		Page<TaskDTO> list = service.findByStatus(status, pageable);	
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<Page<TaskDTO>> findByStatus(@PathVariable("status") Status status, @RequestParam(value = "title", defaultValue = "") String title, Pageable pageable) {
+	    Page<TaskDTO> list = service.findByStatus(status, title.trim(), pageable);
+	    return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{id}") 
 	public ResponseEntity<TaskDTO> findById(@PathVariable Long id) {
 		TaskDTO dto = service.findById(id);	

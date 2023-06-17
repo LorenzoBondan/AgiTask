@@ -62,11 +62,12 @@ public class TaskService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<TaskDTO> findByStatus(Status status, Pageable pageable) {
-		User user = authService.authenticated();
-		Page<Task> list = repository.findByStatus(user, status, pageable);
-		return list.map(x -> new TaskDTO(x));
+	public Page<TaskDTO> findByStatus(Status status, String title, Pageable pageable) {
+	    User user = authService.authenticated();
+	    Page<Task> list = repository.findByStatus(user, status, title, pageable);
+	    return list.map(TaskDTO::new);
 	}
+
 
 	@Transactional(readOnly = true)
 	public TaskDTO findById(Long id) {
