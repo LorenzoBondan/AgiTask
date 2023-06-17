@@ -30,7 +30,7 @@ const TaskFilter = ( {onSubmitFilter} : Props ) => {
                         {...register("title")}
                         type="text"
                         className={`form-control text-dark`}
-                        placeholder="Task title"
+                        placeholder="Task Title"
                         name="title"
                     />
                     <button className='user-filter-button-search-icon'>

@@ -3,6 +3,7 @@ import Footer from "Components/Footer";
 import Navbar from "Components/Navbar";
 import Admin from "pages/Admin";
 import Auth from "pages/Auth";
+import CreateTask from "pages/CreateTask";
 import Home from "pages/Home";
 import Tasks from "pages/Tasks";
 
@@ -39,9 +40,15 @@ const Routes = () => {
                     </Route>
 
                     {isAuthenticated() && (
+                        <>
                         <Route path="/tasks" exact>
                             <Tasks/>
                         </Route>
+
+                        <Route path="/create" exact>
+                            <CreateTask/>
+                        </Route>
+                        </>
                     )}
 
                 </Switch>
