@@ -10,6 +10,10 @@ import { BsListTask } from 'react-icons/bs';
 import { AiOutlineTool } from 'react-icons/ai';
 import { BiCommentDetail } from 'react-icons/bi';
 import { FaCrown } from 'react-icons/fa';
+import { MdGroups } from 'react-icons/md';
+import GroupCard from './GroupCard';
+import { NavLink } from 'react-router-dom';
+import plusIcon from 'assets/images/plus.png';
 
 const Profile = () => {
 
@@ -61,8 +65,19 @@ const Profile = () => {
                         <button className='btn btn-primary'>Edit Profile</button>
                     </div>
                 </div>
-                <div className='profile-card-second-container'>
 
+                <div className='profile-card-second-container'>
+                    <div className='profile-card-groups-container'>
+                        <h3><MdGroups style={{marginRight:"3px"}}/>Groups</h3>
+                        <NavLink to="/create">
+                            <button className='btn'><img src={plusIcon} alt="" />New Group</button>
+                        </NavLink>
+                    </div>
+                    <div className='profile-card-groups'>
+                        {user?.groupsId.map(groupId => (
+                            <GroupCard groupId={groupId} onLeaveGroup={getUser} userId={user.id}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
