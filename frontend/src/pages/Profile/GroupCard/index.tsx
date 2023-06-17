@@ -7,6 +7,7 @@ import { requestBackend } from 'util/requests';
 import { BsClock } from 'react-icons/bs';
 import { HiUsers } from 'react-icons/hi';
 import { MdLogout } from 'react-icons/md';
+import { convertTimeToHours } from 'helpers';
 
 type Props = {
     groupId : number;
@@ -44,12 +45,6 @@ const GroupCard = ({groupId, onLeaveGroup} : Props) => {
             setShowSelect(true);
         }
     }
-
-    const convertTimeToHours = (minutes: number): string => {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        return `${hours}h ${remainingMinutes}min `;
-    };
 
     const handleLeaveGroup = useCallback(() => {
         if(!window.confirm(`Are you sure that you want to leave this group?`)){
