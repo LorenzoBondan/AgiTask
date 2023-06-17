@@ -1,0 +1,98 @@
+.profile-container{
+    margin-left: 85px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100vh;
+    width: 100%;
+}
+
+.profile-card{
+    display: flex;
+    width: 1000px;
+}
+
+.profile-card-first-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    border-right: silver 1px solid;
+}
+
+.profile-card-image-container img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.profile-card-image-container{
+    padding: 5px;
+    border-bottom: 2px solid silver;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-card-user-info-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card-user-info-container h3{
+    color: #F15A23;
+    font-weight: 700;
+    text-align: center;
+}
+
+.profile-card-user-info-container h6{
+    color: #B9331A;
+    text-align: center;
+}
+
+.profile-card-user-info-container span{
+    text-align: center;
+    color: #533A5B;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.profile-card-user-info-bottom-container{
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #c7c4c4;
+    border-radius: 10px;
+    background-color: #aaa5a527;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly
+}
+
+.profile-card-user-info-bottom-container p{
+    color: #828282;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+
+.profile-edit-button-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile-edit-button-container button{
+    width: 100%;
+    color: white;
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.profile-edit-button-container button:hover{
+    transform: scale(1.05);
+    background-color: #B9331A;
+    color: white;
+}
+

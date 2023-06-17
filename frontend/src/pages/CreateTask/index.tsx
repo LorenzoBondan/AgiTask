@@ -14,7 +14,6 @@ const CreateTask = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     control,
   } = useForm<Task>();
   const history = useHistory();

@@ -5,6 +5,7 @@ import Admin from "pages/Admin";
 import Auth from "pages/Auth";
 import CreateTask from "pages/CreateTask";
 import Home from "pages/Home";
+import Profile from "pages/Profile";
 import Tasks from "pages/Tasks";
 
 import { Redirect, Route, Router, Switch } from "react-router-dom";
@@ -47,6 +48,10 @@ const Routes = () => {
 
                         <Route path="/create" exact>
                             <CreateTask/>
+                        </Route>
+
+                        <Route path="/profile" exact>
+                            <Profile/>
                         </Route>
                         </>
                     )}
