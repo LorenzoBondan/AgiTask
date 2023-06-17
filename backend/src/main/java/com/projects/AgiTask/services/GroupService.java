@@ -139,4 +139,17 @@ public class GroupService {
 			throw new DataBaseException("Integrity Violation");
 		}
 	}
+	
+	@Transactional
+	public GroupDTO leaveGroup(Long id, GroupDTO dto) {
+		try {
+			Group entity = repository.getOne(id);
+			User user = authService.authenticated();
+			entity.getUsers().remove(user);
+			entity = repository.save(entity);
+			return new GroupDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
 }

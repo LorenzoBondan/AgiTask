@@ -58,4 +58,10 @@ public class GroupResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PutMapping(value = "/leave/{id}")
+	public ResponseEntity<GroupDTO> leaveGroup(@PathVariable Long id, @RequestBody GroupDTO dto) {
+		dto = service.leaveGroup(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 }
