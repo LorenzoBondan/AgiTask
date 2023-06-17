@@ -5,6 +5,7 @@
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
+    padding-bottom: 250px;
 }
 
 .tasks-container-navbar{
@@ -27,6 +28,7 @@
 .tasks-container-second{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .tasks-container-second p {
@@ -46,6 +48,28 @@
     font-weight: 700;
     text-shadow: 1px 1px 1px #fff;
     margin-bottom: 0;
+}
+
+.tasks-new-task-container button{
+    background-color: #9a9c9cc0;
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.tasks-new-task-container button:hover{
+    transform: scale(1.05);
+    color: #fff;
+}
+
+.tasks-new-task-container img{
+    height: 23px;
+    border: none;
 }
 
 .user-tasks-container{

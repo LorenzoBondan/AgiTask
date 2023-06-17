@@ -7,10 +7,11 @@ import { PieChartConfig, SpringPage, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import TaskCard from 'Components/TaskCard';
-
+import plusIcon from 'assets/images/plus.png';
 import { BsListTask } from 'react-icons/bs';
 import { buildTasksByStatusChart } from 'helpers';
 import PieChartCard from 'Components/pie-chart-card';
+import { NavLink } from 'react-router-dom';
 
 const Tasks = () => {
 
@@ -159,10 +160,15 @@ const Tasks = () => {
                     <h1>{user?.name}'s Tasks</h1>
                 </div>
                 <div className='tasks-container-second'>
+                    <div className='tasks-new-task-container'>
+                        <NavLink to="/create">
+                            <button className='btn'><img src={plusIcon} alt="" />New Task</button>
+                        </NavLink>
+                    </div>
                     <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasks.length}</p>
                 </div>
             </div>
-            
+
             <div className='user-tasks-container'>
                 <div className='tasks-status'>
                     <div className='task-status-top' style={{backgroundColor:"#F66565"}}></div>

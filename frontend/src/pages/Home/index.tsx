@@ -3,6 +3,7 @@ import Banner from 'Components/Banner';
 import './styles.css';
 import Utilized from 'Components/Utilized';
 import Companies from 'Components/Companies';
+import TaskModel from './TaskModel';
 
 const Home = () => {
     return(
@@ -24,6 +25,9 @@ const Home = () => {
             </div>
             <div className='home-utilized-container'>
                 <Companies/>
+            </div>
+            <div className='home-utilized-container'>
+                <TaskModel/>
             </div>
         </div>
     );
