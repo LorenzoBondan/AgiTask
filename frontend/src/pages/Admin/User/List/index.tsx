@@ -8,9 +8,9 @@ import UserFilter, { UserFilterData } from "Components/UserFilter";
 import Pagination from "Components/Pagination";
 
 type ControlComponentsData = {
-    activePage: number;
-    filterData: UserFilterData;
-  }
+  activePage: number;
+  filterData: UserFilterData;
+}
 
 const List = () => {
 
@@ -47,8 +47,8 @@ const List = () => {
     }, [getUsers]);
 
     const handleSubmitFilter = (data : UserFilterData) => {
-        setControlComponentsData({activePage: 0, filterData: data});
-      }
+      setControlComponentsData({activePage: 0, filterData: data});
+    }
 
     return(
         <div className='courses-crud-container'>

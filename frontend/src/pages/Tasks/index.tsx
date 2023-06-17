@@ -12,6 +12,11 @@ import { BsListTask } from 'react-icons/bs';
 import { buildTasksByStatusChart } from 'helpers';
 import PieChartCard from 'Components/pie-chart-card';
 import { NavLink } from 'react-router-dom';
+import TaskFilter, { TaskFilterData } from 'Components/TaskFilter';
+
+type ControlComponentsData = {
+    filterData: TaskFilterData;
+}
 
 const Tasks = () => {
 
@@ -61,6 +66,16 @@ const Tasks = () => {
         getUser();
     }, [getUser]);
 
+    /* filter */
+
+    const [controlComponentsData, setControlComponentsData] = useState<ControlComponentsData>({filterData: { title: '' },});
+    
+    const handleSubmitFilter = (data : TaskFilterData) => {
+        setControlComponentsData({filterData: data});
+    }
+
+    /**/
+
     const [tasksPending, setTasksPending] = useState<SpringPage<Task>>();
 
     const [tasksWorking, setTasksWorking] = useState<SpringPage<Task>>();
@@ -71,6 +86,9 @@ const Tasks = () => {
         const params: AxiosRequestConfig = {
             method: "GET",
             url: `/tasks/status/PENDING`,
+            params: {
+                title: controlComponentsData.filterData.title
+            },
             withCredentials: true
           }
     
@@ -81,12 +99,15 @@ const Tasks = () => {
             .catch(error => {
               console.log("erro: " + error);
             });
-    }, []);
+    }, [controlComponentsData.filterData.title]);
 
     const getTasksWorking = useCallback(async () => {
         const params: AxiosRequestConfig = {
             method: "GET",
             url: `/tasks/status/WORKING`,
+            params: {
+                title: controlComponentsData.filterData.title
+            },
             withCredentials: true
           }
     
@@ -97,12 +118,15 @@ const Tasks = () => {
             .catch(error => {
               console.log("erro: " + error);
             });
-    }, []);
+    }, [controlComponentsData.filterData.title]);
 
     const getTasksCompleted = useCallback(async () => {
         const params: AxiosRequestConfig = {
             method: "GET",
             url: `/tasks/status/COMPLETED`,
+            params: {
+                title: controlComponentsData.filterData.title
+            },
             withCredentials: true
           }
     
@@ -113,7 +137,7 @@ const Tasks = () => {
             .catch(error => {
               console.log("erro: " + error);
             });
-    }, []);
+    }, [controlComponentsData.filterData.title]);
 
     useEffect(() => {
         getTasksPending();
@@ -167,6 +191,10 @@ const Tasks = () => {
                     </div>
                     <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasks.length}</p>
                 </div>
+            </div>
+
+            <div className='tasks-filter'>
+                <TaskFilter onSubmitFilter={handleSubmitFilter}/>
             </div>
 
             <div className='user-tasks-container'>
