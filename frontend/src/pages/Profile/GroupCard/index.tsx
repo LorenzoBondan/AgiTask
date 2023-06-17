@@ -11,10 +11,9 @@ import { MdLogout } from 'react-icons/md';
 type Props = {
     groupId : number;
     onLeaveGroup : Function;
-    userId : number;
 }
 
-const GroupCard = ({groupId, onLeaveGroup, userId} : Props) => {
+const GroupCard = ({groupId, onLeaveGroup} : Props) => {
 
     // get Group by id
     const [group, setGroup] = useState<Group>();
@@ -52,17 +51,20 @@ const GroupCard = ({groupId, onLeaveGroup, userId} : Props) => {
         return `${hours}h ${remainingMinutes}min `;
     };
 
-    const handleLeaveGroup = () => {
+    const handleLeaveGroup = useCallback(() => {
+        if(!window.confirm(`Are you sure that you want to leave this group?`)){
+            return;
+        }
         const params : AxiosRequestConfig = {
             method:"PUT",
-            url: `/groups/leave/${groupId}/${userId}`,
+            url: `/groups/leave/${groupId}`,
             withCredentials:true
         }
           requestBackend(params) 
             .then(response => {
-              setGroup(response.data);
+              onLeaveGroup();
         })
-    }
+    }, [groupId ,onLeaveGroup])
 
     return(
         <div className="group-card-container">

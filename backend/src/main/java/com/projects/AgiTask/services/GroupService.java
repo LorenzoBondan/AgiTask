@@ -141,7 +141,7 @@ public class GroupService {
 	}
 	
 	@Transactional
-	public GroupDTO leaveGroup(Long id, GroupDTO dto) {
+	public GroupDTO leaveGroup(Long id) {
 		try {
 			Group entity = repository.getOne(id);
 			User user = authService.authenticated();

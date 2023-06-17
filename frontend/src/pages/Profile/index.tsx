@@ -75,7 +75,7 @@ const Profile = () => {
                     </div>
                     <div className='profile-card-groups'>
                         {user?.groupsId.map(groupId => (
-                            <GroupCard groupId={groupId} onLeaveGroup={getUser} userId={user.id}/>
+                            <GroupCard groupId={groupId} onLeaveGroup={getUser}/>
                         ))}
                     </div>
                 </div>
