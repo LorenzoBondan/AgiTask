@@ -5,14 +5,15 @@ import { Task, Work } from "types";
 import { requestBackend } from "util/requests";
 import { BsClock } from 'react-icons/bs';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import './styles.css';
 
 type Props = {
     work: Work;
-    onDelete: Function;
+    onDeleteWork: Function;
 }
 
-const WorkCard = ({work, onDelete} : Props) => {
+const WorkCard = ({work, onDeleteWork} : Props) => {
 
     const [task, setTask] = useState<Task>();
 
@@ -33,7 +34,7 @@ const WorkCard = ({work, onDelete} : Props) => {
         getTask();
     }, [getTask]);
 
-    const deleteWork = () => {
+    const handleDeleteWork = useCallback(() => {
         if(!window.confirm(`Are you sure that you want to delete this work?`)){
             return;
         }
@@ -44,14 +45,14 @@ const WorkCard = ({work, onDelete} : Props) => {
           }
           requestBackend(params) 
             .then(response => {
-                onDelete();
-            });
-        };
+                onDeleteWork();
+        })
+    }, [work.id ,onDeleteWork])
 
     return(
         <div className="work-card-container">
             <div className="work-card-delete">
-                <h2 onClick={() => deleteWork()}>X</h2>
+                <h2 onClick={() => handleDeleteWork()}><AiFillCloseCircle/></h2>
             </div>
             <div className="work-card-main-container">
                 <div className="work-card-title">

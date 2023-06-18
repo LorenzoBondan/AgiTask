@@ -19,16 +19,13 @@
 }
 
 .work-card-delete h2{
-    font-size: 10px;
+    font-size: 15px;
     margin-bottom: 0;
-    color: #fff;
-    background-color: lightcoral;
-    padding: 5px;
-    border-radius: 5px;
+    color: lightcoral;
 }
 
 .work-card-delete h2:hover{
-    background-color: darkred;
+    color: darkred;
     cursor: pointer;
 }
 
