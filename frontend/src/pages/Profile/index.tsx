@@ -172,12 +172,12 @@ const Profile = () => {
                         <div className='row profile-card-works'>
                           <div className='col-lg-6'>
                             {worksByEmployeeAndMonth.slice(0, Math.ceil(worksByEmployeeAndMonth.length / 2)).map(work => (
-                              <WorkCard work={work} key={work.id}/>
+                              <WorkCard work={work} onDelete={() => getUser()} key={work.id}/>
                             ))}
                           </div>
                           <div className='col-lg-6'>
                             {worksByEmployeeAndMonth.slice(Math.ceil(worksByEmployeeAndMonth.length / 2)).map(work => (
-                              <WorkCard work={work} key={work.id}/>
+                              <WorkCard work={work} onDelete={() => getUser()} key={work.id}/>
                             ))}
                           </div>
                         </div>

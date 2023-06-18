@@ -9,9 +9,10 @@ import './styles.css';
 
 type Props = {
     work: Work;
+    onDelete: Function;
 }
 
-const WorkCard = ({work} : Props) => {
+const WorkCard = ({work, onDelete} : Props) => {
 
     const [task, setTask] = useState<Task>();
 
@@ -28,20 +29,41 @@ const WorkCard = ({work} : Props) => {
         }
     , [work.taskId])
     
-      useEffect(() => {
+    useEffect(() => {
         getTask();
-      }, [getTask]);
+    }, [getTask]);
+
+    const deleteWork = () => {
+        if(!window.confirm(`Are you sure that you want to delete this work?`)){
+            return;
+        }
+        const params : AxiosRequestConfig = {
+            method:"DELETE",
+            url: `/works/${work.id}`,
+            withCredentials:true
+          }
+          requestBackend(params) 
+            .then(response => {
+                onDelete();
+            });
+        };
 
     return(
         <div className="work-card-container">
-            <div className="work-card-title">
-                <h6>{task?.title}</h6>
+            <div className="work-card-delete">
+                <h2 onClick={() => deleteWork()}>X</h2>
             </div>
-            <div className="work-card-content">
-                <p><BsClock style={{marginRight:"3px"}}/>{convertTimeToHours(work.totalTime)}</p>
-                <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Started at {convertDateTime(work.dateTimeStart)} <br /></span>
-                <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Finished at {convertDateTime(work.dateTimeEnd)}</span>
+            <div className="work-card-main-container">
+                <div className="work-card-title">
+                    <h6>{task?.title}</h6>
+                </div>
+                <div className="work-card-content">
+                    <p><BsClock style={{marginRight:"3px"}}/>{convertTimeToHours(work.totalTime)}</p>
+                    <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Started at {convertDateTime(work.dateTimeStart)} <br /></span>
+                    <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Finished at {convertDateTime(work.dateTimeEnd)}</span>
+                </div>
             </div>
+
         </div>
     );
 }
