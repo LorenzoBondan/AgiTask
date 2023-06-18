@@ -1,8 +1,10 @@
 import { AxiosRequestConfig } from "axios";
-import { convertTimeToHours } from "helpers";
+import { convertDateTime, convertTimeToHours } from "helpers";
 import { useCallback, useEffect, useState } from "react";
 import { Task, Work } from "types";
 import { requestBackend } from "util/requests";
+import { BsClock } from 'react-icons/bs';
+import { AiOutlineCalendar } from 'react-icons/ai';
 import './styles.css';
 
 type Props = {
@@ -33,10 +35,12 @@ const WorkCard = ({work} : Props) => {
     return(
         <div className="work-card-container">
             <div className="work-card-title">
-                <h1>{task?.title}</h1>
+                <h6>{task?.title}</h6>
             </div>
             <div className="work-card-content">
-                <p>Total worked time: {convertTimeToHours(work.totalTime)}</p>
+                <p><BsClock style={{marginRight:"3px"}}/>{convertTimeToHours(work.totalTime)}</p>
+                <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Started at {convertDateTime(work.dateTimeStart)} <br /></span>
+                <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Finished at {convertDateTime(work.dateTimeEnd)}</span>
             </div>
         </div>
     );

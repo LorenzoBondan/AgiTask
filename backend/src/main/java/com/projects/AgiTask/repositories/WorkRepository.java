@@ -10,7 +10,7 @@ import com.projects.AgiTask.dto.WorkDTO;
 import com.projects.AgiTask.entities.Work;
 
 @Repository
-public interface WorkRepository extends JpaRepository<Work,Long>{
+public interface WorkRepository extends JpaRepository<Work, Long> {
 
     default Integer getTotalTimeByEmployeeAndMonth(Long employeeId, Integer month) {
         List<WorkDTO> works = getWorksByEmployeeAndMonth(employeeId, month);
@@ -22,5 +22,6 @@ public interface WorkRepository extends JpaRepository<Work,Long>{
 
 	@Query("SELECT w FROM Work w WHERE w.employee.id = :employeeId AND MONTH(w.dateTimeStart) = :month")
 	List<WorkDTO> getWorksByEmployeeAndMonth(Long employeeId, Integer month);
+
 
 }

@@ -59,6 +59,7 @@ INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is th
 
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (1, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:19:00');
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:29:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:49:00');
 
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,4);

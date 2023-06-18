@@ -168,11 +168,20 @@ const Profile = () => {
                         </select>
                     </div>
                     <div className='profile-card-results-container'>
-                        <h4><BsClock style={{marginRight:"3px"}}/>Total time worked: {totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</h4>
-                        <h3>Tasks Worked</h3>
-                        {worksByEmployeeAndMonth.map(work => (
-                            <WorkCard work={work} key={work.id}/>
-                        ))}
+                        <h4><BsClock style={{marginRight:"3px"}}/>Total worked time: <strong>{totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</strong></h4>
+                        <div className='row profile-card-works'>
+                          <div className='col-lg-6'>
+                            {worksByEmployeeAndMonth.slice(0, Math.ceil(worksByEmployeeAndMonth.length / 2)).map(work => (
+                              <WorkCard work={work} key={work.id}/>
+                            ))}
+                          </div>
+                          <div className='col-lg-6'>
+                            {worksByEmployeeAndMonth.slice(Math.ceil(worksByEmployeeAndMonth.length / 2)).map(work => (
+                              <WorkCard work={work} key={work.id}/>
+                            ))}
+                          </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
