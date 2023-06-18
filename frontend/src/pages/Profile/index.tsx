@@ -13,11 +13,13 @@ import { FaCrown } from 'react-icons/fa';
 import { BsFillGearFill } from 'react-icons/bs';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { MdGroups } from 'react-icons/md';
+import { MdOutlineTask } from 'react-icons/md';
 import GroupCard from './GroupCard';
 import { NavLink } from 'react-router-dom';
 import plusIcon from 'assets/images/plus.png';
 import { convertTimeToHours } from 'helpers';
 import WorkCard from './WorkCard';
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 type MonthOption = {
     value: string;
@@ -26,7 +28,7 @@ type MonthOption = {
 
 const Profile = () => {
 
-    const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const getUser = useCallback(async () => {
     try {
@@ -121,7 +123,6 @@ const Profile = () => {
     getWorksByEmployeeAndMonth();
   }
   
-
     return(
         <div className="profile-container">
             <div className='profile-card base-card'>
@@ -137,16 +138,16 @@ const Profile = () => {
                         ))}
                         <p><BsClock style={{marginRight:"3px"}}/>{user && convertTimeToHours(user?.totalWorkTime)}</p>
                         <div className='profile-card-user-info-bottom-container'>
-                            <p><BsListTask style={{marginRight:"3px"}}/><strong>{user?.tasksId.length}</strong></p>
-                            <p><AiOutlineTool style={{marginRight:"3px"}}/><strong>{user?.works.length}</strong></p>
-                            <p><BiCommentDetail style={{marginRight:"3px"}}/><strong>{user?.commentsId.length}</strong></p>
+                            <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks"><BsListTask style={{marginRight:"3px"}}/><strong>{user?.tasksId.length}</strong></p>
+                            <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Works"><AiOutlineTool style={{marginRight:"3px"}}/><strong>{user?.works.length}</strong></p>
+                            <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Comments"><BiCommentDetail style={{marginRight:"3px"}}/><strong>{user?.commentsId.length}</strong> </p>
+                            <ReactTooltip id={'myTooltip'} place="top" />
                         </div>
                     </div>
                     <div className='profile-edit-button-container'>
                         <button className='btn btn-primary'><BsFillGearFill style={{marginRight:"5px"}}/> Edit Profile</button>
                     </div>
                 </div>
-
                 <div className='profile-card-second-container'>
                     <div className='profile-card-groups-container'>
                         <h3><MdGroups style={{marginRight:"3px"}}/>Groups</h3>
@@ -160,7 +161,6 @@ const Profile = () => {
                         ))}
                     </div>
                 </div>
-
                 <div className='profile-card-third-container'>
                     <div className='profile-card-filter-container'>
                         <h6><BsFillBarChartFill style={{marginRight:"3px"}}/>Your Personal Data</h6>
@@ -173,7 +173,10 @@ const Profile = () => {
                         </select>
                     </div>
                     <div className='profile-card-results-container'>
-                        <h4><BsClock style={{marginRight:"3px"}}/>Total worked time: <strong>{totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</strong></h4>
+                        <div className='profile-card-results-top'>
+                          <h4><BsClock style={{marginRight:"3px"}}/>Total worked time: <strong>{totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</strong></h4>
+                          <h4><MdOutlineTask style={{fontSize:"20px"}}/> Works registered: <strong>{worksByEmployeeAndMonth.length}</strong></h4>
+                        </div>
                         <div className='row profile-card-works'>
                           <div className='col-lg-6'>
                             {worksByEmployeeAndMonth.slice(0, Math.ceil(worksByEmployeeAndMonth.length / 2)).map(work => (
@@ -186,7 +189,6 @@ const Profile = () => {
                             ))}
                           </div>
                         </div>
-
                     </div>
                 </div>
             </div>

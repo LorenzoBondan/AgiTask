@@ -47,7 +47,19 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
             .then(response => {
                 onDeleteWork();
         })
-    }, [work.id ,onDeleteWork])
+    }, [work.id ,onDeleteWork]);
+
+    const returnTaskStatus = (status : string) => {
+        if(status === "PENDING"){
+            return (<p className="work-card-status-card" style={{backgroundColor:"#F66565"}}>{status}</p>);
+        }
+        else if(status === "WORKING"){
+            return (<p className="work-card-status-card" style={{backgroundColor:"#FFDC8D"}}>{status}</p>);
+        }
+        else if(status === "COMPLETED"){
+            return (<p className="work-card-status-card" style={{backgroundColor:"#0DAA2A"}}>{status}</p>);
+        }
+    }
 
     return(
         <div className="work-card-container">
@@ -57,6 +69,7 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
             <div className="work-card-main-container">
                 <div className="work-card-title">
                     <h6>{task?.title}</h6>
+                    <span>{task && returnTaskStatus(task?.status)}</span>
                 </div>
                 <div className="work-card-content">
                     <p><BsClock style={{marginRight:"3px"}}/>{convertTimeToHours(work.totalTime)}</p>

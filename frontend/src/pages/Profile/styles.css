@@ -187,6 +187,14 @@
     color: #828282;
 }
 
+.profile-card-results-top{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+}
+
 .profile-card-works{
     overflow-y: scroll;
     height: 410px;
