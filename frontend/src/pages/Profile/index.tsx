@@ -17,6 +17,7 @@ import GroupCard from './GroupCard';
 import { NavLink } from 'react-router-dom';
 import plusIcon from 'assets/images/plus.png';
 import { convertTimeToHours } from 'helpers';
+import WorkCard from './WorkCard';
 
 type MonthOption = {
     value: string;
@@ -168,8 +169,9 @@ const Profile = () => {
                     </div>
                     <div className='profile-card-results-container'>
                         <h4><BsClock style={{marginRight:"3px"}}/>Total time worked: {totalWorkedTimeByMonth && convertTimeToHours(totalWorkedTimeByMonth)}</h4>
+                        <h3>Tasks Worked</h3>
                         {worksByEmployeeAndMonth.map(work => (
-                            <p>{work.totalTime}</p>
+                            <WorkCard work={work} key={work.id}/>
                         ))}
                     </div>
                 </div>
