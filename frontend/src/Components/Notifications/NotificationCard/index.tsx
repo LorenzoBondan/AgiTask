@@ -2,8 +2,7 @@
 import { Notification } from 'types';
 import './styles.css';
 import { convertDateTime } from 'helpers';
-import { useCallback, useState } from 'react';
-
+import { useCallback } from 'react';
 import { BsEye } from 'react-icons/bs'; 
 import { FiClock } from 'react-icons/fi';
 import { AxiosRequestConfig } from 'axios';
@@ -16,20 +15,11 @@ type Props = {
 
 const NotificationCard = ({notification, onRead} : Props) => {
 
-    const verifyIfIsChanged = () => {
-        if(notification.read){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    const [isChecked, setIsChecked] = useState(verifyIfIsChanged());
-
-    const handleCheckboxChange = () => {
-      setIsChecked(!isChecked);
-      if(isChecked){
+    const handleReadChange = () => {
+      if(notification.read){
+        updateUnreadStatus();
+      }
+      else{
         updateReadStatus();
       }
     };
@@ -40,25 +30,44 @@ const NotificationCard = ({notification, onRead} : Props) => {
           url: `/notifications/${notification.id}/read`,
           withCredentials:true
         }
+        try{
         requestBackend(params) 
           .then(response => {
+            console.log("read");
             onRead();
           })
+        }
+        catch(error){
+            console.log(error);
+        }
+    }, [notification.id, onRead])
+
+    const updateUnreadStatus = useCallback(() => {
+        const params : AxiosRequestConfig = {
+          method:"PUT",
+          url: `/notifications/${notification.id}/unread`,
+          withCredentials:true
+        }
+        try{
+        requestBackend(params) 
+          .then(response => {
+            console.log("unread");
+            onRead();
+          })
+        }
+        catch(error){
+            console.log(error);
+        }
     }, [notification.id, onRead])
 
     return(
-        <div className={isChecked ? "notification-card-container" : "notification-card-container notification-card-container-unread"}>
+        <div className={notification.read ? "notification-card-container" : "notification-card-container notification-card-container-unread"}>
             <div className='notification-card-content'>
                 <h6>{notification.description}</h6>
                 <p><FiClock style={{marginRight:"3px"}}/>{convertDateTime(notification.moment)}</p>
             </div>
             <div className='notification-card-button'>
-                <BsEye style={{marginRight:"3px"}}/>
-                <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                />
+                <BsEye style={{marginRight:"3px"}} onClick={handleReadChange}/>
             </div>
         </div>
     );

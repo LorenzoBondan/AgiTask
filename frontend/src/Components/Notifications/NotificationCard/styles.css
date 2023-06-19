@@ -40,3 +40,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.notification-card-button svg:hover{
+    cursor: pointer;
+}

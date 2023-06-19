@@ -50,8 +50,6 @@ const TopNavbar = () => {
 
     return(
         <div className='top-navbar-main-container'>
-
-        
           <div className='tasks-container-navbar'>
               <NavLink to="/profile">
                   <div className='tasks-container-first'>
@@ -71,7 +69,7 @@ const TopNavbar = () => {
           </div>
           {showNotifications && 
             <div className='top-navbar-notifications-container'>
-              {user && <Notifications user={user} onReadTask={getUser}/>}
+              {user && <Notifications/>}
             </div>
           }
         </div>

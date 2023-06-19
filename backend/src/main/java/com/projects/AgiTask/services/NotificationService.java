@@ -46,7 +46,7 @@ public class NotificationService {
 	}
 	
 	@Transactional
-	public NotificationDTO updateToRead(Long id, NotificationDTO dto) {
+	public NotificationDTO updateToRead(Long id) {
 		try {
 			Notification entity = repository.getOne(id);
 			entity.setRead(true);
@@ -58,7 +58,7 @@ public class NotificationService {
 	}
 	
 	@Transactional
-	public NotificationDTO updateToUnread(Long id, NotificationDTO dto) {
+	public NotificationDTO updateToUnread(Long id) {
 		try {
 			Notification entity = repository.getOne(id);
 			entity.setRead(false);

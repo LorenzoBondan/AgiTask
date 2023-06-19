@@ -2,7 +2,6 @@ package com.projects.AgiTask.resources;
 
 import java.net.URI;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,14 +43,14 @@ public class NotificationResource {
 	}
 	
 	@PutMapping(value = "/{id}/read")
-	public ResponseEntity<NotificationDTO> updateToRead(@PathVariable Long id, @Valid @RequestBody NotificationDTO dto)	{
-		NotificationDTO newDto = service.updateToRead(id, dto);
+	public ResponseEntity<NotificationDTO> updateToRead(@PathVariable Long id)	{
+		NotificationDTO newDto = service.updateToRead(id);
 		return ResponseEntity.ok().body(newDto);
 	}
 	
 	@PutMapping(value = "/{id}/unread")
-	public ResponseEntity<NotificationDTO> updateToUnread(@PathVariable Long id, @Valid @RequestBody NotificationDTO dto)	{
-		NotificationDTO newDto = service.updateToUnread(id, dto);
+	public ResponseEntity<NotificationDTO> updateToUnread(@PathVariable Long id)	{
+		NotificationDTO newDto = service.updateToUnread(id);
 		return ResponseEntity.ok().body(newDto);
 	}
 	
