@@ -8,6 +8,7 @@ import CreateGroup from "pages/CreateGroup";
 import CreateTask from "pages/CreateTask";
 import Home from "pages/Home";
 import Profile from "pages/Profile";
+import TaskDetails from "pages/TaskDetails";
 import Tasks from "pages/Tasks";
 
 import { Redirect, Route, Router, Switch } from "react-router-dom";
@@ -49,6 +50,10 @@ const Routes = () => {
                             <Switch>
                                 <Route path="/tasks" exact>
                                     <Tasks/>
+                                </Route>
+
+                                <Route path="/tasks/:taskId" exact>
+                                    <TaskDetails/>
                                 </Route>
 
                                 <Route path="/create" exact>
