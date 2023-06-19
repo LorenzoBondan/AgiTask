@@ -3,6 +3,7 @@ import Footer from "Components/Footer";
 import Navbar from "Components/Navbar";
 import Admin from "pages/Admin";
 import Auth from "pages/Auth";
+import CreateGroup from "pages/CreateGroup";
 import CreateTask from "pages/CreateTask";
 import Home from "pages/Home";
 import Profile from "pages/Profile";
@@ -52,6 +53,10 @@ const Routes = () => {
 
                         <Route path="/profile" exact>
                             <Profile/>
+                        </Route>
+
+                        <Route path="/createGroup" exact>
+                            <CreateGroup/>
                         </Route>
                         </>
                     )}

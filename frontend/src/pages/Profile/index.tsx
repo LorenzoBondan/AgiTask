@@ -151,7 +151,7 @@ const Profile = () => {
                 <div className='profile-card-second-container'>
                     <div className='profile-card-groups-container'>
                         <h3><MdGroups style={{marginRight:"3px"}}/>Groups</h3>
-                        <NavLink to="/create">
+                        <NavLink to="/createGroup">
                             <button className='btn'><img src={plusIcon} alt="" />New Group</button>
                         </NavLink>
                     </div>
