@@ -41,6 +41,6 @@
     justify-content: center;
 }
 
-.notification-card-button svg:hover{
+.notification-card-eye:hover{
     cursor: pointer;
 }

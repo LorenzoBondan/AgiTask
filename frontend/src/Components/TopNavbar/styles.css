@@ -1,6 +1,7 @@
 .top-navbar-main-container{
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .tasks-container-navbar{
@@ -46,12 +47,12 @@
     margin-right: 10px;
     font-weight: 700;
     color: #4E4E4E;
+    display: flex;
+    align-items: center;
 }
 
 .tasks-container-second p:hover {
     cursor: pointer;
-    transform: scale(1.2);
-    transition: 0.2s ease-in-out;
 }
 
 .top-navbar-icon{
@@ -65,4 +66,20 @@
     justify-content: flex-end;
     padding-right: 10px;
     width: 100%;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 10px;
+    right: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
 }

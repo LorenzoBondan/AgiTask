@@ -33,10 +33,6 @@ const TopNavbar = () => {
       }
     }, []);
   
-    useEffect(() => {
-      getUser();
-    }, [getUser]);
-
     const [showNotifications, setShowNotifications] = useState(false);
     
     const openAndCloseNotifications = () => {
@@ -48,6 +44,10 @@ const TopNavbar = () => {
         }
     }
 
+    useEffect(() => {
+      getUser();
+    }, [getUser]);
+
     return(
         <div className='top-navbar-main-container'>
           <div className='tasks-container-navbar'>
@@ -58,12 +58,16 @@ const TopNavbar = () => {
                   </div>
               </NavLink>
               <div className='tasks-container-second'>
-                  <p onClick={() => openAndCloseNotifications()}><IoIosNotificationsOutline className='top-navbar-icon' /></p>
+                  <p onClick={() => openAndCloseNotifications()}>
+                    <IoIosNotificationsOutline className='top-navbar-icon' />
+                    {user && user?.notifications.filter(notification => !notification.read).length > 0 && <span className='notification-badge'>{user?.notifications.filter(notification => !notification.read).length}</span>}
+                  </p>
+                  
                   <NavLink to="/create">
                       <p><AiOutlinePlus className='top-navbar-icon'/></p>
                   </NavLink>
                   <NavLink to="/tasks">
-                      <p><BsListTask className='top-navbar-icon'/>{user?.tasksId.length}</p>
+                      <p><BsListTask className='top-navbar-icon'/></p>
                   </NavLink>
               </div>
           </div>

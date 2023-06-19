@@ -5,6 +5,7 @@ import { convertDateTime } from 'helpers';
 import { useCallback } from 'react';
 import { BsEye } from 'react-icons/bs'; 
 import { FiClock } from 'react-icons/fi';
+import { AiOutlineCheck } from 'react-icons/ai';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 
@@ -67,7 +68,8 @@ const NotificationCard = ({notification, onRead} : Props) => {
                 <p><FiClock style={{marginRight:"3px"}}/>{convertDateTime(notification.moment)}</p>
             </div>
             <div className='notification-card-button'>
-                <BsEye style={{marginRight:"3px"}} onClick={handleReadChange}/>
+                {notification.read && <AiOutlineCheck style={{marginRight:"2px"}} />}
+                <BsEye onClick={handleReadChange} className='notification-card-eye' />
             </div>
         </div>
     );

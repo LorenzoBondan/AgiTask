@@ -31,13 +31,13 @@ const Notifications = () => {
     }, []);
   
     useEffect(() => {
-      getUser();
+        getUser();
     }, [getUser]);
 
     return(
         <div className="notifications-container">
             <div className='notifications-column'>
-                {user && user.notifications.map(notification => (
+                {user && user.notifications.sort( (a,b) => a.moment < b.moment ? 1 : -1).map(notification => (
                     <NotificationCard notification={notification} onRead={getUser} key={notification.id}/>
                 ))}
             </div>
