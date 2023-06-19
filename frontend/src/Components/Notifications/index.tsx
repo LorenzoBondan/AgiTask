@@ -7,7 +7,11 @@ import { getTokenData } from 'util/auth';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 
-const Notifications = () => {
+type Props = {
+    onReadNotification : Function;
+}
+
+const Notifications = ({onReadNotification} : Props) => {
 
     const [user, setUser] = useState<User | null>(null);
 
@@ -24,6 +28,7 @@ const Notifications = () => {
   
           const response = await requestBackend(params);
           setUser(response.data);
+
         }
       } catch (error) {
         console.log("Error: " + error);
@@ -34,11 +39,16 @@ const Notifications = () => {
         getUser();
     }, [getUser]);
 
+    const handleChangeRead = () => {
+        getUser();
+        onReadNotification();
+    }
+
     return(
         <div className="notifications-container">
             <div className='notifications-column'>
                 {user && user.notifications.sort( (a,b) => a.moment < b.moment ? 1 : -1).map(notification => (
-                    <NotificationCard notification={notification} onRead={getUser} key={notification.id}/>
+                    <NotificationCard notification={notification} onRead={handleChangeRead} key={notification.id}/>
                 ))}
             </div>
         </div>

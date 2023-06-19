@@ -73,7 +73,7 @@ const TopNavbar = () => {
           </div>
           {showNotifications && 
             <div className='top-navbar-notifications-container'>
-              {user && <Notifications/>}
+              {user && <Notifications onReadNotification={getUser}/>}
             </div>
           }
         </div>
