@@ -1,0 +1,50 @@
+.tasks-container-navbar{
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #DCDCDC;
+    width: 100%;
+}
+
+.tasks-container-first{
+    display: flex;
+    align-items: center;
+}
+
+.tasks-container-second{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks-container-navbar img{
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 5px;
+    border: 1px solid #DCDCDC;
+}
+
+.tasks-container-navbar h1{
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px #fff;
+    margin-bottom: 0;
+}
+
+.tasks-container-second p {
+    margin-bottom: 0;
+    font-size: 20px;
+    margin-right: 10px;
+    font-weight: 700;
+    color: #4E4E4E;
+}
+
+.top-navbar-icon{
+    font-size: 24px;
+    margin-right: 5px;
+    color: #4E4E4E;
+}

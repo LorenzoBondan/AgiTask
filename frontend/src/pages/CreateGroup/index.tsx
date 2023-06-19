@@ -82,7 +82,7 @@ const CreateGroup = () => {
 
   return (
     <div className="create-task-container">
-      <h1>Create New Task</h1>
+      <h1>Create New Group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="base-card post-card-form-card">
           <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,6 +1,7 @@
 
 import Footer from "Components/Footer";
 import Navbar from "Components/Navbar";
+import TopNavbar from "Components/TopNavbar";
 import Admin from "pages/Admin";
 import Auth from "pages/Auth";
 import CreateGroup from "pages/CreateGroup";
@@ -17,7 +18,7 @@ const Routes = () => {
 
     return(
         <Router history={history}> 
-            <div className="flex-direction-row">
+            <div className="flex-direction-column">
                 <Navbar/>
 
                 <Switch>
@@ -43,21 +44,26 @@ const Routes = () => {
 
                     {isAuthenticated() && (
                         <>
-                        <Route path="/tasks" exact>
-                            <Tasks/>
-                        </Route>
+                        <div className="flex-direction-column margin-left-85">
+                            <TopNavbar/>
+                            <Switch>
+                                <Route path="/tasks" exact>
+                                    <Tasks/>
+                                </Route>
 
-                        <Route path="/create" exact>
-                            <CreateTask/>
-                        </Route>
+                                <Route path="/create" exact>
+                                    <CreateTask/>
+                                </Route>
 
-                        <Route path="/profile" exact>
-                            <Profile/>
-                        </Route>
+                                <Route path="/profile" exact>
+                                    <Profile/>
+                                </Route>
 
-                        <Route path="/createGroup" exact>
-                            <CreateGroup/>
-                        </Route>
+                                <Route path="/createGroup" exact>
+                                    <CreateGroup/>
+                                </Route>
+                            </Switch>
+                        </div>
                         </>
                     )}
 

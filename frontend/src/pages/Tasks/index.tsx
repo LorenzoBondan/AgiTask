@@ -7,11 +7,9 @@ import { PieChartConfig, SpringPage, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import TaskCard from 'Components/TaskCard';
-import plusIcon from 'assets/images/plus.png';
 import { BsListTask } from 'react-icons/bs';
 import { buildTasksByStatusChart } from 'helpers';
 import PieChartCard from 'Components/pie-chart-card';
-import { NavLink } from 'react-router-dom';
 import TaskFilter, { TaskFilterData } from 'Components/TaskFilter';
 
 type ControlComponentsData = {
@@ -178,20 +176,6 @@ const Tasks = () => {
     
     return(
         <div className="tasks-container">
-            <div className='tasks-container-navbar'>
-                <div className='tasks-container-first'>
-                    <img src={user?.imgUrl} alt="" />
-                    <h1>{user?.name}'s Tasks</h1>
-                </div>
-                <div className='tasks-container-second'>
-                    <div className='tasks-new-task-container'>
-                        <NavLink to="/create">
-                            <button className='btn'><img src={plusIcon} alt="" />New Task</button>
-                        </NavLink>
-                    </div>
-                    <p><BsListTask style={{marginRight:"3px"}}/>{user?.tasksId.length}</p>
-                </div>
-            </div>
 
             <div className='tasks-filter'>
                 <TaskFilter onSubmitFilter={handleSubmitFilter}/>

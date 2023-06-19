@@ -49,15 +49,20 @@ ul {
   color: #9E9E9E;
 }
 
-.flex-direction-row{
+.flex-direction-column{
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
 }
 
+
 @media(min-width:1200px){
-  .flex-direction-row{
+  .flex-direction-column{
     display: flex;
     flex-direction: row;
     height: 100%;
+  }
+
+  .margin-left-85{
+    margin-left: 85px;
   }
 }
