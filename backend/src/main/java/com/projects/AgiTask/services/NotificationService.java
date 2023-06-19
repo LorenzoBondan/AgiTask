@@ -57,6 +57,18 @@ public class NotificationService {
 		}
 	}
 	
+	@Transactional
+	public NotificationDTO updateToUnread(Long id, NotificationDTO dto) {
+		try {
+			Notification entity = repository.getOne(id);
+			entity.setRead(false);
+			entity = repository.save(entity);
+			return new NotificationDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
+	
 	private void copyDtoToEntity(NotificationDTO dto, Notification entity) {
 		entity.setDescription(dto.getDescription());
 		entity.setMoment(dto.getMoment());

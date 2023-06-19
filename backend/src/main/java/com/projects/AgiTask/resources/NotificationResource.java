@@ -49,6 +49,12 @@ public class NotificationResource {
 		return ResponseEntity.ok().body(newDto);
 	}
 	
+	@PutMapping(value = "/{id}/unread")
+	public ResponseEntity<NotificationDTO> updateToUnread(@PathVariable Long id, @Valid @RequestBody NotificationDTO dto)	{
+		NotificationDTO newDto = service.updateToUnread(id, dto);
+		return ResponseEntity.ok().body(newDto);
+	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<NotificationDTO> delete(@PathVariable Long id) {
 		service.delete(id);
