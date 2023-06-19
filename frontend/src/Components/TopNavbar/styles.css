@@ -1,3 +1,8 @@
+.top-navbar-main-container{
+    display: flex;
+    flex-direction: column;
+}
+
 .tasks-container-navbar{
     padding: 20px;
     display: flex;
@@ -43,8 +48,21 @@
     color: #4E4E4E;
 }
 
+.tasks-container-second p:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+
 .top-navbar-icon{
     font-size: 24px;
     margin-right: 5px;
     color: #4E4E4E;
+}
+
+.top-navbar-notifications-container{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    width: 100%;
 }
