@@ -18,7 +18,7 @@ const Routes = () => {
 
     return(
         <Router history={history}> 
-            <div className="flex-direction-column">
+            <div className="flex-direction-row">
                 <Navbar/>
 
                 <Switch>
