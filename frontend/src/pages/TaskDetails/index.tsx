@@ -13,6 +13,8 @@ import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
 import { useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
+import WorkCard from './WorkCard';
+
 
 type UrlParams = {
     taskId: string;
@@ -120,6 +122,7 @@ const TaskDetails = () => {
     }
   };
 
+
     return(
         <div className="task-details-container">
 
@@ -196,7 +199,11 @@ const TaskDetails = () => {
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="works">
-                        <h1>works</h1>
+                      <div className='task-comments-row'>
+                        {task?.works.map(work => (
+                          <WorkCard task={task} work={work} onDeleteWork={getTask} key={work.id}/>
+                        ))}
+                      </div>
                     </Tab.Pane>
 
                   </Tab.Content>
