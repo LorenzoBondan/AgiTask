@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
 import { Task, User } from 'types';
-import axios, { AxiosRequestConfig } from 'axios';
-import { BASE_URL, requestBackend } from 'util/requests';
+import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
 import { convertDateTime } from 'helpers';
-import { Nav, Row, Tab } from 'react-bootstrap';
+import { Nav, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
@@ -22,14 +22,25 @@ const TaskDetails = () => {
 
     const [task, setTask] = useState<Task>();
 
-    useEffect(() => {
-        axios
-        .get(`${BASE_URL}/tasks/${taskId}`)
-        .then((response) => {
-            setTask(response.data);
-            window.scrollTo(0,0);
-        })
+    const getTask = useCallback(async () => {
+      try {
+          const params: AxiosRequestConfig = {
+            method: "GET",
+            url: `/tasks/${taskId}`,
+            withCredentials: true,
+          };
+  
+          const response = await requestBackend(params);
+          setTask(response.data);
+        
+      } catch (error) {
+        console.log("Error: " + error);
+      }
     }, [taskId]);
+
+    useEffect(() => {
+      getTask();
+    }, [getTask]);
 
     const [user, setUser] = useState<User | null>(null);
 
@@ -133,17 +144,15 @@ const TaskDetails = () => {
                   <Tab.Content id="slideInUp">
                     
                     <Tab.Pane eventKey="comments">
-                      <Row className='row task-comments-row'>
-                        {task?.comments.map(comment => (
-                          <CommentCard comment={comment} key={comment.id}/>
+                      <div className='task-comments-row'>
+                        {task?.comments.sort( (a,b) => a.dateTime > b.dateTime ? 1 : -1).map(comment => (
+                          <CommentCard comment={comment} onDelete={getTask} key={comment.id}/>
                         ))}
-                      </Row>
+                      </div>
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="works">
-                      <Row className='row'>
                         <h1>works</h1>
-                      </Row>
                     </Tab.Pane>
 
                   </Tab.Content>

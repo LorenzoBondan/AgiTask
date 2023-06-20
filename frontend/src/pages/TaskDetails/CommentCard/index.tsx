@@ -10,9 +10,10 @@ import { BsFillTrash3Fill } from 'react-icons/bs';
 
 type Props = {
     comment: Comment;
+    onDelete: Function;
 }
 
-const CommentCard = ({comment} : Props) => {
+const CommentCard = ({comment, onDelete} : Props) => {
 
     const [user, setUser] = useState<User | null>(null);
 
@@ -79,6 +80,21 @@ const CommentCard = ({comment} : Props) => {
             return false;
         }
     }
+
+    const handleDeleteComment = useCallback(() => {
+        if(!window.confirm(`Are you sure that you want to delete this comment?`)){
+            return;
+        }
+        const params : AxiosRequestConfig = {
+            method:"DELETE",
+            url: `/comments/${comment.id}`,
+            withCredentials:true
+          }
+          requestBackend(params) 
+            .then(response => {
+                onDelete();
+        })
+    }, [comment.id ,onDelete]);
     
     return(
         <div className={iAmTheAuthor() ? "comment-card-container-author" : "comment-card-container"}>
@@ -96,7 +112,7 @@ const CommentCard = ({comment} : Props) => {
 
                     {(iAmTheAuthor() || iAmTheTaskAuthor()) && 
                         <div className='comment-card-buttons'>
-                            <BsFillTrash3Fill/>
+                            <BsFillTrash3Fill onClick={() => handleDeleteComment()}/>
                         </div>
                     }
                 </div>

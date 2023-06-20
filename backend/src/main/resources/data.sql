@@ -55,6 +55,7 @@ INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES 
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Fourth Task', 'This is the fourth task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 1, 3);
 
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 1, 1);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the second comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:22:00', 2, 1);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the second task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 2);
 
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (1, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:19:00');
