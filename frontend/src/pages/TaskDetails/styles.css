@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     width: 20%;
-    border-right: 1px solid #ABABAB;
+    border-right: 1px solid #DCDCDC;
 }
 
 .task-details-first-container-top{
@@ -170,8 +170,18 @@
 .task-comments-row{
     padding: 0 20px;
     overflow-y: scroll;
-    height: 700px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.task-comment-form form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid #DCDCDC;
+    padding-top: 20px;
 }

@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom';
 import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
-import { Task, User } from 'types';
+import { Comment, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
@@ -11,6 +11,8 @@ import { Nav, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
+import { useForm } from 'react-hook-form';
+import { AiOutlineSend } from 'react-icons/ai';
 
 type UrlParams = {
     taskId: string;
@@ -90,6 +92,33 @@ const TaskDetails = () => {
     getCreator();
   }, [getCreator]);
 
+  const { register, handleSubmit, formState: { errors }} = useForm<Comment>();
+
+  const onSubmit = async (formData: Comment) => {
+    if (user) {
+      formData.author = user;
+      formData.taskId = parseInt(taskId);
+      const dateNow = new Date();
+      dateNow.setHours(dateNow.getHours() - 3);
+      formData.dateTime = dateNow.toISOString();
+
+      try {
+        const params: AxiosRequestConfig = {
+          method: "POST",
+          url: "/comments",
+          data: formData,
+          withCredentials: true,
+        };
+        await requestBackend(params);
+      } catch (error) {
+        console.log("Error: " + error);
+      } 
+      finally{
+        getTask();
+      }
+    }
+  };
+
     return(
         <div className="task-details-container">
 
@@ -131,7 +160,6 @@ const TaskDetails = () => {
 
             <div className='task-details-second-container'>
                 <Tab.Container id="tasks-tabs" defaultActiveKey="comments">
-
                   <Nav variant="pills" className="nav-pills mb-2 mt-2" id="pills-tab">
                     <Nav.Item>
                       <Nav.Link eventKey="comments"><BiCommentDetail/></Nav.Link>
@@ -142,12 +170,27 @@ const TaskDetails = () => {
                   </Nav>
 
                   <Tab.Content id="slideInUp">
-                    
                     <Tab.Pane eventKey="comments">
                       <div className='task-comments-row'>
                         {task?.comments.sort( (a,b) => a.dateTime > b.dateTime ? 1 : -1).map(comment => (
                           <CommentCard comment={comment} onDelete={getTask} key={comment.id}/>
                         ))}
+                      </div>
+                      <div className='task-comment-form'>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <input
+                              {...register("text", {
+                                required: "Campo obrigatório",
+                              })}
+                              type="text"
+                              className={`form-control base-input ${
+                                errors.text ? "is-invalid" : ""
+                              }`}
+                              placeholder="Comment"
+                              name="text"
+                            />
+                            <button className='btn' onClick={handleSubmit(onSubmit)}><AiOutlineSend/></button>
+                        </form>
                       </div>
                     </Tab.Pane>
 
