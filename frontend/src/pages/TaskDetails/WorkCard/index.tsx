@@ -18,9 +18,9 @@ type Props = {
     onDeleteWork: Function;
 }
 
-const WorkCard = ({task, work, onDeleteWork} : Props) => {
+const WorkCard = ({work, onDeleteWork} : Props) => {
 
-    const { register, handleSubmit, formState: {errors}, setValue, control } = useForm<Work>();
+    const { handleSubmit, setValue } = useForm<Work>();
 
     useEffect(() => {
         if(work){
@@ -76,7 +76,6 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
         })
     }, [work.id ,onDeleteWork]);
 
-    
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal(){
@@ -87,7 +86,6 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
     setIsOpen(false);
   }
 
-  
   const [dateTimeStart, setDateTimeStart] = useState('');
   const [dateTimeEnd, setDateTimeEnd] = useState('');
 
@@ -120,38 +118,16 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
         onDeleteWork();
     };
 
-    const handleDateTimeStartChange = (selectedDateTime: string | Date[]) => {
-        if (Array.isArray(selectedDateTime)) {
-          if (selectedDateTime.length > 0) {
-            const selectedDate = selectedDateTime[0];
-            setDateTimeStart(selectedDate.toISOString());
-          } else {
-            setDateTimeStart('');
-          }
-        } else {
-            setDateTimeStart(selectedDateTime);
-        }
-        console.log("start: " + dateTimeStart);
+    const handleDateTimeStartChange = (selectedDateTime: Date[]) => {
+        setDateTimeStart(selectedDateTime[0].toISOString());
     };
-
-    const handleDateTimeEndChange = (selectedDateTime: string | Date[]) => {
-        if (Array.isArray(selectedDateTime)) {
-          if (selectedDateTime.length > 0) {
-            const selectedDate = selectedDateTime[0];
-            setDateTimeEnd(selectedDate.toISOString());
-          } else {
-            setDateTimeEnd('');
-          }
-        } else {
-            setDateTimeEnd(selectedDateTime);
-        }
-        console.log("end: ", dateTimeEnd);
+      
+    const handleDateTimeEndChange = (selectedDateTime: Date[]) => {
+        setDateTimeEnd(selectedDateTime[0].toISOString());
     };
-
-
+      
     return(
         <div className="work-card-container-task">
-
             <div className="work-card-main-container-task">
                 <div className="work-user-task">
                     <img src={creator?.imgUrl} alt="" />
@@ -179,43 +155,46 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
                         overlayClassName="modal-overlay"
                         className="modal-content"
                         >
-
-                        <form onSubmit={handleSubmit(onSubmitEdit)}>
-                            <label htmlFor="">Start Date</label>
-                            <FlatPicker
-                              name="dateTimeStart"
-                              value={dateTimeStart}
-                              onChange={(selectedDateTime: Date[]) => handleDateTimeStartChange(selectedDateTime)}
-                              options={{
-                                  enableTime: true,
-                                  dateFormat: 'Y-m-d h:m',
-                                  mode:'single'
-                              }}
-                              className="base-input time-input"
-                            />
-
-                            <label htmlFor="">End Date</label>
-                            <FlatPicker
-                              name="dateTimeEnd"
-                              value={dateTimeEnd}
-                              onChange={(selectedDateTime: Date[]) => handleDateTimeEndChange(selectedDateTime)}
-                              options={{
-                                  enableTime: true,
-                                  dateFormat: 'Y-m-d h:m',
-                                  mode:'single',
-                                  
-                              }}
-                              className="base-input time-input"
-                            />
-                            <button onClick={handleSubmit(onSubmitEdit)}>Submit</button>
+                        <form onSubmit={handleSubmit(onSubmitEdit)} className="work-edit-form">
+                            <h4>Edit Work</h4>
+                            <div className="work-edit-input-container">
+                                <label htmlFor="">Start Date</label>
+                                <FlatPicker
+                                    name="dateTimeStart"
+                                    value={dateTimeStart}
+                                    onChange={(selectedDateTimeStart: Date[]) => handleDateTimeStartChange(selectedDateTimeStart)}
+                                    options={{
+                                        enableTime: true,
+                                        dateFormat: 'Y-m-d H:i',
+                                        mode:'single',
+                                        time_24hr: true,
+                                    }}
+                                    className="base-input time-input"
+                                />
+                            </div>
+                            <div className="work-edit-input-container">
+                                <label htmlFor="">End Date</label>
+                                <FlatPicker
+                                    name="dateTimeEnd"
+                                    value={dateTimeEnd}
+                                    onChange={(selectedDateTimeEnd: Date[]) => handleDateTimeEndChange(selectedDateTimeEnd)}
+                                    options={{
+                                        enableTime: true,
+                                        dateFormat: 'Y-m-d H:i',
+                                        mode:'single',
+                                        time_24hr: true,
+                                    }}
+                                    className="base-input time-input"
+                                />
+                            </div>
+                            <div className="work-edit-buttons">
+                                <button onClick={closeModal} className="btn">Close</button>
+                                <button onClick={handleSubmit(onSubmitEdit)} className="btn">Submit</button>
+                            </div>
                         </form>
-
-                        
-                        <button onClick={closeModal}>Close</button>
                     </Modal>
                 </div>
             </div>
-
         </div>
     );
 }

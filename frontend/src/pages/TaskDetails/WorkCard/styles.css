@@ -80,3 +80,52 @@
     cursor: pointer;
     transform: scale(1.05);
 }
+
+.work-edit-form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.work-edit-form h4{
+    font-weight: 700;
+    margin-bottom: 15px;
+    width: 100%;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ABABAB;
+}
+
+.work-edit-input-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.work-edit-input-container label{
+    margin-right: 5px;
+}
+
+.work-edit-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.work-edit-buttons button{
+    width: 49%;
+    border-bottom: 1px solid #ABABAB;
+    font-weight: 700;
+    border-radius: 0;
+}
+
+.work-edit-buttons button:hover{
+    background-color: #ababab4d;
+}
