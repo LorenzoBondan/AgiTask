@@ -9,6 +9,8 @@ import { AiFillEdit } from 'react-icons/ai';
 import Modal from 'react-modal';
 import './styles.css';
 import { useForm } from "react-hook-form";
+import FlatPicker from 'react-flatpickr';
+import "flatpickr/dist/themes/material_orange.css";
 
 type Props = {
     work: Work;
@@ -85,7 +87,20 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
     setIsOpen(false);
   }
 
+  
+  const [dateTimeStart, setDateTimeStart] = useState('');
+  const [dateTimeEnd, setDateTimeEnd] = useState('');
+
   const onSubmitEdit = (formData : Work) => {
+
+    const correctTime = (dateTimeStart: string): string => {
+        const startDate = new Date(dateTimeStart);
+        startDate.setHours(startDate.getHours() - 3);
+        return startDate.toISOString();
+    };
+
+    formData.dateTimeStart = correctTime(dateTimeStart);
+    formData.dateTimeEnd = correctTime(dateTimeEnd);
 
     const params : AxiosRequestConfig = {
         method: "PUT",
@@ -104,6 +119,35 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
         closeModal();
         onDeleteWork();
     };
+
+    const handleDateTimeStartChange = (selectedDateTime: string | Date[]) => {
+        if (Array.isArray(selectedDateTime)) {
+          if (selectedDateTime.length > 0) {
+            const selectedDate = selectedDateTime[0];
+            setDateTimeStart(selectedDate.toISOString());
+          } else {
+            setDateTimeStart('');
+          }
+        } else {
+            setDateTimeStart(selectedDateTime);
+        }
+        console.log("start: " + dateTimeStart);
+    };
+
+    const handleDateTimeEndChange = (selectedDateTime: string | Date[]) => {
+        if (Array.isArray(selectedDateTime)) {
+          if (selectedDateTime.length > 0) {
+            const selectedDate = selectedDateTime[0];
+            setDateTimeEnd(selectedDate.toISOString());
+          } else {
+            setDateTimeEnd('');
+          }
+        } else {
+            setDateTimeEnd(selectedDateTime);
+        }
+        console.log("end: ", dateTimeEnd);
+    };
+
 
     return(
         <div className="work-card-container-task">
@@ -137,23 +181,31 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
                         >
 
                         <form onSubmit={handleSubmit(onSubmitEdit)}>
-                            <input 
-                                {...register("dateTimeStart", {
-                                required: 'Campo obrigatório',
-                                })}
-                                type="text"
-                                className={`form-control base-input ${errors.dateTimeStart ? 'is-invalid' : ''}`}
-                                placeholder="Date Time Start"
-                                name="dateTimeStart"
+                            <label htmlFor="">Start Date</label>
+                            <FlatPicker
+                              name="dateTimeStart"
+                              value={dateTimeStart}
+                              onChange={(selectedDateTime: Date[]) => handleDateTimeStartChange(selectedDateTime)}
+                              options={{
+                                  enableTime: true,
+                                  dateFormat: 'Y-m-d h:m',
+                                  mode:'single'
+                              }}
+                              className="base-input time-input"
                             />
-                            <input 
-                                {...register("dateTimeEnd", {
-                                required: 'Campo obrigatório',
-                                })}
-                                type="text"
-                                className={`form-control base-input ${errors.dateTimeEnd ? 'is-invalid' : ''}`}
-                                placeholder="Date Time End"
-                                name="dateTimeEnd"
+
+                            <label htmlFor="">End Date</label>
+                            <FlatPicker
+                              name="dateTimeEnd"
+                              value={dateTimeEnd}
+                              onChange={(selectedDateTime: Date[]) => handleDateTimeEndChange(selectedDateTime)}
+                              options={{
+                                  enableTime: true,
+                                  dateFormat: 'Y-m-d h:m',
+                                  mode:'single',
+                                  
+                              }}
+                              className="base-input time-input"
                             />
                             <button onClick={handleSubmit(onSubmitEdit)}>Submit</button>
                         </form>
