@@ -10,6 +10,7 @@ import { convertDateTime } from 'helpers';
 import { Nav, Row, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineTool } from 'react-icons/ai';
+import CommentCard from './CommentCard';
 
 type UrlParams = {
     taskId: string;
@@ -132,9 +133,9 @@ const TaskDetails = () => {
                   <Tab.Content id="slideInUp">
                     
                     <Tab.Pane eventKey="comments">
-                      <Row className='row'>
+                      <Row className='row task-comments-row'>
                         {task?.comments.map(comment => (
-                          <p>{comment.text}</p>
+                          <CommentCard comment={comment} key={comment.id}/>
                         ))}
                       </Row>
                     </Tab.Pane>
