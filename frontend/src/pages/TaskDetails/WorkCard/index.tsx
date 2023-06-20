@@ -22,6 +22,8 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
 
     const { handleSubmit, setValue } = useForm<Work>();
 
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         if(work){
             requestBackend({url:`/works/${work.id}`, withCredentials:true})
@@ -100,6 +102,11 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
     formData.dateTimeStart = correctTime(dateTimeStart);
     formData.dateTimeEnd = correctTime(dateTimeEnd);
 
+    if(formData.dateTimeEnd < formData.dateTimeStart){
+        setError("End Date cannot be earlier than Start Date");
+        return;
+    }
+
     const params : AxiosRequestConfig = {
         method: "PUT",
         url : `/works/${work.id}`,
@@ -110,12 +117,15 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
     requestBackend(params)
         .then(response => {
             console.log('success', response.data);
+            closeModal();
+            onDeleteWork();
+            setError('');
         })
         .catch((error) => {
             console.log(error);
+            setError(error.message);
         })
-        closeModal();
-        onDeleteWork();
+        
     };
 
     const handleDateTimeStartChange = (selectedDateTime: Date[]) => {
@@ -187,6 +197,7 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
                                     className="base-input time-input"
                                 />
                             </div>
+                            {error && <p className="error-message">{error}</p>}
                             <div className="work-edit-buttons">
                                 <button onClick={closeModal} className="btn">Close</button>
                                 <button onClick={handleSubmit(onSubmitEdit)} className="btn">Submit</button>

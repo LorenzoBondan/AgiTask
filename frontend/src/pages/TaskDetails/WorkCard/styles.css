@@ -129,3 +129,11 @@
 .work-edit-buttons button:hover{
     background-color: #ababab4d;
 }
+
+.error-message{
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+}
