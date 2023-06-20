@@ -92,7 +92,7 @@ const TaskDetails = () => {
     getCreator();
   }, [getCreator]);
 
-  const { register, handleSubmit, formState: { errors }} = useForm<Comment>();
+  const { register, handleSubmit, formState: { errors }, setValue} = useForm<Comment>();
 
   const onSubmit = async (formData: Comment) => {
     if (user) {
@@ -115,6 +115,7 @@ const TaskDetails = () => {
       } 
       finally{
         getTask();
+        setValue('text', '');
       }
     }
   };
@@ -189,7 +190,7 @@ const TaskDetails = () => {
                               placeholder="Comment"
                               name="text"
                             />
-                            <button className='btn' onClick={handleSubmit(onSubmit)}><AiOutlineSend/></button>
+                            <AiOutlineSend onClick={handleSubmit(onSubmit)}/>
                         </form>
                       </div>
                     </Tab.Pane>

@@ -170,7 +170,7 @@
 .task-comments-row{
     padding: 0 20px;
     overflow-y: scroll;
-    height: 600px;
+    height: 680px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -184,4 +184,24 @@
     width: 100%;
     border-top: 1px solid #DCDCDC;
     padding-top: 20px;
+}
+
+.task-comment-form input{
+    border-radius: 100px;
+    padding: 5px 20px !important;
+    font-size: 16px;
+    height: 50px;
+}
+
+.task-comment-form input::placeholder{
+    color: #ABABAB;
+}
+
+.task-comment-form svg{
+    margin-left: 5px;
+    font-size: 36px;
+}
+
+.task-comment-form svg:hover{
+    cursor: pointer;
 }
