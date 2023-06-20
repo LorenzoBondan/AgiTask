@@ -11,6 +11,7 @@ import { BsListTask } from 'react-icons/bs';
 import { buildTasksByStatusChart } from 'helpers';
 import PieChartCard from 'Components/pie-chart-card';
 import TaskFilter, { TaskFilterData } from 'Components/TaskFilter';
+import { Link, NavLink } from 'react-router-dom';
 
 type ControlComponentsData = {
     filterData: TaskFilterData;
@@ -191,7 +192,9 @@ const Tasks = () => {
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksPending?.content.map(task => (
-                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <Link to={`/tasks/${task.id}`}>
+                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            </Link>
                         ))}
                     </div>
                     }
@@ -205,7 +208,9 @@ const Tasks = () => {
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksWorking?.content.map(task => (
-                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <Link to={`/tasks/${task.id}`}>
+                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            </Link>
                         ))}
                     </div>
                     }
@@ -219,7 +224,9 @@ const Tasks = () => {
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksCompleted?.content.map(task => (
-                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            <Link to={`/tasks/${task.id}`}>
+                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
+                            </Link>
                         ))}
                     </div>
                     }
