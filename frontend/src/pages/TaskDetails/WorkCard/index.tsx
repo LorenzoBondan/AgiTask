@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { convertDateTime, convertTimeToHours } from "helpers";
 import { useCallback, useEffect, useState } from "react";
-import { Task, User, Work } from "types";
+import { User, Work } from "types";
 import { requestBackend } from "util/requests";
 import { BsClock } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
@@ -14,11 +14,11 @@ import "flatpickr/dist/themes/material_orange.css";
 
 type Props = {
     work: Work;
-    task: Task;
     onDeleteWork: Function;
+    userLogged: User;
 }
 
-const WorkCard = ({work, onDeleteWork} : Props) => {
+const WorkCard = ({work, onDeleteWork, userLogged} : Props) => {
 
     const { handleSubmit, setValue } = useForm<Work>();
 
@@ -155,7 +155,9 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
                     <span>Total Time</span>
                     <p><BsClock style={{marginRight:"3px"}}/><strong>{convertTimeToHours(work.totalTime)}</strong></p>
                 </div>
+
                 <div className="work-card-content-task work-card-content-buttons">
+                    {work.employeeId === userLogged?.id && (<>
                     <AiFillCloseCircle onClick={() => handleDeleteWork()}/>
                     <AiFillEdit onClick={() => openModal()}/>
                     <Modal 
@@ -204,7 +206,9 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
                             </div>
                         </form>
                     </Modal>
+                    </>)}
                 </div>
+
             </div>
         </div>
     );

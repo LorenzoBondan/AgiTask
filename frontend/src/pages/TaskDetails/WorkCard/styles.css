@@ -65,7 +65,7 @@
 .work-card-content-buttons{
     display: flex;
     flex-direction: row;
-    width: auto;
+    width: 8%;
 }
 
 .work-card-content-buttons svg{

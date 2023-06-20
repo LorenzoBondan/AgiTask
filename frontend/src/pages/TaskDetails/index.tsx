@@ -200,8 +200,8 @@ const TaskDetails = () => {
 
                     <Tab.Pane eventKey="works">
                       <div className='task-comments-row'>
-                        {task?.works.map(work => (
-                          <WorkCard task={task} work={work} onDeleteWork={getTask} key={work.id}/>
+                        {user && task?.works.map(work => (
+                          <WorkCard userLogged={user} work={work} onDeleteWork={getTask} key={work.id}/>
                         ))}
                       </div>
                     </Tab.Pane>
