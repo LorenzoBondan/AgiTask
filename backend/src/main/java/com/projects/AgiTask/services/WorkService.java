@@ -60,6 +60,9 @@ public class WorkService {
 	}
 	
 	private void copyDtoToEntity(WorkDTO dto, Work entity) {
+	    if (dto.getDateTimeEnd().isBefore(dto.getDateTimeStart())) {
+	        throw new IllegalArgumentException("End date cannot be before start date");
+	    }
 		entity.setDateTimeStart(dto.getDateTimeStart());
 		entity.setDateTimeEnd(dto.getDateTimeEnd());
 		entity.setEmployee(userRepository.getOne(dto.getEmployeeId()));
