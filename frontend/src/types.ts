@@ -61,8 +61,15 @@ export type Comment = {
 }
 
 export type Work = {
-    id: number;
-    totalTime: number;
+    id: number | null;
+    totalTime: number | null;
+    employeeId: number;
+    taskId: number;
+    dateTimeStart: string;
+    dateTimeEnd: string;
+}
+
+export type WorkVariant = {
     employeeId: number;
     taskId: number;
     dateTimeStart: string;

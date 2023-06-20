@@ -153,7 +153,7 @@ const WorkCard = ({work, onDeleteWork, userLogged} : Props) => {
                 </div>
                 <div className="work-card-content-task">
                     <span>Total Time</span>
-                    <p><BsClock style={{marginRight:"3px"}}/><strong>{convertTimeToHours(work.totalTime)}</strong></p>
+                    <p><BsClock style={{marginRight:"3px"}}/><strong>{work.totalTime && convertTimeToHours(work.totalTime)}</strong></p>
                 </div>
                 <div className="work-card-content-task work-card-content-buttons">
                     {work.employeeId === userLogged?.id && (<>

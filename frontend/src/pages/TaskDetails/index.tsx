@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom';
 import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
-import { Comment, Task, User, Work } from 'types';
+import { Comment, Task, User, Work, WorkVariant } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
@@ -13,6 +13,7 @@ import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
 import { useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import WorkCard from './WorkCard';
 import Modal from 'react-modal';
 import FlatPicker from 'react-flatpickr';
@@ -124,7 +125,7 @@ const TaskDetails = () => {
     }
   };
 
-  const { register: registerWork, handleSubmit: handleSubmitWork, formState: { errors: errorsWork }, setValue: setValueWork } = useForm<Work>();
+  const { handleSubmit: handleSubmitWork } = useForm<Work>();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -193,10 +194,108 @@ const TaskDetails = () => {
         setDateTimeEnd(selectedDateTime[0].toISOString());
     };
 
+    ////////
+
+    const [isRecording, setIsRecording] = useState(false);
+    const [startTime, setStartTime] = useState<Date | null>(null);
+    const [elapsedTime, setElapsedTime] = useState<number>(0);
+
+    const [dateTimeStartRecorded, setDateTimeStartRecorded] = useState('');
+    const [dateTimeEndRecorded, setDateTimeEndRecorded] = useState('');
+
+    const formatTime = (milliseconds: number): string => {
+      const seconds = Math.floor((milliseconds / 1000) % 60);
+      const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
+      const hours = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
+    
+      const formattedSeconds = seconds.toString().padStart(2, '0');
+      const formattedMinutes = minutes.toString().padStart(2, '0');
+      const formattedHours = hours.toString().padStart(2, '0');
+    
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    };
+
+    useEffect(() => {
+      const countTime = () => {
+        if (isRecording) {
+          if (!startTime) {
+
+            setStartTime(new Date());
+          } else {
+
+            const currentTime = new Date();
+            const elapsedMilliseconds = currentTime.getTime() - startTime.getTime();
+            setElapsedTime(elapsedMilliseconds);
+          }
+        } else {
+
+          setStartTime(null);
+          setElapsedTime(0);
+        }
+      };
+    
+      const timer = setInterval(countTime, 1000);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }, [isRecording, startTime]);
+    
+    useEffect(() => {
+      console.log("Data inicio: ", dateTimeStartRecorded);
+    }, [dateTimeStartRecorded]);
+
+    useEffect(() => {
+      console.log("Data Fim: ", dateTimeEndRecorded);
+    }, [dateTimeEndRecorded]);
+
+    const handleStartRecording = () => {
+      const currentDateTime = new Date();
+      const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
+      setDateTimeStartRecorded(formattedDateTime);
+      setIsRecording(true);
+    };
+    
+    const handleStopRecording = () => {
+      const currentDateTime = new Date();
+      const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
+      setDateTimeEndRecorded(formattedDateTime);
+
+      setIsRecording(false);
+      
+      if(user && task){
+
+        const workData: WorkVariant = {
+          employeeId: user?.id,
+          taskId: task?.id,
+          dateTimeStart: dateTimeStartRecorded,
+          dateTimeEnd: formattedDateTime,
+        };
+    
+        const params : AxiosRequestConfig = {
+            method: "POST",
+            url : `/works`,
+            data: workData,
+            withCredentials: true
+        };
+        
+        try{
+          requestBackend(params)
+          .then(response => {
+              console.log('success', response.data);
+              getTask();
+
+              setError('');
+          })
+        }
+        catch(error){
+          console.log(error);
+        }
+      }
+    };
 
     return(
         <div className="task-details-container">
-
             <div className='task-details-first-container'>
                 <div className='task-details-first-container-top'>
                     <h5>{task?.title}</h5>
@@ -204,8 +303,8 @@ const TaskDetails = () => {
                     <span>Created at: {task && convertDateTime(task?.startDate)}</span>
                 </div>
                 <div className='task-container-first-container-buttons'>
-                    <button className='btn btn-start'>Start</button>
-                    <button className='btn btn-finish'>Finish</button>
+                    <button className='btn btn-start' onClick={handleStartRecording}>Start</button>
+                    <button className='btn btn-finish' onClick={handleStopRecording}>Finish</button>
                 </div>
                 <div className='task-container-first-container-followers'>
                     <h4>Creator</h4>
@@ -229,7 +328,9 @@ const TaskDetails = () => {
                     </div>
                 </div>
                 <div className='task-container-first-container-details'>
-
+                  {isRecording && (
+                    <p>Tempo decorrido: {formatTime(elapsedTime)}</p>
+                  )}
                 </div>
             </div>
 
@@ -271,12 +372,12 @@ const TaskDetails = () => {
 
                     <Tab.Pane eventKey="works">
                       <div className='task-comments-row'>
-                        {user && task?.works.map(work => (
+                        {user && task?.works.sort( (a,b) => a.dateTimeStart > b.dateTimeStart ? 1 : -1).map(work => (
                           <WorkCard userLogged={user} work={work} onDeleteWork={getTask} key={work.id}/>
                         ))}
                       </div>
                       <div className='new-work-button-container'>
-                          <button className='btn btn-primary' onClick={openModal}>Add New Work</button>
+                          <button className='btn' onClick={openModal}><AiOutlinePlus style={{marginRight:"5px"}}/> Add New Work</button>
                           <Modal 
                             isOpen={modalIsOpen}
                             onRequestClose={closeModal}

@@ -72,7 +72,7 @@ const WorkCard = ({work, onDeleteWork} : Props) => {
                     <span>{task && returnTaskStatus(task?.status)}</span>
                 </div>
                 <div className="work-card-content">
-                    <p><BsClock style={{marginRight:"3px"}}/>{convertTimeToHours(work.totalTime)}</p>
+                    <p><BsClock style={{marginRight:"3px"}}/>{work.totalTime && convertTimeToHours(work.totalTime)}</p>
                     <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Started at {convertDateTime(work.dateTimeStart)} <br /></span>
                     <span><AiOutlineCalendar style={{marginRight:"3px"}}/>Finished at {convertDateTime(work.dateTimeEnd)}</span>
                 </div>

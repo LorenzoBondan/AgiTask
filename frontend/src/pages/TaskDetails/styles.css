@@ -205,3 +205,23 @@
 .task-comment-form svg:hover{
     cursor: pointer;
 }
+
+.new-work-button-container{
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid #DCDCDC;
+    padding-top: 10px;
+}
+
+.new-work-button-container button{
+    margin-top: 20px;
+    border-bottom: 1px solid #DCDCDC;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 0;
+}
+
+.new-work-button-container button:hover{
+    border-bottom: 2px solid #DCDCDC;
+}
