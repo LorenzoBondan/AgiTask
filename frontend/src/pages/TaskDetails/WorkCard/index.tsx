@@ -8,6 +8,7 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { AiFillEdit } from 'react-icons/ai';
 import Modal from 'react-modal';
 import './styles.css';
+import { useForm } from "react-hook-form";
 
 type Props = {
     work: Work;
@@ -16,6 +17,24 @@ type Props = {
 }
 
 const WorkCard = ({task, work, onDeleteWork} : Props) => {
+
+    const { register, handleSubmit, formState: {errors}, setValue, control } = useForm<Work>();
+
+    useEffect(() => {
+        if(work){
+            requestBackend({url:`/works/${work.id}`, withCredentials:true})
+                .then((response) => {
+                    const work = response.data as Work;
+
+                    setValue('dateTimeStart', work.dateTimeStart);
+                    setValue('dateTimeEnd', work.dateTimeEnd);
+                    setValue('employeeId', work.employeeId);
+                    setValue('taskId', work.taskId);
+                    setValue('totalTime', work.totalTime);
+                })
+        }
+        
+    }, [work, setValue]);
 
     const [creator, setCreator] = useState<User | null>(null);
 
@@ -66,6 +85,26 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
     setIsOpen(false);
   }
 
+  const onSubmitEdit = (formData : Work) => {
+
+    const params : AxiosRequestConfig = {
+        method: "PUT",
+        url : `/works/${work.id}`,
+        data: formData,
+        withCredentials: true
+    };
+
+    requestBackend(params)
+        .then(response => {
+            console.log('success', response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        closeModal();
+        onDeleteWork();
+    };
+
     return(
         <div className="work-card-container-task">
 
@@ -96,7 +135,30 @@ const WorkCard = ({task, work, onDeleteWork} : Props) => {
                         overlayClassName="modal-overlay"
                         className="modal-content"
                         >
-                        <h2>Hello</h2>
+
+                        <form onSubmit={handleSubmit(onSubmitEdit)}>
+                            <input 
+                                {...register("dateTimeStart", {
+                                required: 'Campo obrigatório',
+                                })}
+                                type="text"
+                                className={`form-control base-input ${errors.dateTimeStart ? 'is-invalid' : ''}`}
+                                placeholder="Date Time Start"
+                                name="dateTimeStart"
+                            />
+                            <input 
+                                {...register("dateTimeEnd", {
+                                required: 'Campo obrigatório',
+                                })}
+                                type="text"
+                                className={`form-control base-input ${errors.dateTimeEnd ? 'is-invalid' : ''}`}
+                                placeholder="Date Time End"
+                                name="dateTimeEnd"
+                            />
+                            <button onClick={handleSubmit(onSubmitEdit)}>Submit</button>
+                        </form>
+
+                        
                         <button onClick={closeModal}>Close</button>
                     </Modal>
                 </div>
