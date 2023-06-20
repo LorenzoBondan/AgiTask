@@ -124,3 +124,45 @@
     margin-right: 10px;
     margin-bottom: 10px;
 }
+
+.task-details-second-container{
+    width: 78%;
+    padding: 0 10px;
+}
+
+.task-details-second-container svg{
+    font-size: 24px;
+    color: #828282;
+}
+
+.task-details-second-container .nav.nav-pills {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 30px !important;
+}
+
+.task-details-second-container .nav.nav-pills .nav-item {
+    width: 50% !important;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-details-second-container .nav.nav-pills .nav-item a {
+    width: 98% !important;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #828282;
+    border-radius: 0;
+}
+
+.task-details-second-container .nav.nav-pills .nav-item a.active {
+    border-bottom: 2px solid #828282;
+    background-color: unset;
+}

@@ -7,6 +7,9 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { BASE_URL, requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
 import { convertDateTime } from 'helpers';
+import { Nav, Row, Tab } from 'react-bootstrap';
+import { BiCommentDetail } from 'react-icons/bi';
+import { AiOutlineTool } from 'react-icons/ai';
 
 type UrlParams = {
     taskId: string;
@@ -115,14 +118,36 @@ const TaskDetails = () => {
             </div>
 
             <div className='task-details-second-container'>
-                <div className='task-container-second-container-top'>
+                <Tab.Container id="tasks-tabs" defaultActiveKey="comments">
 
-                </div>
-                <div className='task-container-second-container-content'>
+                  <Nav variant="pills" className="nav-pills mb-2 mt-2" id="pills-tab">
+                    <Nav.Item>
+                      <Nav.Link eventKey="comments"><BiCommentDetail/></Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="works"><AiOutlineTool/></Nav.Link>
+                    </Nav.Item>
+                  </Nav>
 
-                </div>
+                  <Tab.Content id="slideInUp">
+                    
+                    <Tab.Pane eventKey="comments">
+                      <Row className='row'>
+                        {task?.comments.map(comment => (
+                          <p>{comment.text}</p>
+                        ))}
+                      </Row>
+                    </Tab.Pane>
+
+                    <Tab.Pane eventKey="works">
+                      <Row className='row'>
+                        <h1>works</h1>
+                      </Row>
+                    </Tab.Pane>
+
+                  </Tab.Content>
+                </Tab.Container>
             </div>
-
         </div>
     );
 }
