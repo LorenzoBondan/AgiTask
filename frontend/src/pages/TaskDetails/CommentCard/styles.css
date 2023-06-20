@@ -1,11 +1,15 @@
-.comment-card-container{
+.comment-card-container, .comment-card-container-author{
     padding: 10px;
     display: flex;
     flex-direction: column;
+    background-color: #E4F8E6;
     width: 100%;
-    background-color: antiquewhite;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.comment-card-container-author{
+    background-color: #fff !important;
 }
 
 .comment-card-top-container{
@@ -43,4 +47,12 @@
     margin-bottom: 0;
     font-size: 14px;
     color: #ABABAB;
+}
+
+.comment-card-buttons svg{
+    font-size: 18px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }

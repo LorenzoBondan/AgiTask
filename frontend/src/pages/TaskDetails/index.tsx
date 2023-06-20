@@ -108,7 +108,7 @@ const TaskDetails = () => {
                         <p>Followers</p>
                         <div className='task-followers-row'>
                             {task?.followers.map(follower => (
-                                <img src={follower.imgUrl} alt="" />
+                                <img src={follower.imgUrl} alt="" key={follower.id}/>
                             ))}
                         </div>
                     </div>

@@ -1,15 +1,87 @@
 
-import { Comment } from 'types';
+import { Comment, Task, User } from 'types';
 import './styles.css';
 import { convertDateTime } from 'helpers';
+import { getTokenData } from 'util/auth';
+import { AxiosRequestConfig } from 'axios';
+import { requestBackend } from 'util/requests';
+import { useCallback, useEffect, useState } from 'react';
+import { BsFillTrash3Fill } from 'react-icons/bs';
 
 type Props = {
     comment: Comment;
 }
 
 const CommentCard = ({comment} : Props) => {
+
+    const [user, setUser] = useState<User | null>(null);
+
+    const getUser = useCallback(async () => {
+      try {
+        const email = getTokenData()?.user_name;
+  
+        if (email) {
+          const params: AxiosRequestConfig = {
+            method: "GET",
+            url: `/users/email/${email}`,
+            withCredentials: true,
+          };
+  
+          const response = await requestBackend(params);
+          setUser(response.data);
+        }
+      } catch (error) {
+        console.log("Error: " + error);
+      }
+    }, []);
+  
+    useEffect(() => {
+      getUser();
+    }, [getUser]);
+
+    const [task, setTask] = useState<Task | null>(null);
+
+    const getTask = useCallback(async () => {
+      try {
+        if (comment) {
+          const params: AxiosRequestConfig = {
+            method: "GET",
+            url: `/tasks/${comment.taskId}`,
+            withCredentials: true,
+          };
+  
+          const response = await requestBackend(params);
+          setTask(response.data);
+        }
+      } catch (error) {
+        console.log("Error: " + error);
+      }
+    }, [comment]);
+  
+    useEffect(() => {
+        getTask();
+    }, [getTask]);
+
+    const iAmTheAuthor = () => {
+        if(comment.author.id === user?.id){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    const iAmTheTaskAuthor = () => {
+        if(task?.creatorId === user?.id){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     return(
-        <div className='comment-card-container'>
+        <div className={iAmTheAuthor() ? "comment-card-container-author" : "comment-card-container"}>
             <div className='comment-card-top-container'>
                 <div className='comment-card-image'>
                     <img src={comment.author.imgUrl} alt="" /> 
@@ -21,9 +93,12 @@ const CommentCard = ({comment} : Props) => {
                             <p>{convertDateTime(comment.dateTime)}</p>
                         </div>
                     </div>
-                    <div className='comment-card-buttons'>
 
-                    </div>
+                    {(iAmTheAuthor() || iAmTheTaskAuthor()) && 
+                        <div className='comment-card-buttons'>
+                            <BsFillTrash3Fill/>
+                        </div>
+                    }
                 </div>
             </div>
             <div className='comment-card-content'>
