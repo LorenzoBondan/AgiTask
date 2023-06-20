@@ -155,60 +155,58 @@ const WorkCard = ({work, onDeleteWork, userLogged} : Props) => {
                     <span>Total Time</span>
                     <p><BsClock style={{marginRight:"3px"}}/><strong>{convertTimeToHours(work.totalTime)}</strong></p>
                 </div>
-
                 <div className="work-card-content-task work-card-content-buttons">
                     {work.employeeId === userLogged?.id && (<>
-                    <AiFillCloseCircle onClick={() => handleDeleteWork()}/>
-                    <AiFillEdit onClick={() => openModal()}/>
-                    <Modal 
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel="Example Modal"
-                        overlayClassName="modal-overlay"
-                        className="modal-content"
-                        >
-                        <form onSubmit={handleSubmit(onSubmitEdit)} className="work-edit-form">
-                            <h4>Edit Work</h4>
-                            <div className="work-edit-input-container">
-                                <label htmlFor="">Start Date</label>
-                                <FlatPicker
-                                    name="dateTimeStart"
-                                    value={dateTimeStart}
-                                    onChange={(selectedDateTimeStart: Date[]) => handleDateTimeStartChange(selectedDateTimeStart)}
-                                    options={{
-                                        enableTime: true,
-                                        dateFormat: 'Y-m-d H:i',
-                                        mode:'single',
-                                        time_24hr: true,
-                                    }}
-                                    className="base-input time-input"
-                                />
-                            </div>
-                            <div className="work-edit-input-container">
-                                <label htmlFor="">End Date</label>
-                                <FlatPicker
-                                    name="dateTimeEnd"
-                                    value={dateTimeEnd}
-                                    onChange={(selectedDateTimeEnd: Date[]) => handleDateTimeEndChange(selectedDateTimeEnd)}
-                                    options={{
-                                        enableTime: true,
-                                        dateFormat: 'Y-m-d H:i',
-                                        mode:'single',
-                                        time_24hr: true,
-                                    }}
-                                    className="base-input time-input"
-                                />
-                            </div>
-                            {error && <p className="error-message">{error}</p>}
-                            <div className="work-edit-buttons">
-                                <button onClick={closeModal} className="btn">Close</button>
-                                <button onClick={handleSubmit(onSubmitEdit)} className="btn">Submit</button>
-                            </div>
-                        </form>
-                    </Modal>
+                        <AiFillCloseCircle onClick={() => handleDeleteWork()}/>
+                        <AiFillEdit onClick={() => openModal()}/>
+                        <Modal 
+                            isOpen={modalIsOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Example Modal"
+                            overlayClassName="modal-overlay"
+                            className="modal-content"
+                            >
+                            <form onSubmit={handleSubmit(onSubmitEdit)} className="work-edit-form">
+                                <h4>Edit Work</h4>
+                                <div className="work-edit-input-container">
+                                    <label htmlFor="">Start Date</label>
+                                    <FlatPicker
+                                        name="dateTimeStart"
+                                        value={dateTimeStart}
+                                        onChange={(selectedDateTimeStart: Date[]) => handleDateTimeStartChange(selectedDateTimeStart)}
+                                        options={{
+                                            enableTime: true,
+                                            dateFormat: 'Y-m-d H:i',
+                                            mode:'single',
+                                            time_24hr: true,
+                                        }}
+                                        className="base-input time-input"
+                                    />
+                                </div>
+                                <div className="work-edit-input-container">
+                                    <label htmlFor="">End Date</label>
+                                    <FlatPicker
+                                        name="dateTimeEnd"
+                                        value={dateTimeEnd}
+                                        onChange={(selectedDateTimeEnd: Date[]) => handleDateTimeEndChange(selectedDateTimeEnd)}
+                                        options={{
+                                            enableTime: true,
+                                            dateFormat: 'Y-m-d H:i',
+                                            mode:'single',
+                                            time_24hr: true,
+                                        }}
+                                        className="base-input time-input"
+                                    />
+                                </div>
+                                {error && <p className="error-message">{error}</p>}
+                                <div className="work-edit-buttons">
+                                    <button onClick={closeModal} className="btn">Close</button>
+                                    <button onClick={handleSubmit(onSubmitEdit)} className="btn">Submit</button>
+                                </div>
+                            </form>
+                        </Modal>
                     </>)}
                 </div>
-
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom';
 import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
-import { Comment, Task, User } from 'types';
+import { Comment, Task, User, Work } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
@@ -14,7 +14,9 @@ import CommentCard from './CommentCard';
 import { useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
 import WorkCard from './WorkCard';
-
+import Modal from 'react-modal';
+import FlatPicker from 'react-flatpickr';
+import "flatpickr/dist/themes/material_orange.css";
 
 type UrlParams = {
     taskId: string;
@@ -94,7 +96,7 @@ const TaskDetails = () => {
     getCreator();
   }, [getCreator]);
 
-  const { register, handleSubmit, formState: { errors }, setValue} = useForm<Comment>();
+  const { register: registerComment, handleSubmit: handleSubmitComment, formState: { errors: errorsComment }, setValue: setValueComment } = useForm<Comment>();
 
   const onSubmit = async (formData: Comment) => {
     if (user) {
@@ -117,10 +119,79 @@ const TaskDetails = () => {
       } 
       finally{
         getTask();
-        setValue('text', '');
+        setValueComment('text', '');
       }
     }
   };
+
+  const { register: registerWork, handleSubmit: handleSubmitWork, formState: { errors: errorsWork }, setValue: setValueWork } = useForm<Work>();
+
+  const [error, setError] = useState<string | null>(null);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal(){
+    setIsOpen(true);
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+
+    setDateTimeStart('');
+    setDateTimeEnd('');
+  }
+
+  const [dateTimeStart, setDateTimeStart] = useState('');
+  const [dateTimeEnd, setDateTimeEnd] = useState('');
+
+  const onSubmitWork = (formData : Work) => {
+    if(user && task){
+      formData.employeeId = user?.id;
+      formData.taskId = task?.id;
+  
+      const correctTime = (dateTimeStart: string): string => {
+          const startDate = new Date(dateTimeStart);
+          startDate.setHours(startDate.getHours() - 3);
+          return startDate.toISOString();
+      };
+
+      formData.dateTimeStart = correctTime(dateTimeStart);
+      formData.dateTimeEnd = correctTime(dateTimeEnd);
+
+      if(formData.dateTimeEnd < formData.dateTimeStart){
+          setError("End Date cannot be earlier than Start Date");
+          return;
+      }
+
+      const params : AxiosRequestConfig = {
+          method: "POST",
+          url : `/works`,
+          data: formData,
+          withCredentials: true
+      };
+
+      requestBackend(params)
+          .then(response => {
+              console.log('success', response.data);
+              closeModal();
+              getTask();
+
+              setError('');
+          })
+          .catch((error) => {
+              console.log(error);
+              setError(error.message);
+          })
+      }
+    };
+
+    const handleDateTimeStartChange = (selectedDateTime: Date[]) => {
+        setDateTimeStart(selectedDateTime[0].toISOString());
+    };
+      
+    const handleDateTimeEndChange = (selectedDateTime: Date[]) => {
+        setDateTimeEnd(selectedDateTime[0].toISOString());
+    };
 
 
     return(
@@ -181,19 +252,19 @@ const TaskDetails = () => {
                         ))}
                       </div>
                       <div className='task-comment-form'>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmitComment(onSubmit)}>
                             <input
-                              {...register("text", {
+                              {...registerComment("text", {
                                 required: "Campo obrigatório",
                               })}
                               type="text"
                               className={`form-control base-input ${
-                                errors.text ? "is-invalid" : ""
+                                errorsComment.text ? "is-invalid" : ""
                               }`}
                               placeholder="Comment"
                               name="text"
                             />
-                            <AiOutlineSend onClick={handleSubmit(onSubmit)}/>
+                            <AiOutlineSend onClick={handleSubmitComment(onSubmit)}/>
                         </form>
                       </div>
                     </Tab.Pane>
@@ -203,6 +274,55 @@ const TaskDetails = () => {
                         {user && task?.works.map(work => (
                           <WorkCard userLogged={user} work={work} onDeleteWork={getTask} key={work.id}/>
                         ))}
+                      </div>
+                      <div className='new-work-button-container'>
+                          <button className='btn btn-primary' onClick={openModal}>Add New Work</button>
+                          <Modal 
+                            isOpen={modalIsOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Example Modal"
+                            overlayClassName="modal-overlay"
+                            className="modal-content"
+                            >
+                            <form onSubmit={handleSubmitWork(onSubmitWork)} className="work-edit-form">
+                                <h4>Add Work</h4>
+                                <div className="work-edit-input-container">
+                                    <label htmlFor="">Start Date</label>
+                                    <FlatPicker
+                                        name="dateTimeStart"
+                                        value={dateTimeStart}
+                                        onChange={(selectedDateTimeStart: Date[]) => handleDateTimeStartChange(selectedDateTimeStart)}
+                                        options={{
+                                            enableTime: true,
+                                            dateFormat: 'Y-m-d H:i',
+                                            mode:'single',
+                                            time_24hr: true,
+                                        }}
+                                        className="base-input time-input"
+                                    />
+                                </div>
+                                <div className="work-edit-input-container">
+                                    <label htmlFor="">End Date</label>
+                                    <FlatPicker
+                                        name="dateTimeEnd"
+                                        value={dateTimeEnd}
+                                        onChange={(selectedDateTimeEnd: Date[]) => handleDateTimeEndChange(selectedDateTimeEnd)}
+                                        options={{
+                                            enableTime: true,
+                                            dateFormat: 'Y-m-d H:i',
+                                            mode:'single',
+                                            time_24hr: true,
+                                        }}
+                                        className="base-input time-input"
+                                    />
+                                </div>
+                                {error && <p className="error-message">{error}</p>}
+                                <div className="work-edit-buttons">
+                                    <button onClick={closeModal} className="btn">Close</button>
+                                    <button className="btn">Submit</button>
+                                </div>
+                            </form>
+                        </Modal>
                       </div>
                     </Tab.Pane>
 
