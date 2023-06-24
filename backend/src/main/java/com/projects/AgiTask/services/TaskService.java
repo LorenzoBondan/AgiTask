@@ -69,7 +69,6 @@ public class TaskService {
 	    return list.map(TaskDTO::new);
 	}
 
-
 	@Transactional(readOnly = true)
 	public TaskDTO findById(Long id) {
 		Optional<Task> obj = repository.findById(id);
@@ -120,35 +119,41 @@ public class TaskService {
 			entity.setStatus(status);
 			entity = repository.save(entity);
 			
+			User me = authService.authenticated();
+			
 			// send a notification to every follower when task is changed to COMPLETED
 			if(entity.getStatus() == Status.COMPLETED) {
 				for(User follower : entity.getFollowers()) {
+					if(follower != me) {
+						LocalDateTime date = LocalDateTime.now();
+						Notification notification = new Notification();
+						notification.setDescription("The task: " + entity.getTitle() + " has changed the status to completed.");
+						notification.setMoment(date);
+						notification.setRead(false);
+						notification.setUser(follower);
+						
+						notification = notificationRepository.save(notification);
+						
+						follower.getNotifications().add(notification);
+						follower = userRepository.save(follower);
+					}
+				}
+				
+				// also send a notification to the creator of the task
+				User creator = entity.getCreator();
+				if(creator != me) {
 					LocalDateTime date = LocalDateTime.now();
 					Notification notification = new Notification();
 					notification.setDescription("The task: " + entity.getTitle() + " has changed the status to completed.");
 					notification.setMoment(date);
 					notification.setRead(false);
-					notification.setUser(follower);
-					
+					notification.setUser(creator);
+						
 					notification = notificationRepository.save(notification);
-					
-					follower.getNotifications().add(notification);
-					follower = userRepository.save(follower);
+						
+					creator.getNotifications().add(notification);
+					creator = userRepository.save(creator);
 				}
-				
-				// also send a notification to the creator of the task
-				User creator = entity.getCreator();
-				LocalDateTime date = LocalDateTime.now();
-				Notification notification = new Notification();
-				notification.setDescription("The task: " + entity.getTitle() + " has changed the status to completed.");
-				notification.setMoment(date);
-				notification.setRead(false);
-				notification.setUser(creator);
-					
-				notification = notificationRepository.save(notification);
-					
-				creator.getNotifications().add(notification);
-				creator = userRepository.save(creator);
 			}
 			
 			return new TaskDTO(entity);
