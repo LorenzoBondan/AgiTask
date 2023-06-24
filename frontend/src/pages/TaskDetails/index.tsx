@@ -25,6 +25,8 @@ import Select from "react-select";
 import Plus from 'assets/images/plus.png';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
+import ApexCharts from 'apexcharts';
+
 type UrlParams = {
   taskId: string;
 }
@@ -343,7 +345,38 @@ const TaskDetails = () => {
         .then(response => {
           setSelectFollowers(response.data.content)
     })
-  }, []);
+    const usersWorkTime = task?.usersWorkTime || {};
+    generateBarChart(usersWorkTime);
+  }, [task?.usersWorkTime]);
+
+  const generateBarChart = (data: Record<string, number>) => {
+    const options = {
+      chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      series: [{
+        data: Object.values(data),
+      }],
+      xaxis: {
+        categories: Object.keys(data),
+      },
+    };
+  
+    const chart = new ApexCharts(document.querySelector('#chart'), options);
+    chart.render();
+  };
 
     return(
         <div className="task-details-container">
@@ -525,12 +558,13 @@ const TaskDetails = () => {
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="data" className='heigth-100'>
-                    {task?.usersWorkTime && Object.entries(task.usersWorkTime)
-                      .sort(([, timeA], [, timeB]) => timeB - timeA)
-                      .map(([user, workTime]) => (
-                        <p key={user}>{user} : {convertTimeToHours(workTime)}</p>
-                      ))
-                    }
+                      {task?.usersWorkTime && Object.entries(task.usersWorkTime)
+                        .sort(([, timeA], [, timeB]) => timeB - timeA)
+                        .map(([user, workTime]) => (
+                          <p key={user}>{user} : {convertTimeToHours(workTime)}</p>
+                        ))
+                      }
+                      <div id="chart"></div>
                     </Tab.Pane>
 
                   </Tab.Content>
