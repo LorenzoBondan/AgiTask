@@ -202,7 +202,8 @@ public class TaskService {
 	 
 	@Transactional(readOnly = true)
 	public List<TasksByStatusDTO> findTasksByStatus() {
-	    List<TasksByStatusProjection> projections = repository.tasksByStatus();
+		User me = authService.authenticated();
+	    List<TasksByStatusProjection> projections = repository.tasksByStatus(me);
 	    return projections.stream()
 	            .map(projection -> new TasksByStatusDTO(projection.getStatus(), projection.getSum()))
 	            .collect(Collectors.toList());
