@@ -345,8 +345,8 @@ const TaskDetails = () => {
                     </Nav.Item>
                   </Nav>
 
-                  <Tab.Content id="slideInUp">
-                    <Tab.Pane eventKey="comments">
+                  <Tab.Content id="slideInUp" className='heigth-100'>
+                    <Tab.Pane eventKey="comments" className='heigth-100'>
                       <div className='task-comments-row'>
                         {task?.comments.sort( (a,b) => a.dateTime > b.dateTime ? 1 : -1).map(comment => (
                           <CommentCard comment={comment} onDelete={getTask} key={comment.id}/>
@@ -370,7 +370,7 @@ const TaskDetails = () => {
                       </div>
                     </Tab.Pane>
 
-                    <Tab.Pane eventKey="works">
+                    <Tab.Pane eventKey="works" className='heigth-100'>
                       <div className='task-comments-row'>
                         {user && task?.works.sort( (a,b) => a.dateTimeStart > b.dateTimeStart ? 1 : -1).map(work => (
                           <WorkCard userLogged={user} work={work} onDeleteWork={getTask} key={work.id}/>
