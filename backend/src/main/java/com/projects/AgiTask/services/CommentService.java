@@ -2,6 +2,7 @@ package com.projects.AgiTask.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class CommentService {
 	@Autowired
 	private NotificationRepository notificationRepository;
 	
+	@Autowired
+	private AuthService authService;
+	
 	@Transactional(readOnly = true) // goes in TaskResource
 	public List<CommentDTO> findCommentsByTaskId(Long TaskId) {
 		Task task = taskRepository.getOne(TaskId);
@@ -49,36 +53,43 @@ public class CommentService {
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		
+		// don't send a notification to myself if I posted the comment
+		User me = authService.authenticated();
+		
 		// send a notification to every follower of the task when someone post a new comment
 		Task task = taskRepository.getOne(entity.getTask().getId());
 		for(User follower : task.getFollowers()) {
+			if(follower != me) {
+				LocalDateTime date = LocalDateTime.now();
+				Notification notification = new Notification();
+				notification.setDescription("The task: '" + task.getTitle() + "' has a new comment from " + entity.getAuthor().getName() + ".");
+				notification.setMoment(date);
+				notification.setRead(false);
+				notification.setUser(follower);
+					
+				notification = notificationRepository.save(notification);
+					
+				follower.getNotifications().add(notification);
+				follower = userRepository.save(follower);
+			}
+		}
+		
+		// also send a notification to the creator
+		User creator = task.getCreator();
+		if(creator != me) {
 			LocalDateTime date = LocalDateTime.now();
 			Notification notification = new Notification();
 			notification.setDescription("The task: '" + task.getTitle() + "' has a new comment from " + entity.getAuthor().getName() + ".");
 			notification.setMoment(date);
 			notification.setRead(false);
-			notification.setUser(follower);
+			notification.setUser(creator);
 				
 			notification = notificationRepository.save(notification);
 				
-			follower.getNotifications().add(notification);
-			follower = userRepository.save(follower);
+			creator.getNotifications().add(notification);
+			creator = userRepository.save(creator);
 		}
-		
-		// also send a notification to the creator
-		User creator = task.getCreator();
-		LocalDateTime date = LocalDateTime.now();
-		Notification notification = new Notification();
-		notification.setDescription("The task: '" + task.getTitle() + "' has a new comment from " + entity.getAuthor().getName() + ".");
-		notification.setMoment(date);
-		notification.setRead(false);
-		notification.setUser(creator);
-			
-		notification = notificationRepository.save(notification);
-			
-		creator.getNotifications().add(notification);
-		creator = userRepository.save(creator);
-		
+
 		return new CommentDTO(entity);
 	}
 
