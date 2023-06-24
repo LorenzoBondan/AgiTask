@@ -24,6 +24,8 @@ public class UserDTO implements Serializable {
 
 	private String imgUrl;
 	
+	private Integer totalTasksCompleted;
+	
 	private List<RoleDTO> roles = new ArrayList<>();
 	
 	private List<NotificationDTO> notifications = new ArrayList<>();
@@ -42,12 +44,13 @@ public class UserDTO implements Serializable {
 	  
 	public UserDTO() {}
 
-	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl, Integer totalWorkTime) {
+	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl, Integer totalTasksCompleted, Integer totalWorkTime) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.imgUrl = imgUrl;
+		this.totalTasksCompleted = totalTasksCompleted;
 		this.totalWorkTime = totalWorkTime;
 	}
 	
@@ -56,6 +59,7 @@ public class UserDTO implements Serializable {
 		this.name = entity.getName();
 		this.email = entity.getEmail();
 		this.imgUrl = entity.getImgUrl();
+		this.totalTasksCompleted = entity.getTotalTasksCompleted();
 
 		entity.getRoles().forEach(rol -> this.roles.add(new RoleDTO(rol)));
 		entity.getNotifications().forEach(not -> this.notifications.add(new NotificationDTO(not)));
@@ -100,6 +104,14 @@ public class UserDTO implements Serializable {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public Integer getTotalTasksCompleted() {
+		return totalTasksCompleted;
+	}
+
+	public void setTotalTasksCompleted(Integer totalTasksCompleted) {
+		this.totalTasksCompleted = totalTasksCompleted;
 	}
 
 	public List<RoleDTO> getRoles() { 
