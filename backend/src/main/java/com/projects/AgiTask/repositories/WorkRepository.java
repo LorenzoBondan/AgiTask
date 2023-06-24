@@ -12,16 +12,15 @@ import com.projects.AgiTask.entities.Work;
 @Repository
 public interface WorkRepository extends JpaRepository<Work, Long> {
 
-    default Integer getTotalTimeByEmployeeAndMonth(Long employeeId, Integer month) {
-        List<WorkDTO> works = getWorksByEmployeeAndMonth(employeeId, month);
+    default Integer getTotalTimeByEmployeeAndMonthAndYear(Long employeeId, Integer month, Integer year) {
+        List<WorkDTO> works = getWorksByEmployeeAndMonthAndYear(employeeId, month, year);
         Integer totalTime = works.stream()
                 .map(WorkDTO::getTotalTime)
                 .reduce(0, Integer::sum);
         return totalTime;
     }
 
-	@Query("SELECT w FROM Work w WHERE w.employee.id = :employeeId AND MONTH(w.dateTimeStart) = :month")
-	List<WorkDTO> getWorksByEmployeeAndMonth(Long employeeId, Integer month);
-
+    @Query("SELECT w FROM Work w WHERE w.employee.id = :employeeId AND MONTH(w.dateTimeStart) = :month AND YEAR(w.dateTimeStart) = :year")
+    List<WorkDTO> getWorksByEmployeeAndMonthAndYear(Long employeeId, Integer month, Integer year);
 
 }

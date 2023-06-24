@@ -55,7 +55,12 @@ const Profile = () => {
 
   // filter by month
 
-  const [selectedMonth, setSelectedMonth] = useState<string>('1');
+  function getCurrentMonth() {
+    const currentDate = new Date();
+    return currentDate.getMonth() + 1;
+  }
+
+  const [selectedMonth, setSelectedMonth] = useState<string>(getCurrentMonth().toString());
 
   const months: MonthOption[] = [
     { value: '1', label: 'January' },
@@ -72,6 +77,17 @@ const Profile = () => {
     { value: '12', label: 'December' },
   ];
 
+  function getCurrentYear() {
+    const currentDate = new Date();
+    return currentDate.getFullYear();
+  }
+
+  const [selectedYear, setSelectedYear] = useState<string>(getCurrentYear().toString());
+
+  const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedYear(event.target.value);
+  };
+
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(event.target.value);
   };
@@ -82,7 +98,7 @@ const Profile = () => {
     if(user){
       const params : AxiosRequestConfig = {
         method:"GET",
-        url: `/works/${user?.id}/totalTime/${selectedMonth}`,
+        url: `/works/${user?.id}/totalTime/${selectedYear}/${selectedMonth}`,
         withCredentials:true
       }
       requestBackend(params) 
@@ -90,7 +106,7 @@ const Profile = () => {
             setTotalWorkedTimeByMonth(response.data);
         })
     }
-  }, [user, selectedMonth])
+  }, [user, selectedMonth, selectedYear])
 
   useEffect(() => {
     getTotalWorkedTimeByMonth();
@@ -103,14 +119,14 @@ const Profile = () => {
   const getWorksByEmployeeAndMonth = useCallback(() => {
       const params : AxiosRequestConfig = {
         method:"GET",
-        url: `/works/${user?.id}/totalWorks/${selectedMonth}`,
+        url: `/works/${user?.id}/totalWorks/${selectedYear}/${selectedMonth}`,
         withCredentials:true
       }
       requestBackend(params) 
         .then(response => {
             setWorksByEmployeeAndMonth(response.data);
         })
-  }, [user?.id, selectedMonth])
+  }, [user?.id, selectedMonth, selectedYear])
 
   useEffect(() => {
     if (user?.id && selectedMonth) {
@@ -164,13 +180,16 @@ const Profile = () => {
                 <div className='profile-card-third-container'>
                     <div className='profile-card-filter-container'>
                         <h6><BsFillBarChartFill style={{marginRight:"3px"}}/>Your Personal Data</h6>
-                        <select className='base-input month-input' value={selectedMonth} onChange={handleSelectChange}>
-                            {months.map((month) => (
-                                <option key={month.value} value={month.value}>
-                                {month.label}
-                                </option>
-                            ))}
-                        </select>
+                        <div className='profile-card-filter-inputs'>
+                          <input type="text" className='base-input year-input' value={selectedYear} onChange={handleYearChange}/>
+                          <select className='base-input month-input' value={selectedMonth} onChange={handleSelectChange}>
+                              {months.map((month) => (
+                                  <option key={month.value} value={month.value}>
+                                  {month.label}
+                                  </option>
+                              ))}
+                          </select>
+                        </div>
                     </div>
                     <div className='profile-card-results-container'>
                         <div className='profile-card-results-top'>

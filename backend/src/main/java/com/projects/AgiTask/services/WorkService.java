@@ -82,13 +82,13 @@ public class WorkService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Integer findTotalTimeByEmployeeAndMonth(Long employeeId, Integer month) {
-		Integer totalHoursByEmployeeAndMonth = repository.getTotalTimeByEmployeeAndMonth(employeeId, month);
+	public Integer findTotalTimeByEmployeeAndMonthAndYear(Long employeeId, Integer month, Integer year) {
+		Integer totalHoursByEmployeeAndMonth = repository.getTotalTimeByEmployeeAndMonthAndYear(employeeId, month, year);
 		return totalHoursByEmployeeAndMonth;
 	}
 	
-    public List<WorkDTO> findWorksByEmployeeAndMonth(Long employeeId, Integer month) {
-        return repository.getWorksByEmployeeAndMonth(employeeId, month);
+    public List<WorkDTO> findWorksByEmployeeAndMonthAndYear(Long employeeId, Integer month, Integer year) {
+        return repository.getWorksByEmployeeAndMonthAndYear(employeeId, month, year);
     }
     
 	@Transactional

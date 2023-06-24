@@ -171,7 +171,12 @@
 }
 
 .month-input{
-    width: 200px;
+    width: 125px;
+}
+
+.year-input{
+    width: 125px;
+    margin-right: 2px;
 }
 
 .profile-card-results-container{
