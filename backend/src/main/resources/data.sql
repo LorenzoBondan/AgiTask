@@ -38,31 +38,60 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (15, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (16, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (16, 2);
 
-
-INSERT INTO tb_notification (description, moment, read, user_id) VALUES ('Welcome', TIMESTAMP WITHOUT TIME ZONE '2022-12-20T14:00:00', false, 2);
-
-INSERT INTO tb_group (name) VALUES ('Group 1');
-INSERT INTO tb_group (name) VALUES ('Group 2');
+INSERT INTO tb_group (name) VALUES ('Development');
+INSERT INTO tb_group (name) VALUES ('Testing');
+INSERT INTO tb_group (name) VALUES ('Design');
 
 INSERT INTO tb_group_user (group_id, user_id) VALUES (1,2);
 INSERT INTO tb_group_user (group_id, user_id) VALUES (1,3);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,4);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,5);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,6);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,13);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (1,14);
 INSERT INTO tb_group_user (group_id, user_id) VALUES (2,1);
-INSERT INTO tb_group_user (group_id, user_id) VALUES (2,4);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (2,7);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (2,15);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (2,16);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (3,8);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (3,9);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (3,10);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (3,11);
+INSERT INTO tb_group_user (group_id, user_id) VALUES (3,12);
 
-INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('First Task', 'This is the first task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 0, 2);
-INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Second Task', 'This is the second task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 0, 2);
-INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Third Task', 'This is the third task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 0, 1);
-INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Fourth Task', 'This is the fourth task created', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 1, 3);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Home page development', 'Develop the programming of home page', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', 1, 2);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('CRUD page development', 'Develop the programming of CRUD page', TIMESTAMP WITHOUT TIME ZONE '2023-06-13T15:30:00', 1, 4);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Create Database', 'Create the database in SQL', TIMESTAMP WITHOUT TIME ZONE '2023-06-13T17:12:45', 2, 5);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Send final project to client', 'After all done, send the project to client', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:30:12', 0, 2);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Create the documentation', 'Create the documentation of the project', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T09:10:22', 0, 3);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Debug home page code', 'Test and debug home page code', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T12:20:00', 0, 1);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Home page Design', 'Create the home page design and layout', TIMESTAMP WITHOUT TIME ZONE '2023-06-11T21:20:00', 1, 8);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('CRUD page Design', 'Create the CRUD page design and layout', TIMESTAMP WITHOUT TIME ZONE '2023-06-11T21:09:00', 1, 9);
 
-INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 1, 1);
-INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the second comment in the first task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:22:00', 2, 1);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('I will create the HTML for this page', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 1);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('Ok, so I will do the CSS styling', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:22:00', 2, 1);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('When you finish your steps, I will take a look', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T23:01:12', 4, 1);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('We have 3 days to finish this task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T23:12:10', 5, 1);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('This is the first comment in the second task', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 2);
 
-INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (1, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:19:00');
-INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:29:00');
-INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-12T22:49:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T09:12:44', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T10:29:56');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T12:02:01', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T15:13:20');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T16:10:01', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T18:05:10');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 2, TIMESTAMP WITHOUT TIME ZONE '2023-06-16T12:11:21', TIMESTAMP WITHOUT TIME ZONE '2023-06-16T13:05:10');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (3, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T10:01:12', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T11:29:09');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (3, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T12:09:25', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T14:12:40');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (4, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T11:12:11', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T12:16:20');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (5, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T15:55:12', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T16:45:10');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (1, 6, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:29:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (8, 7, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:29:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (9, 7, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:09:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T22:49:00');
 
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,4);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,5);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,6);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,13);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,14);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,4);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (2,5);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (3,3);
