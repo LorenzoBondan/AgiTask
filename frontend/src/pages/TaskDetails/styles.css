@@ -263,3 +263,15 @@
 .new-work-button-container button:hover{
     border-bottom: 2px solid #DCDCDC;
 }
+
+.users-work-time-row{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.task-chart-container{
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}

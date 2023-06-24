@@ -24,7 +24,6 @@ import "flatpickr/dist/themes/material_orange.css";
 import Select from "react-select";
 import Plus from 'assets/images/plus.png';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
-
 import ApexCharts from 'apexcharts';
 
 type UrlParams = {
@@ -350,9 +349,21 @@ const TaskDetails = () => {
   }, [task?.usersWorkTime]);
 
   const generateBarChart = (data: Record<string, number>) => {
-    const options = {
+    const options: ApexCharts.ApexOptions = {
+      noData: {
+        text: 'No results',
+        align: 'center',
+        verticalAlign: 'middle',
+        offsetY: -15,
+        style: {
+          color: '#FFF',
+          fontSize: '18px',
+          fontFamily: 'Roboto, sans-serif'
+        }
+      },
       chart: {
         type: 'bar',
+        foreColor: '#444444',
         height: 350,
         toolbar: {
           show: false,
@@ -366,12 +377,49 @@ const TaskDetails = () => {
       dataLabels: {
         enabled: false,
       },
+      stroke: {
+        show: false
+      },
       series: [{
         data: Object.values(data),
       }],
       xaxis: {
         categories: Object.keys(data),
+        title: {
+          text: 'Work Time (minutes)',
+        },
       },
+      yaxis: {
+      },
+      title: {
+        text: 'Users Work Time',
+        align: 'center',
+        style: {
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: '#444444',
+        },
+      },
+      colors: ['#F15A23'],
+      grid: {
+        borderColor: '#e0e0e0',
+      },
+      tooltip: {
+        theme: 'dark',
+        y: {
+          formatter: function (val: number) {
+            return `${val}`;
+          }
+        },
+        marker: {
+          show: false, 
+        },
+        custom: function({ series, seriesIndex, dataPointIndex, w }) {
+          const data = w.globals.series[seriesIndex][dataPointIndex];
+          return `<div>${data}</div>`;
+        },
+      },
+      
     };
   
     const chart = new ApexCharts(document.querySelector('#chart'), options);
@@ -558,13 +606,19 @@ const TaskDetails = () => {
                     </Tab.Pane>
 
                     <Tab.Pane eventKey="data" className='heigth-100'>
-                      {task?.usersWorkTime && Object.entries(task.usersWorkTime)
-                        .sort(([, timeA], [, timeB]) => timeB - timeA)
-                        .map(([user, workTime]) => (
-                          <p key={user}>{user} : {convertTimeToHours(workTime)}</p>
-                        ))
-                      }
-                      <div id="chart"></div>
+                      <div className='row users-work-time-row'>
+                        {task?.usersWorkTime && Object.entries(task.usersWorkTime)
+                          .sort(([, timeA], [, timeB]) => timeB - timeA)
+                          .map(([user, workTime]) => (
+                            <div className="col-sm-4 col-md-4 col-lg-3 col-xl-2 user-crud-column">
+                              <p key={user}><strong>{user}</strong> : {convertTimeToHours(workTime)}</p>
+                            </div>
+                            
+                          ))
+                        }
+                      </div>
+
+                      <div id="chart" className='task-chart-container'></div>
                     </Tab.Pane>
 
                   </Tab.Content>
