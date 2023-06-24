@@ -82,5 +82,9 @@ public class TaskResource {
 	    return ResponseEntity.ok(list);
 	}
 
-	
+	@PutMapping(value = "/followers/{id}")
+	public ResponseEntity<TaskDTO> updateFollowers(@PathVariable Long id, @Valid @RequestBody TaskDTO dto)	{
+		TaskDTO newDto = service.updateFollowers(id, dto);
+		return ResponseEntity.ok().body(newDto);
+	}
 }

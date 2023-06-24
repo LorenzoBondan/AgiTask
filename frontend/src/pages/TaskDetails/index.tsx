@@ -11,13 +11,14 @@ import { Nav, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
 import WorkCard from './WorkCard';
 import Modal from 'react-modal';
 import FlatPicker from 'react-flatpickr';
 import "flatpickr/dist/themes/material_orange.css";
+import Select from "react-select";
 
 type UrlParams = {
     taskId: string;
@@ -294,6 +295,54 @@ const TaskDetails = () => {
       }
     };
 
+    //
+
+    const { handleSubmit: handleSubmitTask, control: controlTask } = useForm<Task>();
+
+    const [followersModalIsOpen, setFollowersModalIsOpen] = useState(false);
+
+    function openFollowersModal(){
+      setFollowersModalIsOpen(true);
+    }
+  
+    function closeFollowersModal(){
+      setFollowersModalIsOpen(false);
+    }
+
+    const onSubmitTask = (formData : Task) => {
+      if(user && task){
+
+        const params : AxiosRequestConfig = {
+            method: "PUT",
+            url : `/tasks/followers/${task.id}`,
+            data: formData,
+            withCredentials: true
+        };
+  
+        requestBackend(params)
+            .then(response => {
+                console.log('success', response.data);
+                closeFollowersModal();
+                getTask();
+  
+                setError('');
+            })
+            .catch((error) => {
+                console.log(error);
+                setError(error.message);
+            })
+        }
+    };
+
+    const [selectFollowers, setSelectFollowers] = useState<User[]>([]);
+
+    useEffect(() => {
+      requestBackend({url: '/users', withCredentials: true})
+          .then(response => {
+            setSelectFollowers(response.data.content)
+      })
+    }, []);
+
     return(
         <div className="task-details-container">
             <div className='task-details-first-container'>
@@ -324,6 +373,49 @@ const TaskDetails = () => {
                             {task?.followers.map(follower => (
                                 <img src={follower.imgUrl} alt="" key={follower.id}/>
                             ))}
+                            <button onClick={openFollowersModal}>Add</button>
+
+
+
+                            <Modal 
+                              isOpen={followersModalIsOpen}
+                              onRequestClose={closeFollowersModal}
+                              contentLabel="Example Modal"
+                              overlayClassName="modal-overlay"
+                              className="modal-content"
+                              >
+                              <form onSubmit={handleSubmitTask(onSubmitTask)} className="work-edit-form">
+                                  <h4>Add or Remove Followers</h4>
+                                  <div className="work-edit-input-container">
+                                      <label htmlFor="">Followers</label>
+                                      <Controller 
+                                        name = 'followers'
+                                        rules = {{required: false}}
+                                        control = {controlTask}
+                                        render = {( {field} ) => (
+                                          <Select 
+                                            {...field}
+                                            options={selectFollowers}
+                                            defaultValue={task?.followers}
+                                            classNamePrefix="users-crud-select"
+                                            placeholder="Followers"
+                                            isMulti
+                                            getOptionLabel={(user: User) => user.name}
+                                            getOptionValue={(user: User) => user.id.toString()}
+                                          />    
+                                        )}
+                                      />
+                                  </div>
+                                  {error && <p className="error-message">{error}</p>}
+                                  <div className="work-edit-buttons">
+                                      <button onClick={closeFollowersModal} className="btn">Close</button>
+                                      <button className="btn">Submit</button>
+                                  </div>
+                            </form>
+                        </Modal>
+
+
+
                         </div>
                     </div>
                 </div>

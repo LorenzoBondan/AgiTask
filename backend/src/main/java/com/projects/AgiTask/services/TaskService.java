@@ -207,4 +207,23 @@ public class TaskService {
 	            .map(projection -> new TasksByStatusDTO(projection.getStatus(), projection.getSum()))
 	            .collect(Collectors.toList());
 	}
+	
+	@Transactional
+	public TaskDTO updateFollowers(Long id, TaskDTO dto) {
+		try {
+			Task entity = repository.getOne(id);
+			
+			entity.getFollowers().clear();
+			
+			for (UserDTO followerDto : dto.getFollowers()) {
+				User user = userRepository.getOne(followerDto.getId());
+				entity.getFollowers().add(user);
+			}
+			
+			entity = repository.save(entity);
+			return new TaskDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
 }
