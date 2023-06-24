@@ -6,7 +6,7 @@ import { Comment, Task, User, Work, WorkVariant } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
 import { getTokenData } from 'util/auth';
-import { convertDateTime } from 'helpers';
+import { convertDateTime, convertTimeToHours } from 'helpers';
 import { Nav, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
 import { FaPlay } from 'react-icons/fa';
@@ -16,6 +16,7 @@ import CommentCard from './CommentCard';
 import { Controller, useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { FaRegChartBar } from 'react-icons/fa';
 import WorkCard from './WorkCard';
 import Modal from 'react-modal';
 import FlatPicker from 'react-flatpickr';
@@ -436,6 +437,9 @@ const TaskDetails = () => {
                     <Nav.Item>
                       <Nav.Link eventKey="works"><AiOutlineTool/></Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="data"><FaRegChartBar/></Nav.Link>
+                    </Nav.Item>
                   </Nav>
 
                   <Tab.Content id="slideInUp" className='heigth-100'>
@@ -518,6 +522,15 @@ const TaskDetails = () => {
                             </form>
                         </Modal>
                       </div>
+                    </Tab.Pane>
+
+                    <Tab.Pane eventKey="data" className='heigth-100'>
+                    {task?.usersWorkTime && Object.entries(task.usersWorkTime)
+                      .sort(([, timeA], [, timeB]) => timeB - timeA)
+                      .map(([user, workTime]) => (
+                        <p key={user}>{user} : {convertTimeToHours(workTime)}</p>
+                      ))
+                    }
                     </Tab.Pane>
 
                   </Tab.Content>

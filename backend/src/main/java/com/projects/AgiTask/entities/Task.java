@@ -70,6 +70,14 @@ public class Task implements Serializable {
 		this.creator = creator;
 	}
 	
+	public Integer getTotalWorkTime() {
+		int totalWorkTime = 0;
+		for(Work work : works) {
+			totalWorkTime += work.getTotalTime();
+		}
+		return totalWorkTime;
+	}
+	
 	public Map<String, Integer> getUsersWorkTime() {
 	    Map<String, Integer> userWorkTimeMap = new HashMap<>();
 	    for (Work work : works) {
@@ -139,14 +147,6 @@ public class Task implements Serializable {
 
 	public Set<User> getFollowers() {
 		return followers;
-	}
-	
-	public Integer getTotalWorkTime() {
-		int totalWorkTime = 0;
-		for(Work work : works) {
-			totalWorkTime += work.getTotalTime();
-		}
-		return totalWorkTime;
 	}
 
 	@Override
