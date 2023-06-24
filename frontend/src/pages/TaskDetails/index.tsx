@@ -20,6 +20,7 @@ import FlatPicker from 'react-flatpickr';
 import "flatpickr/dist/themes/material_orange.css";
 import Select from "react-select";
 import Plus from 'assets/images/plus.png';
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 type UrlParams = {
     taskId: string;
@@ -372,8 +373,12 @@ const TaskDetails = () => {
                         <p>Followers</p>
                         <div className='task-followers-row'>
                             {task?.followers.map(follower => (
-                                <img src={follower.imgUrl} alt="" key={follower.id}/>
+                              <div>
+                                <img src={follower.imgUrl} alt="" key={follower.id} data-tooltip-content={follower.name} data-tooltip-id={`myTooltip-${follower.name}`}/>
+                                <ReactTooltip id={`myTooltip-${follower.name}`} place="top" />
+                              </div>
                             ))}
+                            
                             {task?.creatorId === user?.id && <>
                             <button onClick={openFollowersModal} className='add-followers-button'><img src={Plus} alt="" /></button>
                             <Modal 
