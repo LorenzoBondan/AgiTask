@@ -19,6 +19,7 @@ import Modal from 'react-modal';
 import FlatPicker from 'react-flatpickr';
 import "flatpickr/dist/themes/material_orange.css";
 import Select from "react-select";
+import Plus from 'assets/images/plus.png';
 
 type UrlParams = {
     taskId: string;
@@ -373,10 +374,8 @@ const TaskDetails = () => {
                             {task?.followers.map(follower => (
                                 <img src={follower.imgUrl} alt="" key={follower.id}/>
                             ))}
-                            <button onClick={openFollowersModal}>Add</button>
-
-
-
+                            {task?.creatorId === user?.id && <>
+                            <button onClick={openFollowersModal} className='add-followers-button'><img src={Plus} alt="" /></button>
                             <Modal 
                               isOpen={followersModalIsOpen}
                               onRequestClose={closeFollowersModal}
@@ -413,9 +412,7 @@ const TaskDetails = () => {
                                   </div>
                             </form>
                         </Modal>
-
-
-
+                        </>}
                         </div>
                     </div>
                 </div>

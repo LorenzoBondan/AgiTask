@@ -125,6 +125,19 @@
     margin-bottom: 10px;
 }
 
+.add-followers-button{
+    border-radius: 50%;
+    background-color: #DCDCDC;
+    border: none;
+    width: 30px;
+    height: 30px;
+    color: white;
+}
+
+.add-followers-button img{
+    margin: 0;
+}
+
 .task-details-second-container{
     width: 78%;
     padding: 0 10px;
