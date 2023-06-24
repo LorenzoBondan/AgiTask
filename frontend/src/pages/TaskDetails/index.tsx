@@ -423,7 +423,7 @@ const TaskDetails = () => {
                 </div>
                 <div className='task-container-first-container-details'>
                   {isRecording && (
-                    <p>Tempo decorrido: {formatTime(elapsedTime)}</p>
+                    <p className='elapsed-time-line'>Elapsed Time: {formatTime(elapsedTime)}</p>
                   )}
                 </div>
             </div>

@@ -138,6 +138,27 @@
     margin: 0;
 }
 
+.elapsed-time-line{
+    background: linear-gradient(to right, #0fcc32, #09681a);
+    background-size: 200% 100%;
+    animation: blinking-gradient 3s linear infinite;
+    color: #fff;
+    padding: 2px 5px;
+    text-align: center;
+}
+
+@keyframes blinking-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
+
 .task-details-second-container{
     width: 78%;
     padding: 0 10px;
