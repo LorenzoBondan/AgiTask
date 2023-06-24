@@ -1,8 +1,7 @@
 
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './styles.css';
-import { AuthContext } from 'AuthContext';
-import { getTokenData, isAuthenticated } from 'util/auth';
+import { getTokenData } from 'util/auth';
 import { PieChartConfig, SpringPage, Task, User } from 'types';
 import { AxiosRequestConfig } from 'axios';
 import { requestBackend } from 'util/requests';
@@ -11,7 +10,6 @@ import { BsListTask } from 'react-icons/bs';
 import { buildTasksByStatusChart } from 'helpers';
 import PieChartCard from 'Components/pie-chart-card';
 import TaskFilter, { TaskFilterData } from 'Components/TaskFilter';
-import { Link, NavLink } from 'react-router-dom';
 
 type ControlComponentsData = {
     filterData: TaskFilterData;
@@ -19,50 +17,29 @@ type ControlComponentsData = {
 
 const Tasks = () => {
 
-    // getting the email
-    const { authContextData, setAuthContextData } = useContext(AuthContext);
-
-    useEffect(() => {
-        if(isAuthenticated()){
-        setAuthContextData({
-            authenticated: true,
-            tokenData: getTokenData()
-        })
-        }
-        else{
-        setAuthContextData({
-            authenticated: false,
-        })
-        }
-    }, [setAuthContextData]);
-
-    let email: string;
-
-    authContextData.authenticated && (
-        authContextData.tokenData?.user_name && (
-        email = authContextData.tokenData?.user_name)) 
-
-    // then, getting the user Id by email
-
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User | null>(null);
 
     const getUser = useCallback(async () => {
-        try {
-        const params: AxiosRequestConfig = {
+      try {
+        const email = getTokenData()?.user_name;
+  
+        if (email) {
+          const params: AxiosRequestConfig = {
             method: "GET",
             url: `/users/email/${email}`,
-            withCredentials: true
-    };
-
-        const response = await requestBackend(params);
-            setUser(response.data);
-            } catch (error) {
-            console.log("error: " + error);
-            }
+            withCredentials: true,
+          };
+  
+          const response = await requestBackend(params);
+          setUser(response.data);
+        }
+      } catch (error) {
+        console.log("Error: " + error);
+      }
     }, []);
-
+  
     useEffect(() => {
-        getUser();
+      getUser();
     }, [getUser]);
 
     /* filter */
@@ -192,9 +169,7 @@ const Tasks = () => {
                     {tasksPending?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksPending?.content.map(task => (
-                            <Link to={`/tasks/${task.id}`}>
-                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
-                            </Link>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -208,9 +183,7 @@ const Tasks = () => {
                     {tasksWorking?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksWorking?.content.map(task => (
-                            <Link to={`/tasks/${task.id}`}>
-                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
-                            </Link>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }
@@ -224,9 +197,7 @@ const Tasks = () => {
                     {tasksCompleted?.numberOfElements !== 0 && 
                     <div className='tasks-zone'>
                         {user && tasksCompleted?.content.map(task => (
-                            <Link to={`/tasks/${task.id}`}>
-                                <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
-                            </Link>
+                            <TaskCard taskId={task.id} creatorId={task.creatorId} userLoggedId={user?.id} onUpdateStatus={getAllTasks} key={task.id}/>
                         ))}
                     </div>
                     }

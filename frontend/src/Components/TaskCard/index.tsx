@@ -7,6 +7,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { FiClock } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 import { SlUserFollow } from 'react-icons/sl';
+import { Link } from 'react-router-dom';
 
 type Props = {
     taskId: number;
@@ -105,23 +106,23 @@ const TaskCard = ({taskId, creatorId, userLoggedId, onUpdateStatus} : Props) => 
         <div className="task-card-container">
             {task && <>
             <p className='task-card-border' style={{backgroundColor:changeBorderColor(task?.status)}}></p>
-
             <div className='task-card-components'>
-                <div className="task-card-content">
-                    <div className='task-card-creator-image'>
-                        <img src={creator?.imgUrl} alt="" />
-                    </div>
-                    <div className='task-card-title'>
-                        <h3>{task?.title}</h3>
-                        <p>{task?.description}</p>
-                        <div className='task-card-title-info'>
-                            <p><FiClock style={{marginRight:"3px"}}/>{formatDateTime(task?.startDate)}</p>
-                            <p><BiCommentDetail style={{marginRight:"3px"}}/>{task?.comments.length}</p>
-                            {isFollower() && <p><SlUserFollow style={{marginRight:"3px"}}/>Follower</p>}
+                <Link to={`/tasks/${task.id}`}>
+                    <div className="task-card-content">
+                        <div className='task-card-creator-image'>
+                            <img src={creator?.imgUrl} alt="" />
                         </div>
-                        
+                        <div className='task-card-title'>
+                            <h3>{task?.title}</h3>
+                            <p>{task?.description}</p>
+                            <div className='task-card-title-info'>
+                                <p><FiClock style={{marginRight:"3px"}}/>{formatDateTime(task?.startDate)}</p>
+                                <p><BiCommentDetail style={{marginRight:"3px"}}/>{task?.comments.length}</p>
+                                {isFollower() && <p><SlUserFollow style={{marginRight:"3px"}}/>Follower</p>}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </Link>
                 <div className="task-card-buttons">
                     <p className='update-task-status' 
                         style={{backgroundColor:"#F66565"}} 
