@@ -9,6 +9,8 @@ import { getTokenData } from 'util/auth';
 import { convertDateTime } from 'helpers';
 import { Nav, Tab } from 'react-bootstrap';
 import { BiCommentDetail } from 'react-icons/bi';
+import { FaPlay } from 'react-icons/fa';
+import { FaStop } from 'react-icons/fa'; 
 import { AiOutlineTool } from 'react-icons/ai';
 import CommentCard from './CommentCard';
 import { Controller, useForm } from 'react-hook-form';
@@ -23,36 +25,36 @@ import Plus from 'assets/images/plus.png';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 type UrlParams = {
-    taskId: string;
+  taskId: string;
 }
 
 const TaskDetails = () => {
 
-    const { taskId } = useParams<UrlParams>();
+  const { taskId } = useParams<UrlParams>();
 
-    const [task, setTask] = useState<Task>();
+  const [task, setTask] = useState<Task>();
 
-    const getTask = useCallback(async () => {
-      try {
-          const params: AxiosRequestConfig = {
-            method: "GET",
-            url: `/tasks/${taskId}`,
-            withCredentials: true,
-          };
+  const getTask = useCallback(async () => {
+    try {
+      const params: AxiosRequestConfig = {
+        method: "GET",
+        url: `/tasks/${taskId}`,
+        withCredentials: true,
+      };
   
-          const response = await requestBackend(params);
-          setTask(response.data);
+      const response = await requestBackend(params);
+      setTask(response.data);
         
-      } catch (error) {
-        console.log("Error: " + error);
-      }
-    }, [taskId]);
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+  }, [taskId]);
 
-    useEffect(() => {
-      getTask();
-    }, [getTask]);
+  useEffect(() => {
+    getTask();
+  }, [getTask]);
 
-    const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const getUser = useCallback(async () => {
     try {
@@ -186,164 +188,161 @@ const TaskDetails = () => {
               console.log(error);
               setError(error.message);
           })
+    }
+  };
+
+  const handleDateTimeStartChange = (selectedDateTime: Date[]) => {
+    setDateTimeStart(selectedDateTime[0].toISOString());
+  };
+      
+  const handleDateTimeEndChange = (selectedDateTime: Date[]) => {
+    setDateTimeEnd(selectedDateTime[0].toISOString());
+  };
+
+  ////////
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+
+  const [dateTimeStartRecorded, setDateTimeStartRecorded] = useState('');
+  const [dateTimeEndRecorded, setDateTimeEndRecorded] = useState('');
+
+  const formatTime = (milliseconds: number): string => {
+    const seconds = Math.floor((milliseconds / 1000) % 60);
+    const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
+    const hours = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
+    
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedHours = hours.toString().padStart(2, '0');
+    
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  useEffect(() => {
+    const countTime = () => {
+      if (isRecording) {
+        if (!startTime) {
+          setStartTime(new Date());
+        } else {
+          const currentTime = new Date();
+          const elapsedMilliseconds = currentTime.getTime() - startTime.getTime();
+          setElapsedTime(elapsedMilliseconds);
+        }
+      } else {
+        setStartTime(null);
+        setElapsedTime(0);
       }
     };
+  
+    const timer = setInterval(countTime, 1000);
 
-    const handleDateTimeStartChange = (selectedDateTime: Date[]) => {
-        setDateTimeStart(selectedDateTime[0].toISOString());
+    return () => {
+      clearInterval(timer);
     };
+  }, [isRecording, startTime]);
+    
+  useEffect(() => {
+    console.log("Data inicio: ", dateTimeStartRecorded);
+  }, [dateTimeStartRecorded]);
+
+  useEffect(() => {
+    console.log("Data Fim: ", dateTimeEndRecorded);
+  }, [dateTimeEndRecorded]);
+
+  const handleStartRecording = () => {
+    const currentDateTime = new Date();
+    const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
+    setDateTimeStartRecorded(formattedDateTime);
+    setIsRecording(true);
+  };
+    
+  const handleStopRecording = () => {
+    const currentDateTime = new Date();
+    const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
+    setDateTimeEndRecorded(formattedDateTime);
+
+    setIsRecording(false);
       
-    const handleDateTimeEndChange = (selectedDateTime: Date[]) => {
-        setDateTimeEnd(selectedDateTime[0].toISOString());
-    };
+    if(user && task){
 
-    ////////
-
-    const [isRecording, setIsRecording] = useState(false);
-    const [startTime, setStartTime] = useState<Date | null>(null);
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
-
-    const [dateTimeStartRecorded, setDateTimeStartRecorded] = useState('');
-    const [dateTimeEndRecorded, setDateTimeEndRecorded] = useState('');
-
-    const formatTime = (milliseconds: number): string => {
-      const seconds = Math.floor((milliseconds / 1000) % 60);
-      const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
-      const hours = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
-    
-      const formattedSeconds = seconds.toString().padStart(2, '0');
-      const formattedMinutes = minutes.toString().padStart(2, '0');
-      const formattedHours = hours.toString().padStart(2, '0');
-    
-      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-    };
-
-    useEffect(() => {
-      const countTime = () => {
-        if (isRecording) {
-          if (!startTime) {
-
-            setStartTime(new Date());
-          } else {
-
-            const currentTime = new Date();
-            const elapsedMilliseconds = currentTime.getTime() - startTime.getTime();
-            setElapsedTime(elapsedMilliseconds);
-          }
-        } else {
-
-          setStartTime(null);
-          setElapsedTime(0);
-        }
+      const workData: WorkVariant = {
+        employeeId: user?.id,
+        taskId: task?.id,
+        dateTimeStart: dateTimeStartRecorded,
+        dateTimeEnd: formattedDateTime,
       };
     
-      const timer = setInterval(countTime, 1000);
-
-      return () => {
-        clearInterval(timer);
+      const params : AxiosRequestConfig = {
+          method: "POST",
+          url : `/works`,
+          data: workData,
+          withCredentials: true
       };
-    }, [isRecording, startTime]);
-    
-    useEffect(() => {
-      console.log("Data inicio: ", dateTimeStartRecorded);
-    }, [dateTimeStartRecorded]);
-
-    useEffect(() => {
-      console.log("Data Fim: ", dateTimeEndRecorded);
-    }, [dateTimeEndRecorded]);
-
-    const handleStartRecording = () => {
-      const currentDateTime = new Date();
-      const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
-      setDateTimeStartRecorded(formattedDateTime);
-      setIsRecording(true);
-    };
-    
-    const handleStopRecording = () => {
-      const currentDateTime = new Date();
-      const formattedDateTime = currentDateTime.toISOString().substring(0, 19);
-      setDateTimeEndRecorded(formattedDateTime);
-
-      setIsRecording(false);
-      
-      if(user && task){
-
-        const workData: WorkVariant = {
-          employeeId: user?.id,
-          taskId: task?.id,
-          dateTimeStart: dateTimeStartRecorded,
-          dateTimeEnd: formattedDateTime,
-        };
-    
-        const params : AxiosRequestConfig = {
-            method: "POST",
-            url : `/works`,
-            data: workData,
-            withCredentials: true
-        };
         
-        try{
-          requestBackend(params)
+      try{
+        requestBackend(params)
+        .then(response => {
+            console.log('success', response.data);
+            getTask();
+
+            setError('');
+        })
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+  };
+
+  //
+
+  const { handleSubmit: handleSubmitTask, control: controlTask } = useForm<Task>();
+
+  const [followersModalIsOpen, setFollowersModalIsOpen] = useState(false);
+
+  function openFollowersModal(){
+    setFollowersModalIsOpen(true);
+  }
+  
+  function closeFollowersModal(){
+    setFollowersModalIsOpen(false);
+  }
+
+  const onSubmitTask = (formData : Task) => {
+    if(user && task){
+
+      const params : AxiosRequestConfig = {
+          method: "PUT",
+          url : `/tasks/followers/${task.id}`,
+          data: formData,
+          withCredentials: true
+      };
+  
+      requestBackend(params)
           .then(response => {
               console.log('success', response.data);
+              closeFollowersModal();
               getTask();
-
+  
               setError('');
           })
-        }
-        catch(error){
-          console.log(error);
-        }
+          .catch((error) => {
+              console.log(error);
+              setError(error.message);
+          })
       }
-    };
+  };
 
-    //
+  const [selectFollowers, setSelectFollowers] = useState<User[]>([]);
 
-    const { handleSubmit: handleSubmitTask, control: controlTask } = useForm<Task>();
-
-    const [followersModalIsOpen, setFollowersModalIsOpen] = useState(false);
-
-    function openFollowersModal(){
-      setFollowersModalIsOpen(true);
-    }
-  
-    function closeFollowersModal(){
-      setFollowersModalIsOpen(false);
-    }
-
-    const onSubmitTask = (formData : Task) => {
-      if(user && task){
-
-        const params : AxiosRequestConfig = {
-            method: "PUT",
-            url : `/tasks/followers/${task.id}`,
-            data: formData,
-            withCredentials: true
-        };
-  
-        requestBackend(params)
-            .then(response => {
-                console.log('success', response.data);
-                closeFollowersModal();
-                getTask();
-  
-                setError('');
-            })
-            .catch((error) => {
-                console.log(error);
-                setError(error.message);
-            })
-        }
-    };
-
-    const [selectFollowers, setSelectFollowers] = useState<User[]>([]);
-
-    useEffect(() => {
-      requestBackend({url: '/users', withCredentials: true})
-          .then(response => {
-            setSelectFollowers(response.data.content)
-      })
-    }, []);
+  useEffect(() => {
+    requestBackend({url: '/users', withCredentials: true})
+        .then(response => {
+          setSelectFollowers(response.data.content)
+    })
+  }, []);
 
     return(
         <div className="task-details-container">
@@ -354,8 +353,8 @@ const TaskDetails = () => {
                     <span>Created at: {task && convertDateTime(task?.startDate)}</span>
                 </div>
                 <div className='task-container-first-container-buttons'>
-                    <button className='btn btn-start' onClick={handleStartRecording}>Start</button>
-                    <button className='btn btn-finish' onClick={handleStopRecording}>Finish</button>
+                    <button className='btn btn-start' onClick={handleStartRecording}><FaPlay/> Start</button>
+                    <button className='btn btn-finish' onClick={handleStopRecording}><FaStop/> Stop</button>
                 </div>
                 <div className='task-container-first-container-followers'>
                     <h4>Creator</h4>
@@ -375,7 +374,7 @@ const TaskDetails = () => {
                             {task?.followers.map(follower => (
                               <div>
                                 <img src={follower.imgUrl} alt="" key={follower.id} data-tooltip-content={follower.name} data-tooltip-id={`myTooltip-${follower.name}`}/>
-                                <ReactTooltip id={`myTooltip-${follower.name}`} place="top" />
+                                <ReactTooltip id={`myTooltip-${follower.name}`} place="top"/>
                               </div>
                             ))}
                             
