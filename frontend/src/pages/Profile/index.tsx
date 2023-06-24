@@ -12,6 +12,7 @@ import { BiCommentDetail } from 'react-icons/bi';
 import { FaCrown } from 'react-icons/fa';
 import { BsFillGearFill } from 'react-icons/bs';
 import { BsFillBarChartFill } from 'react-icons/bs';
+import { MdVerified } from 'react-icons/md';
 import { MdGroups } from 'react-icons/md';
 import { MdOutlineTask } from 'react-icons/md';
 import GroupCard from './GroupCard';
@@ -152,7 +153,10 @@ const Profile = () => {
                         {user?.roles.map(role => (
                             <span><FaCrown style={{marginRight:"3px", color:"#FECB33"}}/>{role.authority.substring(5).charAt(0).toUpperCase() + role.authority.substring(6).toLowerCase()}</span>
                         ))}
-                        <p><BsClock style={{marginRight:"3px"}}/>{user && convertTimeToHours(user?.totalWorkTime)}</p>
+                        <div className='profile-card-user-info'>
+                          <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Worked Time"><BsClock style={{marginRight:"3px"}}/>{user && convertTimeToHours(user?.totalWorkTime)}</p>
+                          <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks Completed"><MdVerified style={{marginRight:"3px", color:"#0DAA2A"}}/><strong>{user?.totalTasksCompleted}</strong></p>
+                        </div>
                         <div className='profile-card-user-info-bottom-container'>
                             <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks"><BsListTask style={{marginRight:"3px"}}/><strong>{user?.tasksId.length}</strong></p>
                             <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Works"><AiOutlineTool style={{marginRight:"3px"}}/><strong>{user?.works.length}</strong></p>
