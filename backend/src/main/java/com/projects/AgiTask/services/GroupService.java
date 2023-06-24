@@ -60,19 +60,24 @@ public class GroupService {
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		
+		// don't send a notification to myself
+		User me = authService.authenticated();
+		
 		// send a notification to every member of the group
 		for(User member : entity.getUsers()) {
-			LocalDateTime date = LocalDateTime.now();
-			Notification notification = new Notification();
-			notification.setDescription("You were added to the group '" + entity.getName() + "'.");
-			notification.setMoment(date);
-			notification.setRead(false);
-			notification.setUser(member);
-				
-			notification = notificationRepository.save(notification);
-				
-			member.getNotifications().add(notification);
-			member = userRepository.save(member);
+			if(member != me) {
+				LocalDateTime date = LocalDateTime.now();
+				Notification notification = new Notification();
+				notification.setDescription("You were added to the group '" + entity.getName() + "'.");
+				notification.setMoment(date);
+				notification.setRead(false);
+				notification.setUser(member);
+					
+				notification = notificationRepository.save(notification);
+					
+				member.getNotifications().add(notification);
+				member = userRepository.save(member);
+			}
 		}
 		
 		return new GroupDTO(entity);
