@@ -344,9 +344,7 @@ const TaskDetails = () => {
         .then(response => {
           setSelectFollowers(response.data.content)
     })
-    const usersWorkTime = task?.usersWorkTime || {};
-    generateBarChart(usersWorkTime);
-  }, [task?.usersWorkTime]);
+  }, []);
 
   const generateBarChart = (data: Record<string, number>) => {
     const options: ApexCharts.ApexOptions = {
@@ -425,6 +423,11 @@ const TaskDetails = () => {
     const chart = new ApexCharts(document.querySelector('#chart'), options);
     chart.render();
   };
+
+  useEffect(() => {
+    const usersWorkTime = task?.usersWorkTime || {};
+    generateBarChart(usersWorkTime);
+  }, [task?.usersWorkTime]);
 
     return(
         <div className="task-details-container">
