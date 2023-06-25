@@ -90,6 +90,13 @@ INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES 
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Create user interface wireframes', 'Design wireframes for the user interface', TIMESTAMP WITHOUT TIME ZONE '2023-06-24T10:00:00', 0, 6);
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Implement data backup mechanism', 'Set up automated data backup for the system', TIMESTAMP WITHOUT TIME ZONE '2023-06-25T09:00:00', 1, 10);
 INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Conduct user acceptance testing', 'Involve users to test the system for acceptance', TIMESTAMP WITHOUT TIME ZONE '2023-06-26T10:00:00', 1, 9);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Database migration', 'Migrate the existing database to a new server', TIMESTAMP WITHOUT TIME ZONE '2023-06-20T09:00:00', 1, 7);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Implement search functionality', 'Add search feature to the application', TIMESTAMP WITHOUT TIME ZONE '2023-06-21T14:30:00', 1, 9);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Perform load testing', 'Test the application performance under heavy load', TIMESTAMP WITHOUT TIME ZONE '2023-06-22T10:00:00', 1, 7);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Create user registration page', 'Design and develop user registration functionality', TIMESTAMP WITHOUT TIME ZONE '2023-06-23T09:00:00', 1, 9);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Optimize CSS code', 'Refactor and optimize the CSS codebase', TIMESTAMP WITHOUT TIME ZONE '2023-06-24T14:00:00', 1, 6);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Implement social media sharing', 'Integrate social media sharing functionality', TIMESTAMP WITHOUT TIME ZONE '2023-06-25T10:00:00', 1, 3);
+INSERT INTO tb_task (title, description, start_Date, status, creator_id) VALUES ('Perform security audit', 'Conduct a security audit of the application', TIMESTAMP WITHOUT TIME ZONE '2023-06-26T09:00:00', 1, 7);
 
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('I will create the HTML for this page', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:11:00', 3, 1);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('Ok, so I will do the CSS styling', TIMESTAMP WITHOUT TIME ZONE '2023-06-12T22:22:00', 2, 1);
@@ -113,6 +120,12 @@ INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('We should 
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The wireframes should follow a user-friendly design approach', TIMESTAMP WITHOUT TIME ZONE '2023-06-18T11:15:00', 6, 14);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The backup mechanism should be scheduled for daily backups', TIMESTAMP WITHOUT TIME ZONE '2023-06-18T12:00:00', 10, 15);
 INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('Let''s involve a diverse group of users for better testing coverage', TIMESTAMP WITHOUT TIME ZONE '2023-06-18T13:30:00', 9, 16);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('I have completed the database migration successfully', TIMESTAMP WITHOUT TIME ZONE '2023-06-20T09:15:00', 7, 17);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The search functionality is now implemented and working', TIMESTAMP WITHOUT TIME ZONE '2023-06-21T15:00:00', 9, 18);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The application performed well under heavy load during testing', TIMESTAMP WITHOUT TIME ZONE '2023-06-22T11:30:00', 7, 19);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The user registration page design is finalized', TIMESTAMP WITHOUT TIME ZONE '2023-06-23T10:15:00', 9, 20);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('I have refactored the CSS code for improved performance', TIMESTAMP WITHOUT TIME ZONE '2023-06-24T14:30:00', 6, 21);
+INSERT INTO tb_comment (text, date_Time, author_id, task_id) VALUES ('The social media sharing feature is now integrated', TIMESTAMP WITHOUT TIME ZONE '2023-06-25T11:00:00', 3, 22);
 
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T09:12:44', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T10:29:56');
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 1, TIMESTAMP WITHOUT TIME ZONE '2023-06-14T12:02:01', TIMESTAMP WITHOUT TIME ZONE '2023-06-14T15:13:20');
@@ -144,6 +157,11 @@ INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUE
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (6, 14, TIMESTAMP WITHOUT TIME ZONE '2023-06-28T12:30:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-28T14:00:00');
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (10, 15, TIMESTAMP WITHOUT TIME ZONE '2023-06-29T11:30:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-29T13:00:00');
 INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (9, 16, TIMESTAMP WITHOUT TIME ZONE '2023-06-30T13:30:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-30T15:00:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (2, 17, TIMESTAMP WITHOUT TIME ZONE '2023-06-30T09:30:00', TIMESTAMP WITHOUT TIME ZONE '2023-06-30T11:00:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (3, 18, TIMESTAMP WITHOUT TIME ZONE '2023-07-01T10:00:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-01T12:00:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (4, 19, TIMESTAMP WITHOUT TIME ZONE '2023-07-02T13:00:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-02T15:30:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (5, 20, TIMESTAMP WITHOUT TIME ZONE '2023-07-03T09:00:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-03T11:30:00');
+INSERT INTO tb_work (employee_id, task_id, date_Time_Start, date_Time_End) VALUES (6, 21, TIMESTAMP WITHOUT TIME ZONE '2023-07-04T14:00:00', TIMESTAMP WITHOUT TIME ZONE '2023-07-04T16:00:00');
 
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,3);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (1,4);
@@ -184,3 +202,9 @@ INSERT INTO tb_task_followers (task_id, follower_id) VALUES (14, 9);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (15, 10);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (16, 9);
 INSERT INTO tb_task_followers (task_id, follower_id) VALUES (16, 11);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (20, 1);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (20, 2);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (18, 2);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (18, 3);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (19, 2);
+INSERT INTO tb_task_followers (task_id, follower_id) VALUES (19, 3);
