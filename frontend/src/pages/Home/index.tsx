@@ -4,6 +4,7 @@ import './styles.css';
 import Utilized from 'Components/Utilized';
 import Companies from 'Components/Companies';
 import TaskModel from './TaskModel';
+import WorkTogether from './WorkTogether';
 
 const Home = () => {
     return(
@@ -28,6 +29,9 @@ const Home = () => {
             </div>
             <div className='home-utilized-container'>
                 <TaskModel/>
+            </div>
+            <div className='home-utilized-container'>
+                <WorkTogether/>
             </div>
         </div>
     );
