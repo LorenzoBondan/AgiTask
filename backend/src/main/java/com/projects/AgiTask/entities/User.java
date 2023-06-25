@@ -40,7 +40,8 @@ public class User implements UserDetails, Serializable{
 	private String password;
 	@Column(columnDefinition = "TEXT")
 	private String imgUrl;
-	private Integer totalTasksCompleted;
+	
+	private Set<Long> totalTasksCompleted = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_role",
@@ -70,14 +71,13 @@ public class User implements UserDetails, Serializable{
 	public User() {
 	}
 	
-	public User(Long id, String name, String email, String password, String imgUrl, Integer totalTasksCompleted) {
+	public User(Long id, String name, String email, String password, String imgUrl) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.imgUrl = imgUrl;
-		this.totalTasksCompleted = totalTasksCompleted;
 	}
 	
 	public Integer getTotalWorkTime() {
@@ -128,12 +128,8 @@ public class User implements UserDetails, Serializable{
 		this.imgUrl = imgUrl;
 	}
 
-	public Integer getTotalTasksCompleted() {
+	public Set<Long> getTotalTasksCompleted() {
 		return totalTasksCompleted;
-	}
-
-	public void setTotalTasksCompleted(Integer totalTasksCompleted) {
-		this.totalTasksCompleted = totalTasksCompleted;
 	}
 
 	public List<Notification> getNotifications() {

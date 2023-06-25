@@ -2,8 +2,10 @@ package com.projects.AgiTask.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +26,7 @@ public class UserDTO implements Serializable {
 
 	private String imgUrl;
 	
-	private Integer totalTasksCompleted;
+	private Set<Long> totalTasksCompleted = new HashSet<>();
 	
 	private List<RoleDTO> roles = new ArrayList<>();
 	
@@ -44,13 +46,12 @@ public class UserDTO implements Serializable {
 	  
 	public UserDTO() {}
 
-	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl, Integer totalTasksCompleted, Integer totalWorkTime) {
+	public UserDTO(Long id, String name, String email, String password, Long favoriteTeamId, String imgUrl, Integer totalWorkTime) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.imgUrl = imgUrl;
-		this.totalTasksCompleted = totalTasksCompleted;
 		this.totalWorkTime = totalWorkTime;
 	}
 	
@@ -59,8 +60,8 @@ public class UserDTO implements Serializable {
 		this.name = entity.getName();
 		this.email = entity.getEmail();
 		this.imgUrl = entity.getImgUrl();
-		this.totalTasksCompleted = entity.getTotalTasksCompleted();
-
+		
+		entity.getTotalTasksCompleted().forEach(task -> this.totalTasksCompleted.add(task));
 		entity.getRoles().forEach(rol -> this.roles.add(new RoleDTO(rol)));
 		entity.getNotifications().forEach(not -> this.notifications.add(new NotificationDTO(not)));
 		entity.getComments().forEach(com -> this.commentsId.add(com.getId()));
@@ -106,12 +107,8 @@ public class UserDTO implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public Integer getTotalTasksCompleted() {
+	public Set<Long> getTotalTasksCompleted() {
 		return totalTasksCompleted;
-	}
-
-	public void setTotalTasksCompleted(Integer totalTasksCompleted) {
-		this.totalTasksCompleted = totalTasksCompleted;
 	}
 
 	public List<RoleDTO> getRoles() { 

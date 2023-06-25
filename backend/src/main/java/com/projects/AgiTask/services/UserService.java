@@ -130,7 +130,11 @@ public class UserService implements UserDetailsService {
 		entity.setName(dto.getName());
 		entity.setEmail(dto.getEmail());
 		entity.setImgUrl(dto.getImgUrl());
-		entity.setTotalTasksCompleted(dto.getTotalTasksCompleted());
+		
+		for (Long taskId : dto.getTotalTasksCompleted()) {
+			Task task = taskRepository.getOne(taskId);
+			entity.getTotalTasksCompleted().add(task.getId());
+		}
 
 		for (RoleDTO rolDto : dto.getRoles()) {
 			Role role = roleRepository.getOne(rolDto.getId());

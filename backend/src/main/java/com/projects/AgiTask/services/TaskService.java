@@ -123,7 +123,7 @@ public class TaskService {
 			
 			// send a notification to every follower when task is changed to COMPLETED
 			if(entity.getStatus() == Status.COMPLETED) {
-				me.setTotalTasksCompleted(me.getTotalTasksCompleted() + 1);
+				me.getTotalTasksCompleted().add(entity.getId());
 				for(User follower : entity.getFollowers()) {
 					if(follower != me) {
 						LocalDateTime date = LocalDateTime.now();
@@ -136,7 +136,7 @@ public class TaskService {
 						notification = notificationRepository.save(notification);
 						
 						follower.getNotifications().add(notification);
-						follower.setTotalTasksCompleted(follower.getTotalTasksCompleted() + 1);
+						follower.getTotalTasksCompleted().add(entity.getId());
 						follower = userRepository.save(follower);
 					}
 				}
@@ -154,7 +154,7 @@ public class TaskService {
 					notification = notificationRepository.save(notification);
 						
 					creator.getNotifications().add(notification);
-					creator.setTotalTasksCompleted(creator.getTotalTasksCompleted() + 1);
+					creator.getTotalTasksCompleted().add(entity.getId());
 					creator = userRepository.save(creator);
 				}
 			}
