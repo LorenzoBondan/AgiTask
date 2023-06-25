@@ -120,10 +120,10 @@ public class TaskService {
 			entity = repository.save(entity);
 			
 			User me = authService.authenticated();
-			me.setTotalTasksCompleted(me.getTotalTasksCompleted() + 1);
 			
 			// send a notification to every follower when task is changed to COMPLETED
 			if(entity.getStatus() == Status.COMPLETED) {
+				me.setTotalTasksCompleted(me.getTotalTasksCompleted() + 1);
 				for(User follower : entity.getFollowers()) {
 					if(follower != me) {
 						LocalDateTime date = LocalDateTime.now();
