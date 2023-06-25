@@ -38,6 +38,7 @@ const Form = () => {
                     setValue('tasksFollowingId', user.tasksFollowingId);
                     setValue('roles', user.roles);
                     setValue('totalWorkTime',user.totalWorkTime);
+                    setValue('totalTasksCompleted', user.totalTasksCompleted);
                 })
         }
         

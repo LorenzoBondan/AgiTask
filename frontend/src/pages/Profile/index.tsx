@@ -21,6 +21,8 @@ import plusIcon from 'assets/images/plus.png';
 import { convertTimeToHours } from 'helpers';
 import WorkCard from './WorkCard';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
+import Modal from 'react-modal';
+import { useForm } from 'react-hook-form';
 
 type MonthOption = {
     value: string;
@@ -139,6 +141,61 @@ const Profile = () => {
     getUser();
     getWorksByEmployeeAndMonth();
   }
+
+  //
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal(){
+    setIsOpen(true);
+    console.log("executou")
+  }
+
+  function closeModal(){
+    setIsOpen(false);
+  }
+
+  const { register, handleSubmit, formState: {errors}, setValue } = useForm<User>();
+
+  useEffect(() => {
+    if(user){
+      requestBackend({url:`/users/${user?.id}`, withCredentials:true})
+        .then((response) => {
+            const user = response.data as User;
+
+            setValue('name', user.name);
+            setValue('imgUrl', user.imgUrl);
+            setValue('password', user.password);
+            setValue('email', user.email);
+            setValue('commentsId', user.commentsId);
+            setValue('notifications', user.notifications);
+            setValue('commentsId', user.commentsId);
+            setValue('groupsId', user.groupsId);
+            setValue('works', user.works);
+            setValue('tasksId',user.tasksId);
+            setValue('tasksFollowingId', user.tasksFollowingId);
+            setValue('roles', user.roles);
+            setValue('totalWorkTime',user.totalWorkTime);
+            setValue('totalTasksCompleted', user.totalTasksCompleted);
+      })  
+    }
+  }, [user, setValue]);
+
+  const onSubmit = (formData : User) => {
+    const params : AxiosRequestConfig = {
+        method:"PUT",
+        url : `/users/${user?.id}`,
+        data: formData,
+        withCredentials: true
+    };
+
+    requestBackend(params)
+        .then(response => {
+            console.log('success', response.data);
+            closeModal();
+            getUser();
+        })
+  };
   
     return(
         <div className="profile-container">
@@ -165,7 +222,39 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className='profile-edit-button-container'>
-                        <button className='btn btn-primary'><BsFillGearFill style={{marginRight:"5px"}}/> Edit Profile</button>
+                        <button className='btn btn-primary' onClick={openModal}><BsFillGearFill style={{marginRight:"5px"}}/>Edit Profile</button>
+                        <Modal 
+                          isOpen={modalIsOpen}
+                          onRequestClose={closeModal}
+                          contentLabel="Example Modal"
+                          overlayClassName="modal-overlay"
+                          className="modal-content"
+                          >
+                            <form onSubmit={handleSubmit(onSubmit)} className="work-edit-form">
+                              <h4>Edit Profile</h4>
+                              <div style={{width:"100%"}}>
+                                <label htmlFor="">Img Url</label>
+                                <input 
+                                  {...register("imgUrl", {
+                                  required: 'Campo obrigatório',
+                                  pattern: { 
+                                    value: /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/gm,
+                                    message: 'Insira uma URL válida'
+                                  }
+                                  })}
+                                  type="text"
+                                  className={`form-control base-input ${errors.imgUrl ? 'is-invalid' : ''}`}
+                                  placeholder="URL of course's image"
+                                  name="imgUrl"
+                                />
+                                <div className='invalid-feedback d-block'>{errors.imgUrl?.message}</div>
+                              </div>
+                              <div className="work-edit-buttons">
+                                <button onClick={closeModal} className="btn">Close</button>
+                                <button className="btn">Submit</button>
+                              </div>
+                            </form>
+                        </Modal>
                     </div>
                 </div>
                 <div className='profile-card-second-container'>
