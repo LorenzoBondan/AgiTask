@@ -24,7 +24,7 @@ export type User = {
     tasksId: number[];
     tasksFollowingId: number[];
     totalWorkTime: number;
-    totalTasksCompleted: number;
+    totalTasksCompleted: number[];
 }
 
 export type Role = {

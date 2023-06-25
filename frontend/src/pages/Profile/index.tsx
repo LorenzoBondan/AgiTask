@@ -155,7 +155,7 @@ const Profile = () => {
                         ))}
                         <div className='profile-card-user-info'>
                           <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Worked Time"><BsClock style={{marginRight:"3px"}}/>{user && convertTimeToHours(user?.totalWorkTime)}</p>
-                          <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks Completed"><MdVerified style={{marginRight:"3px", color:"#0DAA2A"}}/><strong>{user?.totalTasksCompleted}</strong></p>
+                          <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks Completed"><MdVerified style={{marginRight:"3px", color:"#0DAA2A"}}/><strong>{user?.totalTasksCompleted.length}</strong></p>
                         </div>
                         <div className='profile-card-user-info-bottom-container'>
                             <p data-tooltip-id={`myTooltip`} data-tooltip-content="Total Tasks"><BsListTask style={{marginRight:"3px"}}/><strong>{user?.tasksId.length}</strong></p>

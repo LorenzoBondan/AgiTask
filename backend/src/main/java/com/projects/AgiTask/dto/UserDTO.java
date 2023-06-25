@@ -2,10 +2,8 @@ package com.projects.AgiTask.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +24,7 @@ public class UserDTO implements Serializable {
 
 	private String imgUrl;
 	
-	private Set<Long> totalTasksCompleted = new HashSet<>();
+	private List<Long> totalTasksCompleted = new ArrayList<>();
 	
 	private List<RoleDTO> roles = new ArrayList<>();
 	
@@ -107,7 +105,7 @@ public class UserDTO implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public Set<Long> getTotalTasksCompleted() {
+	public List<Long> getTotalTasksCompleted() {
 		return totalTasksCompleted;
 	}
 

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ public class User implements UserDetails, Serializable{
 	@Column(columnDefinition = "TEXT")
 	private String imgUrl;
 	
+	@ElementCollection
 	private Set<Long> totalTasksCompleted = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.EAGER)
