@@ -5,7 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { requestBackend } from 'util/requests';
 import './styles.css';
 import { User } from 'types';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
 
@@ -29,6 +30,7 @@ const RegisterForm = () => {
             .then(response => {
                 console.log('Success', response.data);
                 history.push("/auth/login");
+                toast.success("User created!");
             })
     };
 

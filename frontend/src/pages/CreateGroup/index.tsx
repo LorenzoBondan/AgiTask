@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getTokenData } from "util/auth";
 import logo from 'assets/images/AT-logo-with-title.png';
 import Select from "react-select";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateGroup = () => {
   const {
@@ -60,6 +62,7 @@ const CreateGroup = () => {
 
         await requestBackend(params);
         history.push("/profile");
+        toast.success("Group created!");
       } catch (error) {
         console.log("Error: " + error);
       }

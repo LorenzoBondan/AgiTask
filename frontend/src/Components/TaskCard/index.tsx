@@ -8,6 +8,8 @@ import { FiClock } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 import { SlUserFollow } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
     taskId: number;
@@ -89,6 +91,7 @@ const TaskCard = ({taskId, creatorId, userLoggedId, onUpdateStatus} : Props) => 
         requestBackend(params) 
           .then(response => {
             onUpdateStatus();
+            toast.success(`Task status updated to ${status?.toLowerCase()}!`);
           })
     }, [taskId, onUpdateStatus])
 

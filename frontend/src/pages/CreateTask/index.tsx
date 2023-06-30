@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getTokenData } from "util/auth";
 import logo from 'assets/images/AT-logo-with-title.png';
 import Select from "react-select";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./styles.css";
 
 const CreateTask = () => {
@@ -70,6 +72,7 @@ const CreateTask = () => {
 
         await requestBackend(params);
         history.push("/tasks");
+        toast.success("Task created!");
       } catch (error) {
         console.log("Error: " + error);
       }

@@ -7,6 +7,7 @@ import { requestBackendLogin } from 'util/requests';
 import { getAuthData, saveAuthData } from 'util/storage';
 import './styles.css';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type FormData = {
     username: string,
@@ -48,7 +49,7 @@ const Login = () => {
 
             history.replace(from);
 
-            toast.info("Welcome!");
+            toast.success("Welcome");
         })
         .catch(error => {
             setHasError(true);
