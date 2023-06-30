@@ -14,7 +14,7 @@
 
 .work-card-main-container-task{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
@@ -26,7 +26,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 20%;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .work-card-content-task p, .work-card-content-task svg{
@@ -46,7 +47,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 25%;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .work-user-task img{
@@ -65,7 +67,7 @@
 .work-card-content-buttons{
     display: flex;
     flex-direction: row;
-    width: 8%;
+    width: 100%;
 }
 
 .work-card-content-buttons svg{
@@ -136,4 +138,53 @@
     text-align: center;
     width: 100%;
     font-size: 14px;
+}
+
+@media(min-width:768px){
+    .work-card-main-container-task{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .work-card-content-task{
+        width: 20%;
+        margin-bottom: 0;
+    }
+    
+    .work-card-content-task p, .work-card-content-task svg{
+        font-size: 15px;
+    }
+    
+    .work-card-content-task span{
+        font-size: 12px;
+    }
+    
+    .work-user-task{
+        align-items: center;
+        justify-content: flex-start;
+        width: 25%;
+        margin-bottom: 0px;
+    }
+    
+    .work-user-task img{
+        height: 35px;
+        width: 35px;
+    }
+    
+    .work-user-task h6{
+        font-size: 16px;
+    }
+    
+    .work-card-content-buttons{
+        width: 8%;
+    }
+    
+    .work-card-content-buttons svg{
+        font-size: 32px;
+        padding: 5px;
+    }  
 }

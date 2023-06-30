@@ -65,3 +65,13 @@
 .comment-card-buttons svg:hover{
     cursor: pointer;
 }
+
+.comment-card-content p {
+    font-size: 12px;
+}
+
+@media(min-width:576px){
+    .comment-card-content p {
+        font-size: 16px;
+    }
+}
