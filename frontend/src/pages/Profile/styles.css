@@ -1,24 +1,23 @@
 .profile-container{
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    height: 100vh;
+    padding: 10px;
     width: 100%;
 }
 
 .profile-card{
     display: flex;
-    width: 1200px;
-    height: 520px;
+    flex-direction: column;
+    width: 100%;
 }
 
 .profile-card-first-container{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 20px;
-    border-right: silver 1px solid;
+    padding: 10px;
+    border-bottom: silver 1px solid;
     background-color: #F6F5F5;
 }
 
@@ -118,14 +117,14 @@
 
 .profile-card-second-container{
     padding: 10px;
-    border-right: silver 1px solid;
+    border-bottom: silver 1px solid;
 }
 
 .profile-card-groups-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 300px;
+    width: 100%;
     margin-bottom: 10px;
     border-bottom: 1px solid silver;
     padding-bottom: 12px;
@@ -209,4 +208,222 @@
 .profile-card-works{
     overflow-y: scroll;
     height: 410px;
+}
+
+@media(min-width:1200px){
+    .profile-container{
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        height: 100vh;
+        width: 100%;
+    }
+    
+    .profile-card{
+        display: flex;
+        flex-direction: row;
+        width: 1200px;
+        height: 520px;
+    }
+    
+    .profile-card-first-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        border-right: silver 1px solid;
+        border-bottom: none;
+        background-color: #F6F5F5;
+    }
+    
+    .profile-card-image-container img{
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        border: 1px solid #c7c4c4;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    
+    .profile-card-image-container{
+        padding: 5px;
+        border-bottom: 2px solid silver;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .profile-card-user-info-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .profile-card-user-info-container h3{
+        color: #F15A23;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .profile-card-user-info-container h6{
+        color: #B9331A;
+        text-align: center;
+    }
+    
+    .profile-card-user-info-container span{
+        text-align: center;
+        color: #533A5B;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    
+    .profile-card-user-info-container p{
+        color: #ABABAB;
+        font-size: 14px;
+        margin-bottom:0px;
+    }
+    
+    .profile-card-user-info{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .profile-card-user-info-bottom-container{
+        margin-top: 10px;
+        padding: 5px;
+        border: 1px solid #c7c4c4;
+        border-radius: 10px;
+        background-color: #aaa5a527;
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly
+    }
+    
+    .profile-card-user-info-bottom-container p{
+        color: #828282;
+        margin-bottom: 0;
+        font-size: 20px;
+    }
+    
+    .profile-edit-button-container{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .profile-edit-button-container button{
+        width: 100%;
+        color: white;
+        font-weight: 700;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .profile-edit-button-container button:hover{
+        transform: scale(1.05);
+        background-color: #B9331A;
+        color: white;
+    }
+    
+    .profile-card-second-container{
+        padding: 10px;
+        border-right: silver 1px solid;
+        border-bottom: none;
+    }
+    
+    .profile-card-groups-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 300px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid silver;
+        padding-bottom: 12px;
+    }
+    
+    .profile-card-groups-container h3, .profile-card-filter-container h6{
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+    
+    .profile-card-groups-container button{
+        background-color: #9a9c9cc0;
+        border: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+    
+    .profile-card-groups-container button:hover{
+        transform: scale(1.05);
+        color: #fff;
+    }
+    
+    .profile-card-groups-container img{
+        height: 23px;
+        border: none;
+    }
+    
+    .profile-card-groups{
+        height: 436px;
+        overflow-y: scroll;
+    }
+    
+    .profile-card-third-container{
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .profile-card-filter-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid silver;
+        padding-bottom: 5px;
+    }
+    
+    .month-input{
+        width: 125px;
+    }
+    
+    .year-input{
+        width: 125px;
+        margin-right: 2px;
+    }
+    
+    .profile-card-results-container{
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+    }
+    
+    .profile-card-results-container h4{
+        font-size: 16px;
+        color: #828282;
+    }
+    
+    .profile-card-results-top{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 20px;
+    }
+    
+    .profile-card-works{
+        overflow-y: scroll;
+        height: 410px;
+    }
 }
