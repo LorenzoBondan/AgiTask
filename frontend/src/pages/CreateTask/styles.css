@@ -1,17 +1,17 @@
 .create-task-container{
-    padding: 20px;
+    padding: 10px;
     width: 100%;
     height: 100vh;
 }
 
 .create-task-container h1{
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 20px;
 }
 
 .post-card-form-card{
-    width: 1000px;
+    width: 90%;
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -34,7 +34,7 @@
 }
 
 .new-task-image-container{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -50,4 +50,25 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+@media(min-width:992px){
+    .create-task-container{
+        padding: 20px;
+    }
+    
+    .create-task-container h1{
+        font-size: 30px;
+    }
+    
+    .post-card-form-card{
+        width: 900px;
+    }
+    
+    .new-task-image-container{
+        display: unset;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }
