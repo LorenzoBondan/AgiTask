@@ -7,7 +7,7 @@ This is a team or individual tasks management tool, with comments, notifications
 ## Layout desktop
 
 ### User tasks page
-![tasks](https://github.com/LorenzoBondan/AgiTask/assets/105743965/68c218a2-6e42-4c17-82d6-f425e1516a5c)
+![tasks](https://github.com/LorenzoBondan/AgiTask/assets/105743965/8e2fb385-dedb-4e50-88c3-3aa54d6cc0ae)
 
 ### Task Details (comments)
 ![task-details-comments](https://github.com/LorenzoBondan/AgiTask/assets/105743965/64ca646b-1297-4870-a10d-4d1ba2a93d62)
