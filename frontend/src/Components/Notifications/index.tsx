@@ -1,4 +1,3 @@
-
 import './styles.css';
 import { User } from 'types';
 import NotificationCard from './NotificationCard';

@@ -119,7 +119,6 @@ const CreateTask = () => {
                   </div>
                 </div>
               </div>
-
               <div className="post-crud-inputs-left-container">
                 <div className="margin-bottom-30">
                   <label htmlFor="">Description</label>
@@ -138,7 +137,6 @@ const CreateTask = () => {
                     {errors.description?.message}
                   </div>
                 </div>
-
                 <div className="margin-bottom-30">
                   <label htmlFor="">
                     Followers
@@ -168,7 +166,6 @@ const CreateTask = () => {
                   )}
                 </div>
               </div>
-
               <div className="post-crud-buttons-container">
                 <button
                   className="btn btn-outline-secondary post-crud-buttons"
@@ -176,7 +173,6 @@ const CreateTask = () => {
                 >
                   CANCEL
                 </button>
-
                 <button
                   className="btn btn-primary text-white post-crud-buttons"
                   onClick={handleSubmit(onSubmit)}

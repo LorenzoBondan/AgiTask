@@ -1,4 +1,3 @@
-
 import { useParams } from 'react-router-dom';
 import './styles.css';
 import { useCallback, useEffect, useState } from 'react';
@@ -420,7 +419,7 @@ const TaskDetails = () => {
       
     };
   
-    const chart = new ApexCharts(document.querySelector('#chart'), options);
+  const chart = new ApexCharts(document.querySelector('#chart'), options);
     chart.render();
   };
 
@@ -462,7 +461,6 @@ const TaskDetails = () => {
                                 <ReactTooltip id={`myTooltip-${follower.name}`} place="top"/>
                               </div>
                             ))}
-                            
                             {task?.creatorId === user?.id && <>
                             <button onClick={openFollowersModal} className='add-followers-button'><img src={Plus} alt="" /></button>
                             <Modal 
@@ -511,7 +509,6 @@ const TaskDetails = () => {
                   )}
                 </div>
             </div>
-
             <div className='task-details-second-container'>
                 <Tab.Container id="tasks-tabs" defaultActiveKey="comments">
                   <Nav variant="pills" className="nav-pills mb-2 mt-2" id="pills-tab">
@@ -525,7 +522,6 @@ const TaskDetails = () => {
                       <Nav.Link eventKey="data"><FaRegChartBar/></Nav.Link>
                     </Nav.Item>
                   </Nav>
-
                   <Tab.Content id="slideInUp" className='heigth-100'>
                     <Tab.Pane eventKey="comments" className='heigth-100'>
                       <div className='task-comments-row'>
@@ -550,7 +546,6 @@ const TaskDetails = () => {
                         </form>
                       </div>
                     </Tab.Pane>
-
                     <Tab.Pane eventKey="works" className='heigth-100'>
                       <div className='task-comments-row'>
                         {user && task?.works.sort( (a,b) => a.dateTimeStart > b.dateTimeStart ? 1 : -1).map(work => (
@@ -607,7 +602,6 @@ const TaskDetails = () => {
                         </Modal>
                       </div>
                     </Tab.Pane>
-
                     <Tab.Pane eventKey="data" className='heigth-100'>
                       <div className='row users-work-time-row'>
                         {task?.usersWorkTime && Object.entries(task.usersWorkTime)
@@ -620,10 +614,8 @@ const TaskDetails = () => {
                           ))
                         }
                       </div>
-
                       <div id="chart" className='task-chart-container'></div>
                     </Tab.Pane>
-
                   </Tab.Content>
                 </Tab.Container>
             </div>

@@ -105,7 +105,6 @@ const TaskCard = ({taskId, creatorId, userLoggedId, onUpdateStatus} : Props) => 
       
 
     return(
-        
         <div className="task-card-container">
             {task && <>
             <p className='task-card-border' style={{backgroundColor:changeBorderColor(task?.status)}}></p>

@@ -1,4 +1,3 @@
-
 import { AxiosRequestConfig } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +6,7 @@ import './styles.css';
 import { User } from 'types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
 const RegisterForm = () => {
 
@@ -32,22 +32,28 @@ const RegisterForm = () => {
                 history.push("/auth/login");
                 toast.success("User created!");
             })
+            .catch((error) => {
+                if (error.response && error.response.status === 422) {
+                  setAlertMessage('This email is already in use!');
+                } else {
+                  setAlertMessage('An error occurred while processing the request.');
+                }
+            })
     };
 
     const handleCancel = () => {
         history.push("/home")
     }
 
+    const [alertMessage, setAlertMessage] = useState('');
+
     return(
         <div className="register-container">
-
             <div className="base-card user-register-form-card">
                 <h1>REGISTER</h1>
-
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='row user-crud-inputs-container'>
                         <div className='user-crud-inputs-left-container'>
-
                             <div className='margin-bottom-30'>
                                 <label htmlFor="" style={{color:"black"}}>Name</label>
                                 <input 
@@ -61,7 +67,6 @@ const RegisterForm = () => {
                                 />
                                 <div className='invalid-feedback d-block'>{errors.name?.message}</div>
                             </div>
-
                             <div className='margin-bottom-30'>
                                 <label htmlFor="" style={{color:"black"}}>Email</label>
                                 <input 
@@ -78,8 +83,6 @@ const RegisterForm = () => {
                                 />
                                 <div className='invalid-feedback d-block'>{errors.email?.message}</div>
                             </div>
-
-
                             <div className='margin-bottom-30'>
                                 <label htmlFor="" style={{color:"black"}}>Password</label>
                                 <input 
@@ -91,10 +94,9 @@ const RegisterForm = () => {
                                     name="password"
                                 />
                                 <div className='invalid-feedback d-block'>{errors.password?.message}</div>
-
                             </div>
+                            {alertMessage && <p className="error-message margin-bottom-30">{alertMessage}</p>}
                         </div>
-
                         <div className='user-buttons-container'>
                             <button 
                                 className='btn btn-outline-danger user-crud-buttons'
@@ -106,7 +108,6 @@ const RegisterForm = () => {
                         </div>
                     </div>
                 </form>
-            
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import UserCrudCard from "../UserCrudCard";
 import { SpringPage, User } from "types";
 import UserFilter, { UserFilterData } from "Components/UserFilter";
 import Pagination from "Components/Pagination";
+import './styles.css';
 
 type ControlComponentsData = {
   activePage: number;
@@ -52,37 +53,36 @@ const List = () => {
 
     return(
         <div className='courses-crud-container'>
+          <div className="courses-crud-content">
             <div className="courses-crud-bar-container">
-                <Link to="/admin/users/create">
-                    <button className="btn btn-primary btn-crud-add" style={{color:"white", marginBottom:"20px"}}>
-                        ADD NEW USER
-                    </button>
-                </Link>
+                  <Link to="/admin/users/create">
+                      <button className="btn btn-primary btn-crud-add" style={{color:"white", marginBottom:"20px"}}>
+                          ADD NEW USER
+                      </button>
+                  </Link>
+              </div>
+              <div className='users-search-bar-container'>
+                <UserFilter onSubmitFilter={handleSubmitFilter} />
+              </div>
+              <div className='row'>
+                  {page?.content
+                      .sort( (a,b) => a.name > b.name ? 1 : -1)
+                      .map((item) => (
+                          <div className="col-sm-4 col-md-4 col-lg-3 col-xl-2 user-crud-column" key={item.id}>
+                              <UserCrudCard user={item} onDelete={() => getUsers()} />
+                          </div>
+                      ))
+                  }
             </div>
-
-            <div className='users-search-bar-container'>
-              <UserFilter onSubmitFilter={handleSubmitFilter} />
-            </div>
-
-            <div className='row'>
-                {page?.content
-                    .sort( (a,b) => a.name > b.name ? 1 : -1)
-                    .map((item) => (
-                        <div className="col-sm-4 col-md-4 col-lg-3 col-xl-2 user-crud-column" key={item.id}>
-                            <UserCrudCard user={item} onDelete={() => getUsers()} />
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div className='pagination-container'>
-              <Pagination 
-                pageCount={(page) ? page.totalPages : 0} 
-                range={2}
-                onChange={handlePageChange}
-                forcePage={page?.number}
-              />
-            </div>
+          </div>
+          <div className='pagination-container'>
+            <Pagination 
+              pageCount={(page) ? page.totalPages : 0} 
+              range={2}
+              onChange={handlePageChange}
+              forcePage={page?.number}
+            />
+          </div>
     </div>
     );
 }

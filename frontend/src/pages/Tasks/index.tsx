@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from 'react';
 import './styles.css';
 import { getTokenData } from 'util/auth';
@@ -154,11 +153,9 @@ const Tasks = () => {
     
     return(
         <div className="tasks-container">
-
             <div className='tasks-filter'>
                 <TaskFilter onSubmitFilter={handleSubmitFilter}/>
             </div>
-
             <div className='user-tasks-container'>
                 <div className='tasks-status'>
                     <div className='task-status-top' style={{backgroundColor:"#F66565"}}></div>
@@ -202,7 +199,6 @@ const Tasks = () => {
                     </div>
                     }
                 </div>
-
                 {tasksByStatus && (
                     <PieChartCard
                         name="Tasks Status"

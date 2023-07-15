@@ -1,4 +1,3 @@
-
 import { FaSitemap } from 'react-icons/fa';
 import { AiOutlineLaptop } from 'react-icons/ai';
 import { FaWrench } from 'react-icons/fa';
@@ -7,7 +6,6 @@ import { FaBullhorn } from 'react-icons/fa';
 import { FaChartBar } from 'react-icons/fa';
 import { FaCode } from 'react-icons/fa';
 import { FaMoneyBill } from 'react-icons/fa';
-
 import './styles.css';
 
 const Utilized = () => {

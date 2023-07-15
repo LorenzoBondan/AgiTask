@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from 'AuthContext';
 import { removeAuthData } from 'util/storage';
 import history from 'util/history';
-
 import logo from 'assets/images/AT-logo-with-title.png'
 import taskIcon from 'assets/images/task.png';
 import plusIcon from 'assets/images/plus.png';
@@ -13,7 +12,6 @@ import adminIcon from 'assets/images/admin.png';
 import logoutIcon from 'assets/images/logout.png';
 import loginIcon from 'assets/images/login.png';
 import homeIcon from 'assets/images/home.png';
-
 import './styles.css';
 
 const Navbar = () => {
@@ -53,7 +51,6 @@ const Navbar = () => {
             <div className={isExpanded ? 'navbar-title' : 'navbar-title-expanded'} >
                 <img src={logo} alt="logo" />
             </div>
-
             <div className='hambuger-container'>
                 <button	className="hamburger" onClick={() => setExpendState(!isExpanded)}>
                     <span></span>
@@ -61,7 +58,6 @@ const Navbar = () => {
                     <span></span>
                 </button>
             </div>
-
             <ul className='ul-container'>
                 {isAuthenticated() ? (
                 <>
@@ -83,7 +79,6 @@ const Navbar = () => {
                         {isExpanded && <p>Profile</p>}
                     </NavLink>
                 </li>
-
                 { hasAnyRoles(['ROLE_ADMIN']) && ( 
                     <li>
                         <NavLink to="/admin" className={isExpanded ? "admin-nav-item" : "admin-nav-item-expanded"}>
@@ -100,9 +95,7 @@ const Navbar = () => {
                             {isExpanded && <p>Home</p>}
                         </NavLink>
                     </li>   
-                
                 )}
-
                 { authContextData.authenticated ? (
                     <li>
                         <NavLink to="/" className={isExpanded ? "login-nav-item" : "login-nav-item-expanded"} onClick={handleLogoutClick}>

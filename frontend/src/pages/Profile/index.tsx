@@ -1,4 +1,3 @@
-
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import './styles.css';
 import { User, Work } from 'types';
@@ -25,9 +24,9 @@ import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 
 type MonthOption = {
-    value: string;
-    label: string;
-  };
+  value: string;
+  label: string;
+};
 
 const Profile = () => {
 

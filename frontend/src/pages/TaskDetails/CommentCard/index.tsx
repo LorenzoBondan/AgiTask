@@ -1,4 +1,3 @@
-
 import { Comment, Task, User } from 'types';
 import './styles.css';
 import { convertDateTime } from 'helpers';
@@ -9,8 +8,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 
 type Props = {
-    comment: Comment;
-    onDelete: Function;
+  comment: Comment;
+  onDelete: Function;
 }
 
 const CommentCard = ({comment, onDelete} : Props) => {
@@ -109,7 +108,6 @@ const CommentCard = ({comment, onDelete} : Props) => {
                             <p>{convertDateTime(comment.dateTime)}</p>
                         </div>
                     </div>
-
                     {(iAmTheAuthor() || iAmTheTaskAuthor()) && 
                         <div className='comment-card-buttons'>
                             <BsFillTrash3Fill onClick={() => handleDeleteComment()}/>

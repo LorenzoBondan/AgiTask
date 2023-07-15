@@ -1,4 +1,3 @@
-
 import { useForm } from 'react-hook-form';
 import {ReactComponent as SearchIcon} from 'assets/images/search-icon.svg';
 
@@ -37,7 +36,6 @@ const TaskFilter = ( {onSubmitFilter} : Props ) => {
                         <SearchIcon/>
                     </button>
                 </div>
-
                 <div className='user-filter-bottom-container'>
                     <button onClick={handleFormClear} className='btn btn-outline-secondary btn-user-filter-clear'>
                         CLEAR <span className='btn-user-filter-word'>FILTER</span>

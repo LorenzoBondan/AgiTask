@@ -1,4 +1,3 @@
-
 import { Notification } from 'types';
 import './styles.css';
 import { convertDateTime } from 'helpers';
@@ -34,7 +33,6 @@ const NotificationCard = ({notification, onRead} : Props) => {
         try{
         requestBackend(params) 
           .then(response => {
-            console.log("read");
             onRead();
           })
         }

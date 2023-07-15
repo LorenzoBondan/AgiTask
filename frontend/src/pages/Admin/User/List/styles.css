@@ -1,0 +1,13 @@
+.courses-crud-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.courses-crud-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

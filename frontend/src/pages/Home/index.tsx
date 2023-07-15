@@ -1,4 +1,3 @@
-
 import Banner from 'Components/Banner';
 import './styles.css';
 import Utilized from 'Components/Utilized';
